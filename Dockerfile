@@ -10,7 +10,7 @@ COPY main.go .
 
 RUN go get -d -v \
   # This strips out debug information for a smaller binary
-  && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /app/vulnerability-report
+  && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /app/gmud
 
 # ======================================================================================================================
 FROM scratch AS run
