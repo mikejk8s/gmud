@@ -1,19 +1,12 @@
-package main
+package charactersroutes
 
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"errors"
+	"github.com/mikejk8s/gmud/models"
 	)
 
-
-type Character struct {
-	Name string	`json:"name`
-	ID string	`json:"id"`
-	Class string	`json:"class"`
-	Race string	`json:"race"`
-	Level int	`json:"level"`
-}
 
 var Characters = []Character{
 	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},

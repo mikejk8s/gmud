@@ -1,4 +1,4 @@
-package main
+package gmud
 
 import (
 	"context"
@@ -16,6 +16,8 @@ import (
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
+	"charactersroutes"
+	"models"
 )
 
 const (
@@ -24,7 +26,7 @@ const (
 )
 
 func main() {
-	go CharactersRoutes()
+	go charactersRoutes()
 
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
