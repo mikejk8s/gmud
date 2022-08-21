@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"errors"
-	"github.com/mikejk8s/gmud/models"
+	m "github.com/mikejk8s/gmud/pkg/models"
 	)
 
 
-var Characters = []Character{
+var Characters = []m.Character{
 	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},
 	{ID: "2", Name: "Jacbo Woo", Class: "Wizard", Race: "Human", Level: 2},
 	{ID: "3", Name: "Carly Howe", Class: "Warrior", Race: "Human", Level: 5},
@@ -30,7 +30,7 @@ func GetCharacter(c *gin.Context) {
 }
 
 func CreateCharacter(c *gin.Context) {
-	var Character Character
+	var Character m.Character
 	c.BindJSON(&Character)
 	Characters = append(Characters, Character)
 	c.JSON(http.StatusCreated, Character)
@@ -38,7 +38,7 @@ func CreateCharacter(c *gin.Context) {
 
 func UpdateCharacters(c *gin.Context) {
 	id := c.Param("id")
-	var Character Character
+	var Character m.Character
 	c.BindJSON(&Character)
 	for index, item := range Characters {
 		if item.ID == id {

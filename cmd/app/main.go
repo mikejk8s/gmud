@@ -16,8 +16,7 @@ import (
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
-	"charactersroutes"
-	"models"
+	cr "github.com/mikejk8s/gmud/pkg/httpserver/charactersroutes"
 )
 
 const (
@@ -26,8 +25,7 @@ const (
 )
 
 func main() {
-	go charactersRoutes()
-
+	go cr.CharactersRoutes()
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithHostKeyPath(".ssh/term_info_ed25519"),

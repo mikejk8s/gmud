@@ -1,7 +1,7 @@
 package models
 
 type Character struct {
-	Name string	`json:"name`
+	Name string	`json:"name"`
 	ID string	`json:"id"`
 	Class string	`json:"class"`
 	Race string	`json:"race"`
