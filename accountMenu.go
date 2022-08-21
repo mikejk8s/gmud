@@ -6,13 +6,13 @@ import (
 	"os"
 )
 
-type model struct {
+type accountModel struct {
 	choices  []string         // items on the to-do list
 	cursor   int              // which to-do list item our cursor is pointing at
 	selected map[int]struct{} // which to-do items are selected
 }
 
-func initialModel() model {
+func accountInitialModel() model {
 	return model{
 		// Our shopping list is a grocery list
 		choices: []string{"Login", "Create Account"},
@@ -24,12 +24,12 @@ func initialModel() model {
 	}
 }
 
-func (m model) Init() tea.Cmd {
+func (m model) accountInit() tea.Cmd {
 	// Just return `nil`, which means "no I/O right now, please."
 	return nil
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m model) accountUpdate(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 
 	// Is it a key press?
@@ -71,7 +71,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m model) View() string {
+func (m model) accountView() string {
 	// The header
 	s := "Login or create account?\n\n"
 
@@ -101,7 +101,7 @@ func (m model) View() string {
 	return s
 }
 
-func main() {
+func AccountLogin() {
 	p := tea.NewProgram(initialModel())
 	if err := p.Start(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)

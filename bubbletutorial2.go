@@ -11,12 +11,12 @@ import (
 
 const url = "https://charm.sh"
 
-type model struct {
+type BubbleModel struct {
 	status int
 	err    error
 }
 
-func checkServer() tea.Msg {
+func CheckServer() tea.Msg {
 
 	// Create an HTTP client and make a GET request.
 	c := &http.Client{Timeout: 10 * time.Second}
@@ -41,7 +41,7 @@ type errMsg struct{ err error }
 func (e errMsg) Error() string { return e.err.Error() }
 
 func (m model) Init() tea.Cmd {
-	return checkServer()
+	return CheckServer()
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -64,7 +64,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m model) View() string {
+func (m model) BubbleView() string {
 	if m.err != nil {
 		return fmt.Sprintf("\nWe had some trouble: %v\n\n", m.err)
 	}
@@ -79,7 +79,7 @@ func (m model) View() string {
 
 }
 
-func main() {
+func BubbleMain() {
 	if err := tea.NewProgram(model{}).Start(); err != nil {
 		fmt.Printf("Uh oh, there was an error: %v\n", err)
 		os.Exit(1)

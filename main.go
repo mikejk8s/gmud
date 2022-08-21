@@ -24,6 +24,8 @@ const (
 )
 
 func main() {
+	go CharactersRoutes()
+
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithHostKeyPath(".ssh/term_info_ed25519"),
@@ -39,12 +41,12 @@ func main() {
 					)
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), mrj):
-						wish.Println(s, "Hey $username\n") // TODO: Echo username, not ssh string
+					 // TODO: Echo username, not ssh string
 					default:
 						wish.Println(s, "User not found!")
 					}
 					h(s)
-					loginBubbleteaMiddleware()
+
 				}
 			},
 		),
@@ -125,6 +127,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q", "ctrl+c":
+			return m, tea.Quit
+		case "l", "ctrl+l":
 			return m, tea.Quit
 		}
 	}
