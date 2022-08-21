@@ -12,7 +12,7 @@ A mud in go
 4. ~~DeleteUser currently 404s~~
 5. CharacterRoutes GetUser returns the wrong list of characters, doesn't do its query
 6. Require unique names sql queries Character.Name
-7.
+7. Make a map of public keys
 
 
 ## Api Paths

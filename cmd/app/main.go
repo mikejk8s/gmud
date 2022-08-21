@@ -44,17 +44,17 @@ func main() {
 			lm.Middleware(),
 			func(h ssh.Handler) ssh.Handler {
 				return func(s ssh.Session) {
-					mrj, _, _, _, _ := ssh.ParseAuthorizedKey(
+					user, _, _, _, _ := ssh.ParseAuthorizedKey(
 						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
 					)
 					switch {
-					case ssh.KeysEqual(s.PublicKey(), mrj):
-					 // TODO: Echo username, not ssh string
+					case ssh.KeysEqual(s.PublicKey(), user):
+						wish.Println(s, "%s\n Authorized", user) // TODO: Echo username, not ssh string
+						loginBubbleteaMiddleware()(h)(s)
 					default:
 						wish.Println(s, "User not found!")
 					}
 					h(s)
-
 				}
 			},
 		),
@@ -107,7 +107,7 @@ func loginBubbleteaMiddleware() wish.Middleware {
 			height:    pty.Window.Height,
 			time: time.Now(),
 		}
-		return login(m, tea.WithInput(s), tea.WithOutput(s)) //tea.WithAltScreen)
+		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
 	}
 	return bm.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
 }
