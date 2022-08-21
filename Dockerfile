@@ -7,7 +7,6 @@ RUN apk update && apk add --no-cache git
 COPY go.mod .
 COPY go.sum .
 COPY main.go .
-COPY /characters/characters.go .
 
 RUN go get -d -v \
   # This strips out debug information for a smaller binary
