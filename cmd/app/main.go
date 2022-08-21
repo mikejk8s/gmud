@@ -16,7 +16,9 @@ import (
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
+
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
+	db "github.com/mikejk8s/gmud/pkg/mysql"
 )
 
 const (
@@ -25,6 +27,7 @@ const (
 )
 
 func main() {
+	go db.Connect()
 	go cr.CharactersRoutes()
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),

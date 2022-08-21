@@ -11,7 +11,7 @@ import (
 )
 
 func GetCharacters() []m.Character {
-	db, err := sql.Open("mysql", dbuser+":"+dbpass+"@tcp(127.0.0.1:3306)/"+dbname)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return nil
@@ -37,7 +37,7 @@ results, err := db.Query("SELECT * FROM character")
 				}
 
 				func GetCharacter(code string) *m.Character {
-					db, err := sql.Open("mysql", dbuser+":"+dbpass+"@tcp(127.0.0.1:3306)/"+dbname)
+					db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
 					char:= &m.Character{}
 					if err != nil {
 						// simply print the error to the console
@@ -63,7 +63,7 @@ results, err := db.Query("SELECT * FROM character")
 				}
 
 				func AddCharacter(Character m.Character) {
-					db, err := sql.Open("mysql", dbuser+":"+dbpass+"@tcp(127.0.0.1:3306)/"+dbname)
+					db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
 					if err != nil {
 						panic(err.Error())
 					}
