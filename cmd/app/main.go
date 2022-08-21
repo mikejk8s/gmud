@@ -19,6 +19,7 @@ import (
 
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
+	mn "github.com/mikejk8s/gmud/pkg/menus"
 )
 
 const (
@@ -137,7 +138,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "l", "ctrl+l":
-			return m, tea.Quit
+			mn.AccountLogin()
 		}
 	}
 	return m, nil
@@ -148,7 +149,7 @@ func (m model) View() string {
 	s += "Your terminal is: %s\n"
 	s += "Your window size is x: %d y: %d\n\n"
 	s += "The date is " + m.time.Format(time.RFC1123) + "\n\n"
-	s += "Press l to login\n"
+	s += "Press 'l' to login\n"
 	s += "Press 'q' to quit\n"
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }
