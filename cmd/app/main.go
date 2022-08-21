@@ -27,8 +27,13 @@ const (
 )
 
 func main() {
+	// Connect to mysql database and create db + tables if they don't exist
 	go db.Connect()
+
+	// Begin gin https routes
 	go cr.CharactersRoutes()
+
+	// SSH server begin
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithHostKeyPath(".ssh/term_info_ed25519"),

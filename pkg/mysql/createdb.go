@@ -77,14 +77,6 @@ func createCharacterTable(db *sql.DB) error {
 		alive BOOLEAN NOT NULL DEFAULT '1'
 	) ENGINE=INNODB;`
 
-	// query := `CREATE TABLE IF NOT EXISTS character(id int primary key auto_increment,
-	// 	name varchar(20) NOT NULL DEFAULT NULL,
-    //     level int(3) NOT NULL DEFAULT '1',
-	// 	class varchar(20) NOT NULL DEFAULT NULL,
-	// 	race varchar(20) NOT NULL DEFAULT NULL,
-	// 	created_at datetime default CURRENT_TIMESTAMP,
-	// 	updated_at datetime default CURRENT_TIMESTAMP)`
-
     ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
     defer cancelfunc()
     res, err := db.ExecContext(ctx, query)
