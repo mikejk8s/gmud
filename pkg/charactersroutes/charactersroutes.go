@@ -5,28 +5,36 @@ import (
 	"github.com/gin-gonic/gin"
 	"errors"
 	m "github.com/mikejk8s/gmud/pkg/models"
+	db "github.com/mikejk8s/gmud/pkg/mysql"
 	)
 
 
-var Characters = []m.Character{
-	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},
-	{ID: "2", Name: "Jacbo Woo", Class: "Wizard", Race: "Human", Level: 2},
-	{ID: "3", Name: "Carly Howe", Class: "Warrior", Race: "Human", Level: 5},
+ var Characters = []m.Character{
+// 	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},
 }
 
 func GetCharacters(c *gin.Context) {
+	name := c.Param("name")
+	for _, Character := range Characters {
+		if Character.Name == name {
 	c.JSON(http.StatusOK, Characters)
+	db.GetCharacters(Character.Name)
+			}
+		}
+		c.JSON(http.StatusNotFound, gin.H{"error": "Character Names not found"})
 }
+
 
 func GetCharacter(c *gin.Context) {
 	id := c.Param("id")
 	for _, Character := range Characters {
 		if Character.ID == id {
 			c.JSON(http.StatusOK, Character)
-			return
+			//return
+			db.GetCharacters(id)
 		}
 	}
-	c.JSON(http.StatusNotFound, gin.H{"error": "Character not found"})
+	c.JSON(http.StatusNotFound, gin.H{"error": "Character ID not found"})
 }
 
 func CreateCharacter(c *gin.Context) {
@@ -34,6 +42,7 @@ func CreateCharacter(c *gin.Context) {
 	c.BindJSON(&Character)
 	Characters = append(Characters, Character)
 	c.JSON(http.StatusCreated, Character)
+	db.AddCharacter(Character)
 }
 
 func UpdateCharacters(c *gin.Context) {
@@ -44,19 +53,21 @@ func UpdateCharacters(c *gin.Context) {
 		if item.ID == id {
 			Characters[index] = Character
 			c.JSON(http.StatusOK, Character)
-			return
+			//return
 		}
 	}
 	c.JSON(http.StatusNotFound, errors.New("Character not found"))
 }
 
 func DeleteCharacter(c *gin.Context) {
+	var Character m.Character
 	id := c.Param("id")
 	for index, item := range Characters {
 		if item.ID == id {
 			Characters = append(Characters[:index], Characters[index+1:]...)
 			c.JSON(http.StatusOK, gin.H{"success": "Character deleted"})
-			return
+			//return
+			db.DeleteCharacter(Character)
 		}
 	}
 	c.JSON(http.StatusNotFound, errors.New("Character not found"))

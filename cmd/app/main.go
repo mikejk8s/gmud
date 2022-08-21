@@ -19,6 +19,7 @@ import (
 
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
+	mn "github.com/mikejk8s/gmud/pkg/menus"
 )
 
 const (
@@ -44,17 +45,17 @@ func main() {
 			lm.Middleware(),
 			func(h ssh.Handler) ssh.Handler {
 				return func(s ssh.Session) {
-					mrj, _, _, _, _ := ssh.ParseAuthorizedKey(
+					user, _, _, _, _ := ssh.ParseAuthorizedKey(
 						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
 					)
 					switch {
-					case ssh.KeysEqual(s.PublicKey(), mrj):
-					 // TODO: Echo username, not ssh string
+					case ssh.KeysEqual(s.PublicKey(), user):
+						wish.Println(s, "%s\n Authorized", user) // TODO: Echo username, not ssh string
+						loginBubbleteaMiddleware()(h)(s)
 					default:
 						wish.Println(s, "User not found!")
 					}
 					h(s)
-
 				}
 			},
 		),
@@ -107,7 +108,7 @@ func loginBubbleteaMiddleware() wish.Middleware {
 			height:    pty.Window.Height,
 			time: time.Now(),
 		}
-		return login(m, tea.WithInput(s), tea.WithOutput(s)) //tea.WithAltScreen)
+		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
 	}
 	return bm.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
 }
@@ -137,7 +138,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "l", "ctrl+l":
-			return m, tea.Quit
+			mn.AccountLogin()
 		}
 	}
 	return m, nil
@@ -148,7 +149,7 @@ func (m model) View() string {
 	s += "Your terminal is: %s\n"
 	s += "Your window size is x: %d y: %d\n\n"
 	s += "The date is " + m.time.Format(time.RFC1123) + "\n\n"
-	s += "Press l to login\n"
+	s += "Press 'l' to login\n"
 	s += "Press 'q' to quit\n"
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }

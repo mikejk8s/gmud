@@ -1,4 +1,4 @@
-// package main
+// package menus
 
 // import (
 // 	"fmt"
@@ -15,7 +15,7 @@
 // func initialModel() model {
 // 	return model{
 // 		// Our shopping list is a grocery list
-// 		choices: []string{"Gandalf", "Fender", "Ghibli"},
+// 		choices: []string{"Warrior", "Wizard", "Thief"},
 
 // 		// A map which indicates which choices are selected. We're using
 // 		// the  map like a mathematical set. The keys refer to the indexes
@@ -73,7 +73,7 @@
 
 // func (m model) View() string {
 // 	// The header
-// 	s := "Which character would you like to login as?\n\n"
+// 	s := "Which class would you like to login as?\n\n"
 
 // 	// Iterate over our choices
 // 	for i, choice := range m.choices {
