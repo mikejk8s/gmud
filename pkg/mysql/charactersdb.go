@@ -26,7 +26,7 @@ import (
 // 	defer results.Close()
 // 	for result.Next()
 
-func GetCharacter() []m.Character {
+func GetCharacte() []m.Character {
 	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
 	if err != nil {
 		fmt.Println("Error", err.Error())

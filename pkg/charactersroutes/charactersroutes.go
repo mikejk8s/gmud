@@ -31,7 +31,7 @@ func GetCharacter(c *gin.Context) {
 		if Character.ID == id {
 			c.JSON(http.StatusOK, Character)
 			//return
-			db.GetCharacters(Character.ID)
+			db.GetCharacters(id)
 		}
 	}
 	c.JSON(http.StatusNotFound, gin.H{"error": "Character ID not found"})
