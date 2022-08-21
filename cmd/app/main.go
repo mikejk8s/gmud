@@ -1,4 +1,4 @@
-package gmud
+package main
 
 import (
 	"context"
@@ -16,7 +16,7 @@ import (
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
-	cr "github.com/mikejk8s/gmud/pkg/httpserver/charactersroutes"
+	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 )
 
 const (
