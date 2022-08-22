@@ -13,7 +13,11 @@ A mud in go
 5. CharacterRoutes GetUser returns the wrong list of characters, doesn't do its query
 6. Require unique names sql queries Character.Name
 7. Make a map of public keys
-8. AccountLogin function runs login page on the server 
+8. AccountLogin function runs login page on the server
+9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine
+10. Alive reports false need to switch to reverse bool or dead
+11. Level shouldnt be 0
+12. 
 
 
 ## Api Paths
