@@ -20,6 +20,9 @@ import (
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
+
+	"net/http"
+	"github.com/felixge/fgtrace"
 )
 
 const (
@@ -28,6 +31,12 @@ const (
 )
 
 func main() {
+
+	defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
+
+	http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
+	http.ListenAndServe(":1234", nil)
+
 	// Connect to mysql database and create db + tables if they don't exist
 	go db.Connect()
 
@@ -47,7 +56,7 @@ func main() {
 				return func(s ssh.Session) {
 					user, _, _, _, _ := ssh.ParseAuthorizedKey(
 						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
-					)
+					) // TODO: Replace with file
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), user):
 						wish.Println(s, "%s\n Authorized", user) // TODO: Echo username, not ssh string
