@@ -80,5 +80,5 @@ func CharactersRoutes() {
 	r.POST("/characters", CreateCharacter)
 	r.PUT("/characters/:id", UpdateCharacters)
 	r.DELETE("/characters/:id", DeleteCharacter)
-	r.Run(":8080")
+	r.Run(":8081")
 }

@@ -56,7 +56,7 @@ func main() {
 				return func(s ssh.Session) {
 					user, _, _, _, _ := ssh.ParseAuthorizedKey(
 						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
-					) // TODO: Replace with file
+					) // TODO: Replace with file https://github.com/charmbracelet/wishlist/blob/main/server.go#L158
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), user):
 						wish.Println(s, "%s\n Authorized", user) // TODO: Echo username, not ssh string
@@ -148,17 +148,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "l", "ctrl+l":
 			mn.AccountLogin()
+		case "n", "ctrl+n":
+			//mn.NewAccount()
+			return m, tea.Quit
 		}
 	}
 	return m, nil
 }
 
 func (m model) View() string {
-	s := "Welcome to gmud!\n"
+	s := "Welcome to gmud!\n\n"
 	s += "Your terminal is: %s\n"
 	s += "Your window size is x: %d y: %d\n\n"
 	s += "The date is " + m.time.Format(time.RFC1123) + "\n\n"
 	s += "Press 'l' to login\n"
+	s += "Press 'n' to create a new account\n"
 	s += "Press 'q' to quit\n"
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }

@@ -13,6 +13,7 @@ import (
 const (
     username = "user"
     password = "password"
+    //hostname = "docker.for.mac.localhost:3306"
     hostname = "127.0.0.1:3306"
     dbname   = "characters"
 )
@@ -69,7 +70,7 @@ func dbConnection() (*sql.DB, error) {
 func createCharacterTable(db *sql.DB) error {
     query := `CREATE TABLE IF NOT EXISTS characters (
 		id VARCHAR(15) UNIQUE NOT NULL PRIMARY KEY,
-		name VARCHAR(30) NOT NULL,
+		name VARCHAR(30) UNIQUE NOT NULL,
 		class VARCHAR(15) NOT NULL,
 		race VARCHAR(15) NOT NULL DEFAULT 'HUMAN',
 		level INT(3) NOT NULL DEFAULT '1',

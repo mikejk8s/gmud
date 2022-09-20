@@ -8,6 +8,7 @@ import (
 
 	//cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	m "github.com/mikejk8s/gmud/pkg/models"
+	"github.com/felixge/fgtrace"
 )
 
 // func GetCharacters(code string) []m.Character {
@@ -33,6 +34,7 @@ func GetCharacter() []m.Character {
 		return nil
 }
 
+defer fgtrace.Config{Dst: fgtrace.File("charactersdb-fgtrace.json")}.Trace().Stop()
 
 defer db.Close()
 results, err := db.Query("SELECT * FROM characters")

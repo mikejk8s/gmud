@@ -5,23 +5,29 @@ go 1.19
 require (
 	github.com/charmbracelet/bubbletea v0.20.0
 	github.com/charmbracelet/wish v0.5.0
+	github.com/felixge/fgtrace v0.1.0
+	github.com/gin-gonic/gin v1.8.1
 	github.com/gliderlabs/ssh v0.3.4
-	github.com/mikejk8s/go-api-server v0.0.0-20220821050611-9c89f9adca28
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/muesli/termenv v0.11.1-0.20220212125758-44cd13922739
+	go.opentelemetry.io/otel v1.9.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.9.0
+	go.opentelemetry.io/otel/sdk v1.9.0
 )
 
 require (
+	github.com/DataDog/gostackparse v0.5.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be // indirect
 	github.com/caarlos0/sshmarshal v0.1.0 // indirect
 	github.com/charmbracelet/keygen v0.3.0 // indirect
 	github.com/charmbracelet/lipgloss v0.4.0 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.8.1 // indirect
+	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
@@ -35,12 +41,14 @@ require (
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/stretchr/testify v1.8.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220307211146-efcb8507fb70 // indirect
-	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
-	golang.org/x/sys v0.0.0-20220209214540-3681064d5158 // indirect
+	go.opentelemetry.io/otel/trace v1.9.0 // indirect
+	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
+	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
+	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

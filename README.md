@@ -4,6 +4,11 @@ A mud in go
 
 ## Features
 
+What's broken:
+1. //TODO: SSH only takes one key and right now I'm getting errors accessing it
+2. //TODO: gmud container cant connect to database
+   1. This is NOT a problem when running ./app from localhost
+
 ## Todo
 
 1. Let user create a new character
@@ -13,16 +18,16 @@ A mud in go
 5. CharacterRoutes GetUser returns the wrong list of characters, doesn't do its query
 6. Require unique names sql queries Character.Name
 7. Make a map of public keys
-8. AccountLogin function runs login page on the server
+8. *AccountLogin function runs login page on the server*
 9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine
 10. Alive reports false need to switch to reverse bool or dead
 11. Level shouldnt be 0
-12. 
+12.
 
 
 ## Api Paths
 
-http://127.0.0.1:8080/characters/9 {id}
+http://127.0.0.1:8081/characters/9 {id}
 
 ``` go
     r.GET("/characters", GetCharacters)
@@ -30,7 +35,7 @@ http://127.0.0.1:8080/characters/9 {id}
 	r.POST("/characters", CreateCharacter)
 	r.PUT("/characters/:id", UpdateCharacters)
 	r.DELETE("/characters/:id", DeleteCharacter)
-	r.Run(":8080")
+	r.Run(":8081")
 ```
 
 

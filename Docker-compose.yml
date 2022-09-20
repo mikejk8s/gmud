@@ -19,8 +19,9 @@ services:
     container_name: gmud
     build: .
     ports:
+      - "1234:1234" # fgtrace but doesnt work
       - "2222:2222"
-      - "8080:8080"
+      - "8081:8081"
     volumes:
     - .:/code
     command: "./app"
