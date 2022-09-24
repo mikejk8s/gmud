@@ -18,11 +18,11 @@ import (
 	"github.com/muesli/termenv"
 
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
-	db "github.com/mikejk8s/gmud/pkg/mysql"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
+	db "github.com/mikejk8s/gmud/pkg/mysql"
 
-	"net/http"
 	"github.com/felixge/fgtrace"
+	"net/http"
 )
 
 const (
@@ -56,10 +56,10 @@ func main() {
 				return func(s ssh.Session) {
 					user, _, _, _, _ := ssh.ParseAuthorizedKey(
 						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
-					) // TODO: Replace with file https://github.com/charmbracelet/wishlist/blob/main/server.go#L158
+					) // TODO: #3 Replace with file https://github.com/charmbracelet/wishlist/blob/main/server.go#L158
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), user):
-						wish.Println(s, "%s\n Authorized", user) // TODO: Echo username, not ssh string
+						wish.Println(s, "%s\n Authorized", user) // TODO: #4 Echo username, not ssh string
 						loginBubbleteaMiddleware()(h)(s)
 					default:
 						wish.Println(s, "User not found!")
@@ -110,12 +110,12 @@ func loginBubbleteaMiddleware() wish.Middleware {
 		if !active {
 			wish.Fatalln(s, "no active terminal")
 			return nil
-	}
+		}
 		m := model{
-			term: pty.Term,
-			width:    pty.Window.Width,
-			height:    pty.Window.Height,
-			time: time.Now(),
+			term:   pty.Term,
+			width:  pty.Window.Width,
+			height: pty.Window.Height,
+			time:   time.Now(),
 		}
 		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
 	}
@@ -167,4 +167,5 @@ func (m model) View() string {
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }
 
-//TODO: Nothing happens after user logs in and their name is displayed
+
+

@@ -88,7 +88,7 @@ func (m model) View() string {
 		// Is this choice selected?
 		checked := " " // not selected
 		if _, ok := m.selected[i]; ok {
-			checked = "x" // selected!
+			checked = "x" // selected! //TODO: Make this return a different page not just select
 		}
 
 		// Render the row
