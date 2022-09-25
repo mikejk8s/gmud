@@ -4,9 +4,9 @@ POST http://{{host}}/api/user/register HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Mukesh Murugan",
-    "username": "mukesh.murugan",
-    "email": "mukesh@go.com",
+    "name": "Mike",
+    "username": "swozey",
+    "email": "mike@@mikej.dev",
     "password": "123465789"
 }
 ###
