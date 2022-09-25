@@ -20,6 +20,7 @@ import (
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
+	udb "github.com/mikejk8s/gmud/pkg/userdb"
 
 	"github.com/felixge/fgtrace"
 	"net/http"
@@ -37,8 +38,11 @@ func main() {
 	http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
 	http.ListenAndServe(":1234", nil)
 
-	// Connect to mysql database and create db + tables if they don't exist
+	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
+
+	// Connect to user-db mysql database and create db + tables if they don't exist
+	go	udb.ConnectUserDB()
 
 	// Begin gin https routes
 	go cr.CharactersRoutes()
