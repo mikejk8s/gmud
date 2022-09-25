@@ -7,6 +7,7 @@ import (
 )
 
 var jwtKey = []byte("my_secret_key")
+
 type JWTClaim struct {
 	Username string `json:"username"`
 	Email string `json:"email"`
