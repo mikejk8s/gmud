@@ -8,7 +8,6 @@ import (
 	db "github.com/mikejk8s/gmud/pkg/mysql"
 	)
 
-
  var Characters = []m.Character{
 // 	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},
 }
@@ -73,12 +72,12 @@ func DeleteCharacter(c *gin.Context) {
 	c.JSON(http.StatusNotFound, errors.New("Character not found"))
 }
 
-func CharactersRoutes() {
-	r := gin.Default()
-	r.GET("/characters", GetCharacters)
-	r.GET("/characters/:id", GetCharacter)
-	r.POST("/characters", CreateCharacter)
-	r.PUT("/characters/:id", UpdateCharacters)
-	r.DELETE("/characters/:id", DeleteCharacter)
-	r.Run(":8081")
-}
+// func CharactersRoutes() {
+// 	r := gin.Default()
+// 	r.GET("/characters", GetCharacters)
+// 	r.GET("/characters/:id", GetCharacter)
+// 	r.POST("/characters", CreateCharacter)
+// 	r.PUT("/characters/:id", UpdateCharacters)
+// 	r.DELETE("/characters/:id", DeleteCharacter)
+// 	r.Run(":8081")
+// }

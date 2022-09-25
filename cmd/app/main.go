@@ -17,10 +17,9 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
 
-	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
-	routes "github.com/mikejk8s/gmud/pkg/routes"
+	r "github.com/mikejk8s/gmud/pkg/routes"
 
 	"github.com/felixge/fgtrace"
 	"net/http"
@@ -42,10 +41,7 @@ func main() {
 	go db.Connect()
 
 	// Connect to user-db mysql database and create db + tables if they don't exist
-	go	routes.ConnectUserDB()
-
-	// Begin gin https routes
-	go cr.CharactersRoutes()
+	go	r.ConnectUserDB()
 
 	// SSH server begin
 	s, err := wish.NewServer(

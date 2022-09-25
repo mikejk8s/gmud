@@ -5,27 +5,33 @@ import (
 	"github.com/mikejk8s/gmud/middlewares"
 	"github.com/mikejk8s/gmud/controllers"
 	"github.com/mikejk8s/gmud/pkg/userdb"
+	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 )
 
 func ConnectUserDB() {
 	// Initialize Database
 	userdb.Connect("user:password@tcp(localhost:3307)/users?parseTime=true")
 	userdb.Migrate()
-	router := InitRouter()
-	router.Run(":8080")
+	r := InitRouter()
+	r.Run(":8080")
 }
 
 func InitRouter() *gin.Engine {
-	router := gin.Default()
-	api := router.Group("/api")
+	r := gin.Default()
+	a := r.Group("/api")
 	{
-		api.POST("/user/register", controllers.RegisterUser)
-		api.POST("/token", controllers.GenerateToken)
-		secured := api.Group("/secured").Use(middlewares.Auth())
+		a.POST("/token", controllers.GenerateToken)
+		a.POST("/user/register", controllers.RegisterUser)
+		r.GET("/characters", cr.GetCharacters)
+		s := a.Group("/secured").Use(middlewares.Auth())
 		{
-			secured.GET("/user", controllers.GetUser)
-			secured.POST("/token", controllers.GenerateToken)
+			s.GET("/user", controllers.GetUser)
+			s.POST("/token", controllers.GenerateToken)
+			s.GET("/characters/:id", cr.GetCharacter)
+			s.POST("/characters", cr.CreateCharacter)
+			s.PUT("/characters/:id", cr.UpdateCharacters)
+			s.DELETE("/characters/:id", cr.DeleteCharacter)
 		}
-	return router
+	return r
 }
 }
