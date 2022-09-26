@@ -1,11 +1,15 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
-	"github.com/mikejk8s/gmud/middlewares"
+	"github.com/semihalev/gin-stats"
+
 	"github.com/mikejk8s/gmud/controllers"
-	"github.com/mikejk8s/gmud/pkg/userdb"
+	"github.com/mikejk8s/gmud/middlewares"
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
+	"github.com/mikejk8s/gmud/pkg/userdb"
 )
 
 func ConnectUserDB() {
@@ -18,6 +22,15 @@ func ConnectUserDB() {
 
 func InitRouter() *gin.Engine {
 	r := gin.Default()
+
+	// stats / 200 OK
+	r.Use(stats.RequestStats())
+
+	r.GET("/stats", func(c *gin.Context) {
+		c.JSON(http.StatusOK, stats.Report())
+	})
+
+	// Routes
 	a := r.Group("/api")
 	{
 		a.POST("/token", controllers.GenerateToken)
