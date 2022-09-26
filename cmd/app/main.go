@@ -59,7 +59,7 @@ func main() {
 			func(h ssh.Handler) ssh.Handler {
 				return func(s ssh.Session) {
 					user, _, _, _, _ := ssh.ParseAuthorizedKey(
-						[]byte("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrr9hgSKnoddIDmzFyMnf5qb3QTsG40/9UyhexKiw6z mike@mikej.dev"),
+						[]byte("ssh-ed25519"),
 					) // TODO: #3 Replace with file https://github.com/charmbracelet/wishlist/blob/main/server.go#L158
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), user):
