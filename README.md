@@ -27,15 +27,24 @@ What's broken:
 
 ## Api Paths
 
+Gin Stats http://127.0.0.1:8080/stats
 http://127.0.0.1:8081/characters/9 {id}
 
 ``` go
-    r.GET("/characters", GetCharacters)
-	r.GET("/characters/:id", GetCharacter)
-	r.POST("/characters", CreateCharacter)
-	r.PUT("/characters/:id", UpdateCharacters)
-	r.DELETE("/characters/:id", DeleteCharacter)
-	r.Run(":8081")
+	a := r.Group("/api")
+	{
+		a.POST("/token", controllers.GenerateToken)
+		a.POST("/user/register", controllers.RegisterUser)
+		r.GET("/characters", cr.GetCharacters)
+		s := a.Group("/secured").Use(middlewares.Auth())
+		{
+			s.GET("/user", controllers.GetUser)
+			s.POST("/token", controllers.GenerateToken)
+			s.GET("/characters/:id", cr.GetCharacter)
+			s.POST("/characters", cr.CreateCharacter)
+			s.PUT("/characters/:id", cr.UpdateCharacters)
+			s.DELETE("/characters/:id", cr.DeleteCharacter)
+		}
 ```
 
 

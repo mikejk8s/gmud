@@ -17,9 +17,9 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
 
-	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
+	r "github.com/mikejk8s/gmud/pkg/routes"
 
 	"github.com/felixge/fgtrace"
 	"net/http"
@@ -37,11 +37,11 @@ func main() {
 	http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
 	http.ListenAndServe(":1234", nil)
 
-	// Connect to mysql database and create db + tables if they don't exist
+	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
 
-	// Begin gin https routes
-	go cr.CharactersRoutes()
+	// Connect to user-db mysql database and create db + tables if they don't exist
+	go	r.ConnectUserDB()
 
 	// SSH server begin
 	s, err := wish.NewServer(

@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/charmbracelet/bubbletea v0.20.0
 	github.com/charmbracelet/wish v0.5.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/felixge/fgtrace v0.1.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/gliderlabs/ssh v0.3.4
@@ -13,6 +14,9 @@ require (
 	go.opentelemetry.io/otel v1.9.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.9.0
 	go.opentelemetry.io/otel/sdk v1.9.0
+	golang.org/x/crypto v0.0.0-20220924013350-4ba4fb4dd9e7
+	gorm.io/driver/mysql v1.3.6
+	gorm.io/gorm v1.23.10
 )
 
 require (
@@ -29,6 +33,8 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
@@ -40,11 +46,12 @@ require (
 	github.com/muesli/ansi v0.0.0-20211018074035-2e021307bc4b // indirect
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
+	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/semihalev/gin-stats v0.0.0-20180505163755-30fdcbbd3533 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	go.opentelemetry.io/otel/trace v1.9.0 // indirect
-	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
 	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
 	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect

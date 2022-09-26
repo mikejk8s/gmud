@@ -1,8 +1,8 @@
 version: '3'
 services:
-  db:
+  char-db:
     image: mysql
-    container_name: mysql
+    container_name: char-db-mysql
     restart: always
     environment:
       MYSQL_DATABASE: 'characters'
@@ -14,7 +14,23 @@ services:
     expose:
       - '3306'
     volumes:
-      - my-db:/var/lib/mysql
+      - char-db:/var/lib/mysql
+
+  user-db:
+    image: mysql
+    container_name: user-db-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'users'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3306'
+    volumes:
+      - user-db:/var/lib/mysql
   mud:
     container_name: gmud
     build: .
@@ -31,6 +47,8 @@ services:
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
     depends_on:
-      - db
+      - char-db
+      - user-db
 volumes:
-  my-db:
+  char-db:
+  user-db:
