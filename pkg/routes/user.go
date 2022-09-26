@@ -10,7 +10,15 @@ import (
 	"github.com/mikejk8s/gmud/middlewares"
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	"github.com/mikejk8s/gmud/pkg/userdb"
+
+	nrgin "github.com/newrelic/go-agent/v3/integrations/nrgin"
+	"github.com/newrelic/go-agent/v3/newrelic"
+
+	"fmt"
+	"os"
+
 )
+
 
 func ConnectUserDB() {
 	// Initialize Database
@@ -21,7 +29,20 @@ func ConnectUserDB() {
 }
 
 func InitRouter() *gin.Engine {
+
+	app, err := newrelic.NewApplication(
+		newrelic.ConfigAppName("Gmud"),
+		newrelic.ConfigLicense(os.Getenv("NEW_RELIC_API_KEY")),
+		newrelic.ConfigDebugLogger(os.Stdout),
+		newrelic.ConfigCodeLevelMetricsEnabled(true),
+	)
+	if nil != err {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
 	r := gin.Default()
+	r.Use(nrgin.Middleware(app))
 
 	// stats / 200 OK
 	r.Use(stats.RequestStats())

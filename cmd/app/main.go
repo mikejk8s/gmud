@@ -20,7 +20,9 @@ import (
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
 	r "github.com/mikejk8s/gmud/pkg/routes"
+	"github.com/mikejk8s/gmud/pkg/tracing"
 
+	// "github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/felixge/fgtrace"
 	"net/http"
 )
@@ -43,6 +45,8 @@ func main() {
 	// Connect to user-db mysql database and create db + tables if they don't exist
 	go	r.ConnectUserDB()
 
+	go tracing.JaegerTraceProvider()
+
 	// SSH server begin
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
@@ -55,7 +59,7 @@ func main() {
 			func(h ssh.Handler) ssh.Handler {
 				return func(s ssh.Session) {
 					user, _, _, _, _ := ssh.ParseAuthorizedKey(
-						[]byte(""),
+						[]byte("ssh-ed25519"),
 					) // TODO: #3 Replace with file https://github.com/charmbracelet/wishlist/blob/main/server.go#L158
 					switch {
 					case ssh.KeysEqual(s.PublicKey(), user):

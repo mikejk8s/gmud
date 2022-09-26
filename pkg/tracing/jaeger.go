@@ -7,11 +7,11 @@ import (
 )
 
 func JaegerTraceProvider()(*sdktrace.TracerProvider, error) {
-    exp, err: = jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://localhost:14268/api/traces")))
+    exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://localhost:14268/api/traces")))
     if err != nil {
         return nil, err
     }
-    tp: = sdktrace.NewTracerProvider(
+    tp := sdktrace.NewTracerProvider(
         sdktrace.WithBatcher(exp),
         sdktrace.WithResource(resource.NewWithAttributes(
             semconv.SchemaURL,
