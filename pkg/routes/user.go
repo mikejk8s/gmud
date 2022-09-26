@@ -10,7 +10,10 @@ import (
 	"github.com/mikejk8s/gmud/middlewares"
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	"github.com/mikejk8s/gmud/pkg/userdb"
+	//"github.com/newrelic/go-agent/v3/newrelic"
+	//"github.com/newrelic/go-agent/v3/integrations/nrgin"
 )
+
 
 func ConnectUserDB() {
 	// Initialize Database

@@ -16,595 +16,214 @@
 ,{"name":"net.sysSocket","ph":"B","ts":0,"pid":1,"tid":1}
 ,{"name":"syscall.CloseOnExec","ph":"B","ts":0,"pid":1,"tid":1}
 ,{"name":"syscall.fcntl","ph":"B","ts":0,"pid":1,"tid":1}
-,{"name":"syscall.fcntl","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"syscall.CloseOnExec","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.sysSocket","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.(*ipStackCapabilities).probe","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"sync.(*Once).doSlow","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"sync.(*Once).Do","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.supportsIPv4map","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.favoriteAddrFamily","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.internetSocket","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.(*sysListener).listenTCP","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.(*ListenConfig).Listen","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net.Listen","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net/http.(*Server).ListenAndServe","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"net/http.ListenAndServe","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"main.main","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"chan receive","ph":"B","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"main.main","ph":"B","ts":10136.792000000001,"pid":1,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":24,"tid":1,"args":{"name":"G24 main.main"}}
-,{"name":"IO wait","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/mikejk8s/gmud/pkg/routes.ConnectUserDB","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Connect","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.Open","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Dialector.Initialize","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryRowContext","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryContext","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).query","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).conn","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*connector).Connect","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readHandshakePacket","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":10136.792000000001,"pid":24,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":53,"tid":1,"args":{"name":"G53 database/sql.OpenDB"}}
-,{"name":"select","ph":"B","ts":10136.792000000001,"pid":53,"tid":1}
-,{"name":"database/sql.(*DB).connectionOpener","ph":"B","ts":10136.792000000001,"pid":53,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":26,"tid":1,"args":{"name":"G26 os/signal.Notify.func1.1"}}
-,{"name":"syscall","ph":"B","ts":10136.792000000001,"pid":26,"tid":1}
-,{"name":"os/signal.loop","ph":"B","ts":10136.792000000001,"pid":26,"tid":1}
-,{"name":"os/signal.signal_recv","ph":"B","ts":10136.792000000001,"pid":26,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":67,"tid":1,"args":{"name":"G67 main.main"}}
-,{"name":"IO wait","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"main.main.func3","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).ListenAndServe","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).Serve","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"net.(*TCPListener).Accept","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"net.(*TCPListener).accept","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"net.(*netFD).accept","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"internal/poll.(*FD).Accept","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":10136.792000000001,"pid":67,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":72,"tid":1,"args":{"name":"G72 github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher"}}
-,{"name":"select","ph":"B","ts":10136.792000000001,"pid":72,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1","ph":"B","ts":10136.792000000001,"pid":72,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readHandshakePacket","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*connector).Connect","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).conn","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).query","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryContext","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryRowContext","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Dialector.Initialize","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.Open","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Connect","ph":"E","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Migrate","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*DB).AutoMigrate","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate.func1","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes.func1","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*DB).Rows","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*processor).Execute","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/callbacks.RowQuery","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryContext","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).query","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).queryDC","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.withLock","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).queryDC.func2","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"database/sql.ctxDriverPrepare","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).PrepareContext","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).Prepare","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).readPrepareResultPacket","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":20245.958000000002,"pid":24,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).readPrepareResultPacket","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).Prepare","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).PrepareContext","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.ctxDriverPrepare","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).queryDC.func2","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.withLock","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).queryDC","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).query","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"database/sql.(*DB).QueryContext","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/callbacks.RowQuery","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*processor).Execute","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*DB).Rows","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes.func1","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate.func1","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"gorm.io/gorm.(*DB).AutoMigrate","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Migrate","ph":"E","ts":30664.5,"pid":24,"tid":1}
-,{"name":"github.com/gin-gonic/gin.(*Engine).Run","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net/http.ListenAndServe","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net/http.(*Server).ListenAndServe","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net/http.(*Server).Serve","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net.(*TCPListener).Accept","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net.(*TCPListener).accept","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"net.(*netFD).accept","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*FD).Accept","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":30664.5,"pid":24,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":6,"tid":1,"args":{"name":"G6 github.com/gliderlabs/ssh.(*Server).Serve"}}
-,{"name":"running/runnable","ph":"B","ts":13384148.125,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"B","ts":13384148.125,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.newContext","ph":"B","ts":13384148.125,"pid":6,"tid":1}
-,{"name":"context.WithCancel","ph":"B","ts":13384148.125,"pid":6,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":73,"tid":1,"args":{"name":"G73 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"IO wait","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":13394376.5,"pid":73,"tid":1}
-,{"name":"context.WithCancel","ph":"E","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.newContext","ph":"E","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"E","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"chan receive","ph":"B","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"B","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"B","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"B","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":13394376.5,"pid":6,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":74,"tid":1,"args":{"name":"G74 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"select","ph":"B","ts":13394376.5,"pid":74,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":13394376.5,"pid":74,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":13424712.75,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverAuthenticate","ph":"B","ts":13424712.75,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":13424712.75,"pid":6,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"IO wait","ph":"E","ts":13434645.958,"pid":73,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverAuthenticate","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"chan receive","ph":"E","ts":13434645.958,"pid":6,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":13434645.958,"pid":74,"tid":1}
-,{"name":"select","ph":"E","ts":13434645.958,"pid":74,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":30,"tid":1,"args":{"name":"G30 github.com/gliderlabs/ssh.(*Server).Serve"}}
-,{"name":"chan receive","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":68647988.91700001,"pid":30,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":31,"tid":1,"args":{"name":"G31 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"chan receive","ph":"B","ts":68647988.91700001,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":68647988.91700001,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":68647988.91700001,"pid":31,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":32,"tid":1,"args":{"name":"G32 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"IO wait","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).server","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*curve25519sha256).Server","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":68647988.91700001,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":68665805.45799999,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"E","ts":68665805.45799999,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":68665805.45799999,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"chan receive","ph":"E","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"IO wait","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":68665805.45799999,"pid":31,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*curve25519sha256).Server","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).server","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"IO wait","ph":"E","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"select","ph":"B","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":68665805.45799999,"pid":32,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":68686960.875,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverAuthenticate","ph":"B","ts":68686960.875,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":68686960.875,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverAuthenticate","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"chan receive","ph":"E","ts":68698019.25,"pid":30,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"IO wait","ph":"E","ts":68698019.25,"pid":31,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":68698019.25,"pid":32,"tid":1}
-,{"name":"select","ph":"E","ts":68698019.25,"pid":32,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":12,"tid":1,"args":{"name":"G12 github.com/gliderlabs/ssh.(*Server).Serve"}}
-,{"name":"chan receive","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":77414226.292,"pid":12,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":14,"tid":1,"args":{"name":"G14 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"IO wait","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).server","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*curve25519sha256).Server","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":77414226.292,"pid":14,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":13,"tid":1,"args":{"name":"G13 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"chan receive","ph":"B","ts":77414226.292,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":77414226.292,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":77414226.292,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":77424240.54200001,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"E","ts":77424240.54200001,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"E","ts":77424240.54200001,"pid":12,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"E","ts":77424240.54200001,"pid":12,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*curve25519sha256).Server","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).server","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"IO wait","ph":"E","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"select","ph":"B","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":77424240.54200001,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"chan receive","ph":"E","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"IO wait","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":77424240.54200001,"pid":13,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":84,"tid":1,"args":{"name":"G84 golang.org/x/crypto/ssh.newMux"}}
-,{"name":"running/runnable","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).handleChannelOpen","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.Unmarshal","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.typeTags","ph":"B","ts":77424240.54200001,"pid":84,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":85,"tid":1,"args":{"name":"G85 github.com/gliderlabs/ssh.(*Server).HandleConn"}}
-,{"name":"chan receive","ph":"B","ts":77424240.54200001,"pid":85,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).handleRequests","ph":"B","ts":77424240.54200001,"pid":85,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"IO wait","ph":"E","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"running/runnable","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":77444855.042,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.typeTags","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.Unmarshal","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).handleChannelOpen","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"chan receive","ph":"B","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"B","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"B","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":77444855.042,"pid":84,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":86,"tid":1,"args":{"name":"G86 github.com/gliderlabs/ssh.(*Server).HandleConn"}}
-,{"name":"chan receive","ph":"B","ts":77444855.042,"pid":86,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.DefaultSessionHandler","ph":"B","ts":77444855.042,"pid":86,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*session).handleRequests","ph":"B","ts":77444855.042,"pid":86,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"E","ts":77455497.125,"pid":12,"tid":1}
-,{"name":"chan receive","ph":"E","ts":77455497.125,"pid":12,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":77455497.125,"pid":13,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*session).handleRequests","ph":"E","ts":77455497.125,"pid":86,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.DefaultSessionHandler","ph":"E","ts":77455497.125,"pid":86,"tid":1}
-,{"name":"chan receive","ph":"E","ts":77455497.125,"pid":86,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":77455497.125,"pid":14,"tid":1}
-,{"name":"select","ph":"E","ts":77455497.125,"pid":14,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":77455497.125,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"E","ts":77455497.125,"pid":84,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"E","ts":77455497.125,"pid":84,"tid":1}
-,{"name":"chan receive","ph":"E","ts":77455497.125,"pid":84,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).handleRequests","ph":"E","ts":77455497.125,"pid":85,"tid":1}
-,{"name":"chan receive","ph":"E","ts":77455497.125,"pid":85,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":87,"tid":1,"args":{"name":"G87 github.com/gliderlabs/ssh.(*Server).Serve"}}
-,{"name":"chan receive","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":84636541.792,"pid":87,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":89,"tid":1,"args":{"name":"G89 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"IO wait","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":84636541.792,"pid":89,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":88,"tid":1,"args":{"name":"G88 golang.org/x/crypto/ssh.newServerTransport"}}
-,{"name":"chan receive","ph":"B","ts":84636541.792,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":84636541.792,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":84636541.792,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":84646614.375,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).waitSession","ph":"E","ts":84646614.375,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connection).serverHandshake","ph":"E","ts":84646614.375,"pid":87,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.NewServerConn","ph":"E","ts":84646614.375,"pid":87,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":98,"tid":1,"args":{"name":"G98 github.com/gliderlabs/ssh.(*Server).HandleConn"}}
-,{"name":"running/runnable","ph":"B","ts":84646614.375,"pid":98,"tid":1}
-,{"name":"runtime.goexit","ph":"B","ts":84646614.375,"pid":98,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn.func3","ph":"B","ts":84646614.375,"pid":98,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":16,"tid":1,"args":{"name":"G16 golang.org/x/crypto/ssh.newMux"}}
-,{"name":"chan receive","ph":"B","ts":84646614.375,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"B","ts":84646614.375,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"B","ts":84646614.375,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":84646614.375,"pid":16,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*streamPacketCipher).readCipherPacket","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).enterKeyExchange","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"IO wait","ph":"E","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"select","ph":"B","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"B","ts":84646614.375,"pid":89,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"chan receive","ph":"E","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"IO wait","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"io.ReadFull","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"net.(*conn).Read","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":84646614.375,"pid":88,"tid":1}
-,{"name":"process_name","ph":"M","ts":0,"pid":99,"tid":1,"args":{"name":"G99 github.com/gliderlabs/ssh.(*Server).HandleConn"}}
-,{"name":"chan receive","ph":"B","ts":84660507.5,"pid":99,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.DefaultSessionHandler","ph":"B","ts":84660507.5,"pid":99,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*session).handleRequests","ph":"B","ts":84660507.5,"pid":99,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn.func3","ph":"E","ts":84660507.5,"pid":98,"tid":1}
-,{"name":"runtime.goexit","ph":"E","ts":84660507.5,"pid":98,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":84660507.5,"pid":98,"tid":1}
-,{"name":"chan receive","ph":"B","ts":84660507.5,"pid":98,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).handleRequests","ph":"B","ts":84660507.5,"pid":98,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"E","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"E","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"chan receive","ph":"E","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"running/runnable","ph":"B","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"B","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"B","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"B","ts":84660507.5,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).kexLoop","ph":"E","ts":84667099.95799999,"pid":89,"tid":1}
-,{"name":"select","ph":"E","ts":84667099.95799999,"pid":89,"tid":1}
-,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"internal/poll.(*FD).Read","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"net.(*netFD).Read","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"net.(*conn).Read","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*serverConn).Read","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"bufio.(*Reader).Read","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"io.ReadAtLeast","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"io.ReadFull","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*chacha20Poly1305Cipher).readCipherPacket","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*connectionState).readPacket","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*transport).readPacket","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readOnePacket","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readLoop","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"IO wait","ph":"E","ts":84667099.95799999,"pid":88,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).HandleConn","ph":"E","ts":84667099.95799999,"pid":87,"tid":1}
-,{"name":"chan receive","ph":"E","ts":84667099.95799999,"pid":87,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*session).handleRequests","ph":"E","ts":84667099.95799999,"pid":99,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.DefaultSessionHandler","ph":"E","ts":84667099.95799999,"pid":99,"tid":1}
-,{"name":"chan receive","ph":"E","ts":84667099.95799999,"pid":99,"tid":1}
-,{"name":"github.com/gliderlabs/ssh.(*Server).handleRequests","ph":"E","ts":84667099.95799999,"pid":98,"tid":1}
-,{"name":"chan receive","ph":"E","ts":84667099.95799999,"pid":98,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*handshakeTransport).readPacket","ph":"E","ts":84667099.95799999,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).onePacket","ph":"E","ts":84667099.95799999,"pid":16,"tid":1}
-,{"name":"golang.org/x/crypto/ssh.(*mux).loop","ph":"E","ts":84667099.95799999,"pid":16,"tid":1}
-,{"name":"running/runnable","ph":"E","ts":84667099.95799999,"pid":16,"tid":1}
-,{"name":"main.main","ph":"E","ts":104717592.875,"pid":1,"tid":1}
-,
+,{"name":"syscall.fcntl","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"syscall.CloseOnExec","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.sysSocket","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.(*ipStackCapabilities).probe","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"sync.(*Once).doSlow","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"sync.(*Once).Do","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.supportsIPv4map","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.favoriteAddrFamily","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.internetSocket","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.(*sysListener).listenTCP","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.(*ListenConfig).Listen","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net.Listen","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net/http.(*Server).ListenAndServe","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"net/http.ListenAndServe","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"main.main","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"running/runnable","ph":"E","ts":10127.875,"pid":1,"tid":1}
+,{"name":"chan receive","ph":"B","ts":10127.875,"pid":1,"tid":1}
+,{"name":"main.main","ph":"B","ts":10127.875,"pid":1,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":36,"tid":1,"args":{"name":"G36 main.main"}}
+,{"name":"IO wait","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/mysql.Connect","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/mysql.dbConnection","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).PingContext","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).pingDC","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"database/sql.withLock","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).pingDC.func1","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).Ping","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultOK","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"net.(*conn).Read","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":10127.875,"pid":36,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":37,"tid":1,"args":{"name":"G37 main.main"}}
+,{"name":"IO wait","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/routes.ConnectUserDB","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Connect","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.Open","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Dialector.Initialize","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryRowContext","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryContext","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).query","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.withLock","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC.func1","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"database/sql.ctxDriverQuery","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).QueryContext","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).query","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultSetHeaderPacket","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"net.(*conn).Read","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":10127.875,"pid":37,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":39,"tid":1,"args":{"name":"G39 os/signal.Notify.func1.1"}}
+,{"name":"syscall","ph":"B","ts":10127.875,"pid":39,"tid":1}
+,{"name":"os/signal.loop","ph":"B","ts":10127.875,"pid":39,"tid":1}
+,{"name":"os/signal.signal_recv","ph":"B","ts":10127.875,"pid":39,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":51,"tid":1,"args":{"name":"G51 database/sql.OpenDB"}}
+,{"name":"select","ph":"B","ts":10127.875,"pid":51,"tid":1}
+,{"name":"database/sql.(*DB).connectionOpener","ph":"B","ts":10127.875,"pid":51,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":83,"tid":1,"args":{"name":"G83 go.opentelemetry.io/otel/sdk/trace.NewBatchSpanProcessor"}}
+,{"name":"select","ph":"B","ts":10127.875,"pid":83,"tid":1}
+,{"name":"go.opentelemetry.io/otel/sdk/trace.NewBatchSpanProcessor.func1","ph":"B","ts":10127.875,"pid":83,"tid":1}
+,{"name":"go.opentelemetry.io/otel/sdk/trace.(*batchSpanProcessor).processQueue","ph":"B","ts":10127.875,"pid":83,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":9,"tid":1,"args":{"name":"G9 main.main"}}
+,{"name":"IO wait","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"main.main.func3","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"github.com/gliderlabs/ssh.(*Server).ListenAndServe","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"github.com/gliderlabs/ssh.(*Server).Serve","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"net.(*TCPListener).Accept","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"net.(*TCPListener).accept","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"net.(*netFD).accept","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"internal/poll.(*FD).Accept","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":10127.875,"pid":9,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":25,"tid":1,"args":{"name":"G25 github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher"}}
+,{"name":"select","ph":"B","ts":10127.875,"pid":25,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1","ph":"B","ts":10127.875,"pid":25,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":42,"tid":1,"args":{"name":"G42 database/sql.OpenDB"}}
+,{"name":"select","ph":"B","ts":10127.875,"pid":42,"tid":1}
+,{"name":"database/sql.(*DB).connectionOpener","ph":"B","ts":10127.875,"pid":42,"tid":1}
+,{"name":"process_name","ph":"M","ts":0,"pid":44,"tid":1,"args":{"name":"G44 github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher"}}
+,{"name":"select","ph":"B","ts":10127.875,"pid":44,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1","ph":"B","ts":10127.875,"pid":44,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"net.(*conn).Read","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultSetHeaderPacket","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).query","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).QueryContext","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.ctxDriverQuery","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC.func1","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.withLock","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).query","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryContext","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryRowContext","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Dialector.Initialize","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.Open","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Connect","ph":"E","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Migrate","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).AutoMigrate","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate.func1","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes.func1","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.CurrentSchema","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.CurrentDatabase","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).Scan","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).Rows","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*processor).Execute","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/callbacks.RowQuery","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryContext","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).query","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.rowsiFromStatement","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"database/sql.ctxDriverStmtQuery","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).QueryContext","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).query","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultSetHeaderPacket","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"net.(*conn).Read","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":20217.791999999998,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1","ph":"E","ts":20217.791999999998,"pid":44,"tid":1}
+,{"name":"select","ph":"E","ts":20217.791999999998,"pid":44,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"net.(*conn).Read","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultOK","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).Ping","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).pingDC.func1","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"database/sql.withLock","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).pingDC","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).PingContext","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/mysql.dbConnection","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/mysql.Connect","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"IO wait","ph":"E","ts":20217.791999999998,"pid":36,"tid":1}
+,{"name":"database/sql.(*DB).connectionOpener","ph":"E","ts":20217.791999999998,"pid":42,"tid":1}
+,{"name":"select","ph":"E","ts":20217.791999999998,"pid":42,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*FD).Read","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net.(*netFD).Read","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net.(*conn).Read","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).fill","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*buffer).readNext","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readPacket","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlConn).readResultSetHeaderPacket","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).query","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/go-sql-driver/mysql.(*mysqlStmt).QueryContext","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"database/sql.ctxDriverStmtQuery","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"database/sql.rowsiFromStatement","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).queryDC","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).query","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"database/sql.(*DB).QueryContext","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/callbacks.RowQuery","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*processor).Execute","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).Rows","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).Scan","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.CurrentDatabase","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.CurrentSchema","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes.func1","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/driver/mysql.Migrator.ColumnTypes","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate.func1","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.RunWithValue","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm/migrator.Migrator.AutoMigrate","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"gorm.io/gorm.(*DB).AutoMigrate","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/mikejk8s/gmud/pkg/userdb.Migrate","ph":"E","ts":30872.125,"pid":37,"tid":1}
+,{"name":"github.com/gin-gonic/gin.(*Engine).Run","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net/http.ListenAndServe","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net/http.(*Server).ListenAndServe","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net/http.(*Server).Serve","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net.(*TCPListener).Accept","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net.(*TCPListener).accept","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"net.(*netFD).accept","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*FD).Accept","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).waitRead","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.(*pollDesc).wait","ph":"B","ts":30872.125,"pid":37,"tid":1}
+,{"name":"internal/poll.runtime_pollWait","ph":"B","ts":30872.125,"pid":37,"tid":1}
