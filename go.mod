@@ -5,17 +5,19 @@ go 1.19
 require (
 	github.com/charmbracelet/bubbletea v0.22.1
 	github.com/charmbracelet/wish v0.5.0
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/felixge/fgtrace v0.2.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/gliderlabs/ssh v0.3.5
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/muesli/termenv v0.13.0
+	github.com/newrelic/go-agent/v3 v3.19.2
 	github.com/newrelic/go-agent/v3/integrations/nrgin v1.1.3
 	github.com/semihalev/gin-stats v0.0.0-20180505163755-30fdcbbd3533
 	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.10.0
 	go.opentelemetry.io/otel/sdk v1.10.0
+	go.uber.org/zap v1.23.0
 	golang.org/x/crypto v0.0.0-20220924013350-4ba4fb4dd9e7
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.10
@@ -51,12 +53,13 @@ require (
 	github.com/muesli/ansi v0.0.0-20211031195517-c9f0611b6c70 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/reflow v0.3.0 // indirect
-	github.com/newrelic/go-agent/v3 v3.19.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rivo/uniseg v0.4.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	go.opentelemetry.io/otel/trace v1.10.0 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
 	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	golang.org/x/term v0.0.0-20220919170432-7a66f970e087 // indirect
