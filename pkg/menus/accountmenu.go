@@ -3,6 +3,7 @@ package menus
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mikejk8s/gmud/extra/charselect"
 	//"github.com/charmbracelet/wish"
 )
 
@@ -61,6 +62,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
+				return charselect.InitialModel(), nil
 			}
 		}
 	}

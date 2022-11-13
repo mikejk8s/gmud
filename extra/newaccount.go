@@ -1,5 +1,4 @@
-
-package menus
+package extra
 
 import (
 	"fmt"
@@ -103,8 +102,6 @@ func (m model) View() string {
 	return s
 }
 
-
-
 func NewAccount() error {
 	p := tea.NewProgram(initialModel())
 	if err := p.Start(); err != nil {
@@ -112,4 +109,4 @@ func NewAccount() error {
 		os.Exit(1)
 	}
 	return nil
-}/* */
+} /* */

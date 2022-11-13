@@ -1,4 +1,4 @@
-package changeme
+package charselect
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type model struct {
 	selected map[int]struct{} // which to-do items are selected
 }
 
-func initialModel() model {
+func InitialModel() model {
 	return model{
 		// Our shopping list is a grocery list
 		choices: []string{"Gandalf", "Fender", "Ghibli"},
@@ -102,7 +102,7 @@ func (m model) View() string {
 }
 
 func main() {
-	p := tea.NewProgram(initialModel())
+	p := tea.NewProgram(InitialModel())
 	if err := p.Start(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
