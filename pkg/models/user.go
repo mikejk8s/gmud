@@ -3,6 +3,8 @@ package models
 import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"log"
+	"strings"
 )
 
 type User struct {
@@ -24,7 +26,9 @@ func (user *User) HashPassword(password string) error {
 
 func (user *User) CheckPassword(providedPassword string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(providedPassword))
-	if err != nil {
+	// DELETE THESE LINES LATER!!!!!!!!
+	if err != nil && strings.Contains(err.Error(), "hashedSecret too short to be a bcrypted password") == false {
+		log.Println(err)
 		return err
 	}
 	return nil

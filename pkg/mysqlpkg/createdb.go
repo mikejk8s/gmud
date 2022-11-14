@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	username = "cansu"
+	username = "root"
 	password = "1234"
 	//hostname = "docker.for.mac.localhost:3306"
 	hostname = "127.0.0.1:3306"
@@ -23,7 +23,7 @@ func Dsn(dbName string) string {
 }
 
 func dbConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:1234@tcp(127.0.0.1:3306)/")
+	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func dbConnection() (*sql.DB, error) {
 }
 
 func createCharacterTable(db *sql.DB) error {
-	query := `CREATE TABLE if not exists characters (
+	query := `CREATE TABLE  if not exists characters (
 		id VARCHAR(15) UNIQUE NOT NULL PRIMARY KEY,
 		name VARCHAR(30) UNIQUE NOT NULL,
 		class VARCHAR(15) NOT NULL,

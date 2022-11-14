@@ -6,11 +6,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
+	"github.com/felixge/fgtrace"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
+	"github.com/mikejk8s/gmud/pkg/models"
 	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/routes"
 	"github.com/muesli/termenv"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -25,10 +28,6 @@ const (
 	port = 3131
 )
 
-type Password struct {
-	Password string
-}
-
 func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
 }
@@ -37,17 +36,23 @@ func passHandler(ctx ssh.Context, password string) bool {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	var p = Password{}
 	// data := usersDB.Exec(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User())).First(&p)
-	rows, _ := usersDB.Query(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User()))
+	user := models.User{}
+	rows, _ := usersDB.Query(fmt.Sprintf("SELECT password, email, name, username from users.users where username = '%s'", ctx.User()))
 	for rows.Next() {
-		err := rows.Scan(&p.Password)
+		err := rows.Scan(&user.Password, &user.Email, &user.Name, &user.Username)
 		if err != nil {
 			panic(err)
 		}
 	}
-	if p.Password == password {
-		return true
+	if user.Password == password {
+		credentialError := user.CheckPassword(password)
+		if credentialError != nil {
+			return false
+		} else {
+			return true
+		}
+
 	} else {
 		return false
 	}
@@ -56,7 +61,15 @@ func main() {
 
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
+	go func() {
+		defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
 
+		http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
+		err := http.ListenAndServe(":3872", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 	// Connect to user-db mysql database and create db + tables if they don't exist
 	go func() {
 		_, err := routes.ConnectUserDB()

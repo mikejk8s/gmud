@@ -2,6 +2,8 @@ package mysqlpkg
 
 import (
 	"database/sql"
+	"log"
+
 	//_ "github.com/go-sql-driver/mysql"
 	//"github.com/mikejk8s/gmud"
 	"fmt"
@@ -34,9 +36,19 @@ func GetCharacter() []m.Character {
 		return nil
 	}
 
-	defer fgtrace.Config{Dst: fgtrace.File("charactersdb-fgtrace.json")}.Trace().Stop()
+	defer func(trace *fgtrace.Trace) {
+		err := trace.Stop()
+		if err != nil {
+			log.Println(err)
+		}
+	}(fgtrace.Config{Dst: fgtrace.File("charactersdb-fgtrace.json")}.Trace())
 
-	defer db.Close()
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(db)
 	results, err := db.Query("SELECT * FROM characters")
 	if err != nil {
 		fmt.Println("Error", err.Error())
