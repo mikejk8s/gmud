@@ -141,7 +141,7 @@ func loginBubbleteaMiddleware() wish.Middleware {
 			time:     time.Now(),
 			accOwner: s.User(),
 		}
-		return login(m, tea.WithAltScreen())
+		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
 	}
 	return bm.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
 }

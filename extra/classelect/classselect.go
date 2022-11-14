@@ -64,15 +64,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.selected[m.cursor] = struct{}{}
 				classChoice := m.choices[m.cursor]
 				m.character.Class = classChoice
-				fmt.Println(m.character)
 				//
 				// this is where we insert the character into the database
 				// we got:
 				// account owner: from main.go
 				// class: from this file
-				// race: from charselection.go
-				// ID and CreatedAt is generated in charselection.go when race is picked in charselection.go
-				// Level is set to 1, alive is set to true when race is picked in charselection.go
+				// race: from charselection.go model
+				// ID and CreatedAt is generated in charselection.go when race is picked in charselection.go model
+				// Level is set to 1, alive is set to true when race is picked in charselection.go model
 				//
 				usersDB, err := routes.ConnectUserDB()
 				if err != nil {
