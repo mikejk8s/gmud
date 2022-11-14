@@ -4,6 +4,9 @@ import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/mikejk8s/gmud/pkg/charactersroutes"
+	"github.com/mikejk8s/gmud/pkg/models"
+	"math/rand"
+	"time"
 )
 
 type model struct {
@@ -62,7 +65,19 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
-				return charactersroutes.InitialModel(m.choices[m.cursor]), nil
+				// Generate a random 5 digit string for ID
+				rand.Seed(time.Now().UnixNano())
+				id := rand.Intn(99999)
+				// Create a new character struct
+				newCharacter := models.Character{
+					Race:      m.choices[m.cursor], // current selection
+					ID:        id,                  // TODO: random number for ID, fix this later.
+					Level:     1,                   // Initial character level
+					CreatedAt: time.Now(),          // This will probably explode, change it to NOW() function while in SQL query
+					Alive:     true,                // Initial character status
+				}
+				// Pass it to character name selection screen
+				return charactersroutes.InitialModel(m.choices[m.cursor], &newCharacter), nil
 			}
 		}
 	}

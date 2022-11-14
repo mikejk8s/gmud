@@ -61,6 +61,7 @@ func main() {
 
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
+
 	go func() {
 		defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
 

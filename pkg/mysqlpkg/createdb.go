@@ -73,7 +73,7 @@ func dbConnection() (*sql.DB, error) {
 
 func createCharacterTable(db *sql.DB) error {
 	query := `CREATE TABLE  if not exists characters (
-		id VARCHAR(15) UNIQUE NOT NULL PRIMARY KEY,
+		id BIGINT UNIQUE NOT NULL PRIMARY KEY,
 		name VARCHAR(30) UNIQUE NOT NULL,
 		class VARCHAR(15) NOT NULL,
 		race VARCHAR(15) NOT NULL DEFAULT 'HUMAN',

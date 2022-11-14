@@ -62,7 +62,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
-				return charselect.InitialModel(), nil
+				return charselect.InitialModel(), nil // TODO: Change this to switch case of m.choices[m.cursor]
 			}
 		}
 	}

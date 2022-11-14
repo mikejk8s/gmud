@@ -4,20 +4,22 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mikejk8s/gmud/extra/classelect"
+	"github.com/mikejk8s/gmud/pkg/models"
 )
 
 type (
 	errMsg error
 )
 type model struct {
-	focusIndex     int
+	character      *models.Character
 	input          textinput.Model
 	characterClass string
 	cursorMode     textinput.CursorMode
 	err            error
 }
 
-func InitialModel(choice string) model {
+func InitialModel(choice string, characterTemp *models.Character) model {
 	ti := textinput.New()
 	ti.Placeholder = "Enter here"
 	ti.Focus()
@@ -25,6 +27,7 @@ func InitialModel(choice string) model {
 	ti.Width = 20
 
 	return model{
+		character:      characterTemp,
 		input:          ti,
 		err:            nil,
 		characterClass: choice,
@@ -42,7 +45,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyCtrlC, tea.KeyEsc:
 			return m, tea.Quit
 		case tea.KeyEnter:
-
+			m.character.Name = m.input.Value()
+			return classelect.InitialModel(m.character), nil
 		}
 	case errMsg:
 		m.err = msg

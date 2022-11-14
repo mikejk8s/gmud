@@ -100,7 +100,12 @@ func AddCharacter(Character m.Character) {
 	}
 	// defer the close till after this function has finished
 	// executing
-	defer db.Close()
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(db)
 	insert, err := db.Query(
 		"INSERT INTO characters (name,id,class,level,race) VALUES (?,?,?,?,?)",
 		Character.Name, Character.ID, Character.Class, Character.Level, Character.Race)
@@ -108,7 +113,12 @@ func AddCharacter(Character m.Character) {
 	if err != nil {
 		panic(err.Error())
 	}
-	defer insert.Close()
+	defer func(insert *sql.Rows) {
+		err := insert.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(insert)
 }
 
 func DeleteCharacter(Character m.Character) {
