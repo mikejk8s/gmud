@@ -7,6 +7,8 @@ import (
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
+	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/routes"
 	"github.com/muesli/termenv"
 	"log"
 	"os"
@@ -31,16 +33,11 @@ func passHandler(ctx ssh.Context, password string) bool {
 }
 func main() {
 
-	// defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
-
-	// http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
-	// http.ListenAndServe(":1234", nil)
-
 	// Connect to char-db mysql database and create db + tables if they don't exist
-	// go db.Connect()
+	go db.Connect()
 
 	// Connect to user-db mysql database and create db + tables if they don't exist
-	// go r.ConnectUserDB()
+	go routes.ConnectUserDB()
 
 	/* go func() {
 		_, err := tracing.JaegerTraceProvider()

@@ -23,7 +23,7 @@ func Dsn(dbName string) string {
 }
 
 func dbConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:1234@tcp(localhost)/")
+	db, err := sql.Open("mysql", "root:1234@tcp(127.0.0.1:3306)/")
 	if err != nil {
 		return nil, err
 	}
