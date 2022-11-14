@@ -25,11 +25,32 @@ const (
 	port = 3131
 )
 
+type Password struct {
+	Password string
+}
+
 func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
 }
 func passHandler(ctx ssh.Context, password string) bool {
-	return true
+	usersDB, err := routes.ConnectUserDB()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	var p = Password{}
+	// data := usersDB.Exec(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User())).First(&p)
+	rows, _ := usersDB.Query(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User()))
+	for rows.Next() {
+		err := rows.Scan(&p.Password)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if p.Password == password {
+		return true
+	} else {
+		return false
+	}
 }
 func main() {
 
@@ -37,8 +58,15 @@ func main() {
 	go db.Connect()
 
 	// Connect to user-db mysql database and create db + tables if they don't exist
-	go routes.ConnectUserDB()
+	go func() {
+		_, err := routes.ConnectUserDB()
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
+	// Migrate only once
+	go routes.Migration()
 	/* go func() {
 		_, err := tracing.JaegerTraceProvider()
 		if err != nil {
