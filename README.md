@@ -11,7 +11,8 @@ What's broken:
 
 ## Todo
 
-1. Let user create a new character
+~~1. Let user create a new character~~ ![TODO1](https://media4.giphy.com/media/DtcIXipywWrSlvXPrp/giphy.gif?cid=790b76115f4a0964390d82e9bc76ed9bd151e5d2ee43f9a3&rid=giphy.gif&ct=g)
+1.5 Assign users to characters
 2. Let user login to an existing character
 3. Put user into beginner room with a description
 4. ~~DeleteUser currently 404s~~
