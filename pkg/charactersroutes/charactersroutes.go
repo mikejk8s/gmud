@@ -1,82 +1,59 @@
 package charactersroutes
 
 import (
-	"errors"
-	"github.com/gin-gonic/gin"
-	m "github.com/mikejk8s/gmud/pkg/models"
-	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"net/http"
+	"fmt"
+	"github.com/charmbracelet/bubbles/textinput"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
-var Characters = []m.Character{
-	// 	{ID: "1", Name: "John Doe", Class: "Warrior", Race: "Human", Level: 1},
+type (
+	errMsg error
+)
+type model struct {
+	focusIndex     int
+	input          textinput.Model
+	characterClass string
+	cursorMode     textinput.CursorMode
+	err            error
 }
 
-func GetCharacters(c *gin.Context) {
-	name := c.Param("name")
-	for _, Character := range Characters {
-		if Character.Name == name {
-			c.JSON(http.StatusOK, Characters)
-			db.GetCharacters(Character.Name)
-		}
+func InitialModel(choice string) model {
+	ti := textinput.New()
+	ti.Placeholder = "Enter here"
+	ti.Focus()
+	ti.CharLimit = 20
+	ti.Width = 20
+
+	return model{
+		input:          ti,
+		err:            nil,
+		characterClass: choice,
 	}
-	c.JSON(http.StatusNotFound, gin.H{"error": "Character Names not found"})
+}
+func (m model) Init() tea.Cmd {
+	return nil
 }
 
-func GetCharacter(c *gin.Context) {
-	id := c.Param("id")
-	for _, Character := range Characters {
-		if Character.ID == id {
-			c.JSON(http.StatusOK, Character)
-			//return
-			db.GetCharacters(id)
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.Type {
+		case tea.KeyEnter, tea.KeyCtrlC, tea.KeyEsc:
+			return m, tea.Quit
 		}
+	case errMsg:
+		m.err = msg
+		return m, nil
 	}
-	c.JSON(http.StatusNotFound, gin.H{"error": "Character ID not found"})
+	m.input, cmd = m.input.Update(msg)
+	return m, cmd
 }
 
-func CreateCharacter(c *gin.Context) {
-	var Character m.Character
-	c.BindJSON(&Character)
-	Characters = append(Characters, Character)
-	c.JSON(http.StatusCreated, Character)
-	db.AddCharacter(Character)
+func (m model) View() string {
+	return fmt.Sprintf("Enter the characters name for your %s with 20 characters being maximum:\n\n%s\n\n%s",
+		m.characterClass,
+		m.input.View(),
+		"Ctrl+C or Esc to quit, enter to finish.",
+	)
 }
-
-func UpdateCharacters(c *gin.Context) {
-	id := c.Param("id")
-	var Character m.Character
-	c.BindJSON(&Character)
-	for index, item := range Characters {
-		if item.ID == id {
-			Characters[index] = Character
-			c.JSON(http.StatusOK, Character)
-			//return
-		}
-	}
-	c.JSON(http.StatusNotFound, errors.New("Character not found"))
-}
-
-func DeleteCharacter(c *gin.Context) {
-	var Character m.Character
-	id := c.Param("id")
-	for index, item := range Characters {
-		if item.ID == id {
-			Characters = append(Characters[:index], Characters[index+1:]...)
-			c.JSON(http.StatusOK, gin.H{"success": "Character deleted"})
-			//return
-			db.DeleteCharacter(Character)
-		}
-	}
-	c.JSON(http.StatusNotFound, errors.New("Character not found"))
-}
-
-// func CharactersRoutes() {
-// 	r := gin.Default()
-// 	r.GET("/characters", GetCharacters)
-// 	r.GET("/characters/:id", GetCharacter)
-// 	r.POST("/characters", CreateCharacter)
-// 	r.PUT("/characters/:id", UpdateCharacters)
-// 	r.DELETE("/characters/:id", DeleteCharacter)
-// 	r.Run(":8081")
-// }

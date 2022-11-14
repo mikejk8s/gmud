@@ -3,7 +3,7 @@ package charselect
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
-	"os"
+	"github.com/mikejk8s/gmud/pkg/charactersroutes"
 )
 
 type model struct {
@@ -62,6 +62,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
+				return charactersroutes.InitialModel(m.choices[m.cursor]), nil
 			}
 		}
 	}
@@ -99,12 +100,4 @@ func (m model) View() string {
 
 	// Send the UI for rendering
 	return s
-}
-
-func main() {
-	p := tea.NewProgram(InitialModel())
-	if err := p.Start(); err != nil {
-		fmt.Printf("Alas, there's been an error: %v", err)
-		os.Exit(1)
-	}
 }
