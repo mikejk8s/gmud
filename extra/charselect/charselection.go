@@ -72,7 +72,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// Create a new character struct
 				newCharacter := models.Character{
 					Race:           m.choices[m.cursor], // current selection
-					ID:             id,                  // TODO: random number for ID, fix this later.
+					ID:             id,                  // random number for character identifier.
 					Level:          1,                   // Initial character level
 					CreatedAt:      time.Now(),          // This will probably explode, change it to NOW() function while in SQL query
 					Alive:          true,                // Initial character status

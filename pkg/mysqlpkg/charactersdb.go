@@ -107,8 +107,8 @@ func AddCharacter(Character m.Character) {
 		}
 	}(db)
 	insert, err := db.Query(
-		"INSERT INTO characters (name,id,class,level,race) VALUES (?,?,?,?,?)",
-		Character.Name, Character.ID, Character.Class, Character.Level, Character.Race)
+		"INSERT INTO characters (name,id,class,level,race,characterowner) VALUES (?,?,?,?,?,?)",
+		Character.Name, Character.ID, Character.Class, Character.Level, Character.Race, Character.CharacterOwner)
 	// if there is an error inserting, handle it
 	if err != nil {
 		panic(err.Error())

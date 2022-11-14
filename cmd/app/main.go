@@ -137,27 +137,16 @@ func loginBubbleteaMiddleware() wish.Middleware {
 		return p
 	}
 	teaHandler := func(s ssh.Session) *tea.Program {
-		pty, _, active := s.Pty()
-		if !active {
-			wish.Fatalln(s, "no active terminal")
-			return nil
-		}
 		m := model{
-			term:     pty.Term,
-			width:    pty.Window.Width,
-			height:   pty.Window.Height,
 			time:     time.Now(),
 			accOwner: s.User(),
 		}
-		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
+		return login(m, tea.WithAltScreen())
 	}
 	return bm.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
 }
 
 type model struct {
-	term     string
-	width    int
-	height   int
 	time     time.Time
 	accOwner string // Account owner will be used for matching the characters created from this account.
 }
@@ -172,9 +161,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case timeMsg:
 		m.time = time.Time(msg)
-	case tea.WindowSizeMsg:
-		m.height = msg.Height
-		m.width = msg.Width
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q", "ctrl+c":
@@ -194,5 +180,5 @@ func (m model) View() string {
 	s := "Welcome to gmud!\n\n"
 	s += "Date> " + m.time.Format(time.RFC1123) + "\n\n"
 	s += "Press 'l' to go in.\n"
-	return fmt.Sprintf(s, m.term, m.width, m.height)
+	return fmt.Sprintf(s)
 }
