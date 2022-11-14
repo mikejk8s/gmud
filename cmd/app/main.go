@@ -192,11 +192,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	s := "Welcome to gmud!\n\n"
-	s += "Your terminal is: %s\n"
-	s += "Your window size is x: %d y: %d\n\n"
-	s += "The date is " + m.time.Format(time.RFC1123) + "\n\n"
-	s += "Press 'l' to login\n"
-	s += "Press 'n' to create a new account\n"
-	s += "Press 'q' to quit\n"
+	s += "Date> " + m.time.Format(time.RFC1123) + "\n\n"
+	s += "Press 'l' to go in.\n"
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }

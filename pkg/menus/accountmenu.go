@@ -16,7 +16,7 @@ type model struct {
 
 func InitialModel(accOwner string) model {
 	return model{
-		choices:      []string{"Login", "Create Account", "Test"},
+		choices:      []string{"Play with Existing Character", "Create Character"},
 		accountOwner: accOwner,
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes
@@ -65,6 +65,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.selected[m.cursor] = struct{}{}
 				// Pass the account owner to the character selection screen
 				// for associating the character with the account
+				switch m.choices[m.cursor] {
+				case "Play with Existing Character":
+				case "Create Character":
+					return charselect.InitialModel(m.accountOwner), nil
+				}
 				return charselect.InitialModel(m.accountOwner), nil // TODO: Change this to switch case of m.choices[m.cursor]
 			}
 		}
@@ -77,7 +82,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	// The header
-	s := "Login or create account?\n\n"
+	s := "Choose your way.\n\n"
 
 	// Iterate over our choices
 	for i, choice := range m.choices {
@@ -91,7 +96,7 @@ func (m model) View() string {
 		// Is this choice selected?
 		checked := " " // not selected
 		if _, ok := m.selected[i]; ok {
-			checked = "x" // selected! //TODO: Make this return a different page not just se
+			checked = "x" // selected!
 		}
 
 		// Render the row
@@ -104,11 +109,3 @@ func (m model) View() string {
 	// Send the UI for rendering
 	return s
 }
-
-// func AccountLogin() {
-// 	p := tea.NewProgram(initialModel())
-// 	if err := p.Start(); err != nil {
-// 		fmt.Printf("Alas, there's been an error: %v", err)
-// 		os.Exit(1)
-// 	}
-// 	}
