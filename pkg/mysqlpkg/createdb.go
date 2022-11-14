@@ -79,7 +79,8 @@ func createCharacterTable(db *sql.DB) error {
 		race VARCHAR(15) NOT NULL DEFAULT 'HUMAN',
 		level INT(3) NOT NULL DEFAULT '1',
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-		alive BOOLEAN NOT NULL DEFAULT '1'
+		alive BOOLEAN NOT NULL DEFAULT '1',
+    	characterowner VARCHAR(15) NOT NULL DEFAULT 'player',
 	) ENGINE=INNODB;`
 
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)

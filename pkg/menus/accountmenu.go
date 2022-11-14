@@ -8,15 +8,16 @@ import (
 )
 
 type model struct {
-	choices  []string         // items on the list
-	cursor   int              // item our cursor is pointing at
-	selected map[int]struct{} // whats selected
+	choices      []string         // items on the list
+	cursor       int              // item our cursor is pointing at
+	selected     map[int]struct{} // whats selected
+	accountOwner string
 }
 
-func InitialModel() model {
+func InitialModel(accOwner string) model {
 	return model{
-		choices: []string{"Login", "Create Account", "Test"},
-
+		choices:      []string{"Login", "Create Account", "Test"},
+		accountOwner: accOwner,
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes
 		// of the `choices` slice, above.
@@ -62,7 +63,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				delete(m.selected, m.cursor)
 			} else {
 				m.selected[m.cursor] = struct{}{}
-				return charselect.InitialModel(), nil // TODO: Change this to switch case of m.choices[m.cursor]
+				// Pass the account owner to the character selection screen
+				// for associating the character with the account
+				return charselect.InitialModel(m.accountOwner), nil // TODO: Change this to switch case of m.choices[m.cursor]
 			}
 		}
 	}

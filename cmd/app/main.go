@@ -143,10 +143,11 @@ func loginBubbleteaMiddleware() wish.Middleware {
 			return nil
 		}
 		m := model{
-			term:   pty.Term,
-			width:  pty.Window.Width,
-			height: pty.Window.Height,
-			time:   time.Now(),
+			term:     pty.Term,
+			width:    pty.Window.Width,
+			height:   pty.Window.Height,
+			time:     time.Now(),
+			accOwner: s.User(),
 		}
 		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen())
 	}
@@ -154,10 +155,11 @@ func loginBubbleteaMiddleware() wish.Middleware {
 }
 
 type model struct {
-	term   string
-	width  int
-	height int
-	time   time.Time
+	term     string
+	width    int
+	height   int
+	time     time.Time
+	accOwner string // Account owner will be used for matching the characters created from this account.
 }
 
 type timeMsg time.Time
@@ -179,7 +181,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "l", "ctrl+l":
 			// return login model and make it equal to main model
-			return mn.InitialModel(), nil
+			return mn.InitialModel(m.accOwner), nil // Go to the login page with passing account owner
 		case "n", "ctrl+n":
 			//mn.NewAccount()
 			return m, tea.Quit

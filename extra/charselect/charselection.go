@@ -10,16 +10,17 @@ import (
 )
 
 type model struct {
-	choices  []string         // items on the to-do list
-	cursor   int              // which to-do list item our cursor is pointing at
-	selected map[int]struct{} // which to-do items are selected
+	choices      []string         // items on the to-do list
+	cursor       int              // which to-do list item our cursor is pointing at
+	selected     map[int]struct{} // which to-do items are selected
+	accountOwner string
 }
 
-func InitialModel() model {
+func InitialModel(accountOwn string) model {
 	return model{
 		// Our shopping list is a grocery list
-		choices: []string{"Gandalf", "Fender", "Ghibli"},
-
+		choices:      []string{"Gandalf", "Fender", "Ghibli"},
+		accountOwner: accountOwn,
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes
 		// of the `choices` slice, above.
@@ -70,11 +71,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				id := rand.Intn(99999)
 				// Create a new character struct
 				newCharacter := models.Character{
-					Race:      m.choices[m.cursor], // current selection
-					ID:        id,                  // TODO: random number for ID, fix this later.
-					Level:     1,                   // Initial character level
-					CreatedAt: time.Now(),          // This will probably explode, change it to NOW() function while in SQL query
-					Alive:     true,                // Initial character status
+					Race:           m.choices[m.cursor], // current selection
+					ID:             id,                  // TODO: random number for ID, fix this later.
+					Level:          1,                   // Initial character level
+					CreatedAt:      time.Now(),          // This will probably explode, change it to NOW() function while in SQL query
+					Alive:          true,                // Initial character status
+					CharacterOwner: m.accountOwner,
 				}
 				// Pass it to character name selection screen
 				return charactersroutes.InitialModel(m.choices[m.cursor], &newCharacter), nil

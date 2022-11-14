@@ -5,11 +5,12 @@ import (
 )
 
 type Character struct {
-	Name      string    `json:"name"`
-	ID        int       `json:"id"`
-	Class     string    `json:"class"`
-	Race      string    `json:"race"`
-	Level     int       `json:"level"`
-	CreatedAt time.Time `json:"created_at"`
-	Alive     bool      `json:"alive"`
+	Name           string    `json:"name"`
+	ID             int       `json:"id"`
+	Class          string    `json:"class"`
+	Race           string    `json:"race"`
+	Level          int       `json:"level"`
+	CreatedAt      time.Time `json:"created_at"`
+	Alive          bool      `json:"alive"`
+	CharacterOwner string    `json:"character_owner"`
 }
