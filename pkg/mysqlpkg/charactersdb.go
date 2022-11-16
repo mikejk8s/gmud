@@ -77,7 +77,7 @@ func GetCharacters(code string) *m.Character {
 		return nil
 	}
 	defer db.Close()
-	results, err := db.Query("SELECT * FROM characters WHERE id = ?", code)
+	results, err := db.Query("SELECT * FROM characters WHERE characterowner = ?", code)
 	if err != nil {
 		fmt.Println("Err", err.Error())
 		return nil

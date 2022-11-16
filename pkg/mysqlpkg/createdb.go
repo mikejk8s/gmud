@@ -23,7 +23,7 @@ func Dsn(dbName string) string {
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
 }
 
-func dbConnection() (*sql.DB, error) {
+func DbConnection() (*sql.DB, error) {
 	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
 	if err != nil {
 		return nil, err
@@ -110,7 +110,7 @@ func Connect() {
 	if err != nil {
 		log.Printf("Error %s when assigning output to logger", err)
 	}
-	db, err := dbConnection()
+	db, err := DbConnection()
 	if err != nil {
 		DBConnectionLogger.LogUtil.Errorln("Error connecting to DB: ", err)
 		panic(err)
