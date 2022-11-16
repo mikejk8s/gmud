@@ -36,7 +36,7 @@ func (l *Logger) AssignOutput(logCategory string, logDirectory string) error {
 			return err
 		}
 	}
-	logFileName := fmt.Sprintf("%s+%s", logCategory, time.Now().Format("2006-01-02")+".log")
+	logFileName := fmt.Sprintf("%s+%s", logCategory, time.Now().UTC().Format("2006-01-02")+".log")
 	logOutput := fmt.Sprintf("%s/%s", logDirectory, logFileName)
 	var logFile *os.File
 	var errRet error
