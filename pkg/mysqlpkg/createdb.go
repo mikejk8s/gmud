@@ -105,7 +105,7 @@ func createCharacterTable(db *sql.DB) error {
 func Connect() {
 	// Get a new logger instance for database
 	DBConnectionLogger := logger.GetNewLogger()
-	logDirectory := fmt.Sprintf("./logs/dbconnections")
+	logDirectory := fmt.Sprintf("./logs/dbconn")
 	err := DBConnectionLogger.AssignOutput("dbLog", logDirectory)
 	if err != nil {
 		log.Printf("Error %s when assigning output to logger", err)
