@@ -46,7 +46,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
-			return menus.InitialModel(m.character), nil
+			return menus.InitialModel(m.character.CharacterOwner), nil
 		}
 	case errMsg:
 		m.err = msg
