@@ -35,32 +35,17 @@ What's broken:
 
 10. Alive reports false need to switch to reverse bool or dead
 
-11. Level shouldnt be 0
+~~11. Level shouldnt be 0~~
 
 12.
 
 
 ## Api Paths
 
-Gin Stats http://127.0.0.1:8080/stats
-http://127.0.0.1:8081/characters/9 {id}
+~~Gin Stats http://127.0.0.1:8080/stats
+http://127.0.0.1:8081/characters/9 {id}~~
 
-``` go
-	a := r.Group("/api")
-	{
-		a.POST("/token", controllers.GenerateToken)
-		a.POST("/user/register", controllers.RegisterUser)
-		r.GET("/characters", cr.GetCharacters)
-		s := a.Group("/secured").Use(middlewares.Auth())
-		{
-			s.GET("/user", controllers.GetUser)
-			s.POST("/token", controllers.GenerateToken)
-			s.GET("/characters/:id", cr.GetCharacter)
-			s.POST("/characters", cr.CreateCharacter)
-			s.PUT("/characters/:id", cr.UpdateCharacters)
-			s.DELETE("/characters/:id", cr.DeleteCharacter)
-		}
-```
+This part is completely yeeted off. We still need a create account endpoint on a site that creates new users at users table.
 
 
 
@@ -76,3 +61,5 @@ go: downloading github.com/mikejk8s/gmud v0.0.0-20220821060920-758a6a03bc00
 go: found github.com/go-sql-driver/mysql in github.com/go-sql-driver/mysql v1.6.0
 go: found github.com/mikejk8s/gmud in github.com/mikejk8s/gmud v0.0.0-20220821060920-758a6a03bc00
 ```
+
+These are working I guess? Didnt have any problem with fresh installation WSL.
