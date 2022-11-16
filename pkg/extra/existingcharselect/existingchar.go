@@ -2,73 +2,91 @@ package existingcharselect
 
 import (
 	"fmt"
-	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/bubbles/progress"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/mikejk8s/gmud/logger"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"log"
+	"strings"
+	"time"
 )
 
 type errMsg error
 
+const (
+	padding  = 2
+	maxWidth = 80
+)
+
+var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#626262")).Render
+
+type tickMsg time.Time
+
 type model struct {
-	spinner        spinner.Model
-	quitting       bool
-	err            error
+	percent        float64
+	progress       progress.Model
 	AccountOwner   string
 	CharacterFound bool
 }
 
 func InitialModel(accOwner string) model {
-	s := spinner.New()
-	s.Spinner = spinner.Dot
-	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("#0000ff"))
-
-	return model{spinner: s, CharacterFound: false, AccountOwner: accOwner}
+	prog := progress.New(progress.WithScaledGradient("#FF7CCB", "#FDFF8C"))
+	return model{
+		progress:       prog,
+		AccountOwner:   accOwner,
+		CharacterFound: false,
+	}
 }
-
+func tickCmd() tea.Cmd {
+	return tea.Tick(time.Second, func(t time.Time) tea.Msg {
+		return tickMsg(t)
+	})
+}
 func (m model) Init() tea.Cmd {
-	return m.spinner.Tick
+	// m.GetCharacterDB()
+	return tickCmd()
 }
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch msg.String() {
-		case "q", "esc", "ctrl+c":
-			m.quitting = true
-			return m, tea.Quit
-		default:
-			return m, nil
-		}
+		return m, tea.Quit
 
-	case errMsg:
-		m.err = msg
+	case tea.WindowSizeMsg:
+		m.progress.Width = msg.Width - padding*2 - 4
+		if m.progress.Width > maxWidth {
+			m.progress.Width = maxWidth
+		}
 		return m, nil
 
+	case tickMsg:
+		m.percent += 0.25
+		if m.percent > 1.0 {
+			m.percent = 1.0
+			return m, tea.Quit
+		}
+		return m, tickCmd()
+
 	default:
-		var cmd tea.Cmd
-		m.spinner, cmd = m.spinner.Update(msg)
-		return m, cmd
+		return m, nil
 	}
 }
 
 func (m model) View() string {
-	if m.err != nil {
-		return m.err.Error()
-	}
-	str := fmt.Sprintf("\n\n   %s Loading your characters...", m.spinner.View())
-	return str
+	pad := strings.Repeat(" ", padding)
+	return "\n" +
+		pad + m.progress.ViewAs(m.percent) + "\n\n" +
+		pad + helpStyle("Press any key to quit")
 }
-func (m model) GetCharacterDB() {
+func GetCharacterDB(accOwner string) {
 	cDBLogger := logger.GetNewLogger()
 	err := cDBLogger.AssignOutput("characterDB", "./logs/characterDBconn")
 	if err != nil {
 		log.Println(err)
 	}
 	if err != nil {
-		cDBLogger.LogUtil.Errorf("Error %s connecting to characterDB during fetching the %s accounts characters: ", err, m.AccountOwner)
+		cDBLogger.LogUtil.Errorf("Error %s connecting to characterDB during fetching the %s accounts characters: ", err, accOwner)
 	}
-	characters := mysqlpkg.GetCharacters(m.AccountOwner)
-	fmt.Println(characters)
+	characters := mysqlpkg.GetCharacters(accOwner)
+	fmt.Println(characters.Name)
 }
