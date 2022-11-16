@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/mikejk8s/gmud/extra/classelect"
+	"github.com/mikejk8s/gmud/pkg/extra/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
 )
 

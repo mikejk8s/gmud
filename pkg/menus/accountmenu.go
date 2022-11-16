@@ -3,7 +3,7 @@ package menus
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/mikejk8s/gmud/extra/charselect"
+	"github.com/mikejk8s/gmud/pkg/extra/charselect"
 	//"github.com/charmbracelet/wish"
 )
 

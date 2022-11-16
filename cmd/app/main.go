@@ -6,14 +6,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
-	"github.com/felixge/fgtrace"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/routes"
 	"github.com/muesli/termenv"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -58,11 +56,9 @@ func passHandler(ctx ssh.Context, password string) bool {
 	}
 }
 func main() {
-
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
-
-	go func() {
+	/* go func() {
 		defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
 
 		http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
@@ -70,7 +66,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-	}()
+	}() */
 	// Connect to user-db mysql database and create db + tables if they don't exist
 	go func() {
 		_, err := routes.ConnectUserDB()
@@ -87,6 +83,7 @@ func main() {
 			panic(err)
 		}
 	}() */
+
 	// SSH server begin
 	s, err := wish.NewServer(
 		ssh.PasswordAuth(passHandler),
@@ -108,11 +105,12 @@ func main() {
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	log.Printf("Starting SSH server on %s:%d", host, port)
 	go func() {
-		if err = s.ListenAndServe(); err != nil {
+		err = s.ListenAndServe()
+		if err != nil {
 			log.Fatalln(err)
 		}
 	}()
-
+	// start web based terminal
 	<-done
 	log.Println("Stopping SSH server")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)

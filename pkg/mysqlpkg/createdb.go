@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/mikejk8s/gmud/logger"
 	"log"
 	"time"
 
@@ -102,23 +103,30 @@ func createCharacterTable(db *sql.DB) error {
 }
 
 func Connect() {
+	// Get a new logger instance for database
+	DBConnectionLogger := logger.GetNewLogger()
+	logDirectory := fmt.Sprintf("./logs/dbconnections")
+	err := DBConnectionLogger.AssignOutput("dbLog", logDirectory)
+	if err != nil {
+		log.Printf("Error %s when assigning output to logger", err)
+	}
 	db, err := dbConnection()
 	if err != nil {
-		log.Printf("Error %s when getting db connection", err)
+		DBConnectionLogger.LogUtil.Errorln("Error connecting to DB: ", err)
 		panic(err)
 		return
 	}
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-			log.Printf("Error %s when closing db connection", err)
+			DBConnectionLogger.LogUtil.Errorf("Error %s while connecting to DB: ", err)
 			return
 		}
 	}(db)
-	log.Printf("Successfully connected to database")
+	DBConnectionLogger.LogUtil.Infoln("Connected to DB successfully")
 	err = createCharacterTable(db)
 	if err != nil {
-		log.Printf("Create Character table failed with error %s", err)
+		DBConnectionLogger.LogUtil.Errorf("Error %s while creating Character table", err)
 		panic(err)
 		return
 	}
