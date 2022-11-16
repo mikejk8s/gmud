@@ -35,7 +35,7 @@ What's broken:
 
 10. Alive reports false need to switch to reverse bool or dead
 
-11. Level shouldnt be 0
+~~11. Level shouldnt be 0~~
 
 12.
 
