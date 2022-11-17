@@ -26,6 +26,7 @@ func Dsn(dbName string) string {
 func DbConnection() (*sql.DB, error) {
 	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
 	if err != nil {
+		panic(err)
 		return nil, err
 	}
 

@@ -68,22 +68,21 @@ func GetCharacter() []m.Character {
 }
 
 func GetCharacters(code string) *m.Character {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
 	char := &m.Character{}
 	if err != nil {
-		// simply print the error to the console
-		fmt.Println("Err", err.Error())
-		// returns nil on error
-		return nil
+		log.Println("Error", err.Error())
 	}
 	defer db.Close()
-	results, err := db.Query("SELECT * FROM characters WHERE characterowner = ?", code)
+	results, err := db.Query(fmt.Sprintf("SELECT * FROM characters WHERE characterowner = '%s'", code))
 	if err != nil {
 		fmt.Println("Err", err.Error())
 		return nil
 	}
 	if results.Next() {
-		err = results.Scan(&char.Name, &char.ID, &char.Class, &char.Level)
+		err = results.Scan(&char.ID, &char.Name, &char.Class, &char.Race, &char.Level, &char.CreatedAt, &char.Alive, &char.CharacterOwner)
+		char.CharacterOwner = code
+		fmt.Println(char)
 		if err != nil {
 			return nil
 		}
