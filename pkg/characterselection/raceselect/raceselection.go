@@ -1,18 +1,21 @@
-package classelect
+package raceselect
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/mikejk8s/gmud/pkg/characterselection/nameselect"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/routes"
 	"io"
-	"log"
+	"math/rand"
+	"time"
 )
 
+//
+// CHARACTER SELECTION MODELS
+// RACE SELECTION (YOU ARE HERE) -> NAME SELECTION (YOU ARE GOING HERE) -> CLASS SELECTION
+//
 var (
 	titleStyle        = lipgloss.NewStyle().MarginLeft(2)
 	itemStyle         = lipgloss.NewStyle().PaddingLeft(4)
@@ -53,22 +56,21 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	character  *models.Character
-	choiceList list.Model
-	choice     string
-	cursor     int
-	selected   map[int]struct{}
+	choiceList   list.Model       // items on the to-do list
+	cursor       int              // which to-do list item our cursor is pointing at
+	selected     map[int]struct{} // which to-do items are selected
+	accountOwner string
 }
 
-func InitialModel(characterTemp *models.Character) model {
+func InitialModel(accountOwn string) model {
 	const defaultWidth = 20
 	const listHeight = 14
-	classes := []list.Item{
-		item("Warrior"),
-		item("Rogue"),
-		item("Mage"),
+	races := []list.Item{
+		item("Gandalf"),
+		item("Fender"),
+		item("Ghibli"),
 	}
-	l := list.New(classes, itemDelegate{}, defaultWidth, listHeight)
+	l := list.New(races, itemDelegate{}, defaultWidth, listHeight)
 	l.Title = "Choose a class."
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)
@@ -76,13 +78,18 @@ func InitialModel(characterTemp *models.Character) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
-		choiceList: l,
-		selected:   make(map[int]struct{}),
-		character:  characterTemp,
+		// Our shopping list is a grocery list
+		choiceList:   l,
+		accountOwner: accountOwn,
+		// A map which indicates which choices are selected. We're using
+		// the  map like a mathematical set. The keys refer to the indexes
+		// of the `choices` slice, above.
+		selected: make(map[int]struct{}),
 	}
 }
 
 func (m model) Init() tea.Cmd {
+	// Just return `nil`, which means "no I/O right now, please."
 	return nil
 }
 
@@ -94,51 +101,43 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		// Cool, what was the actual key pressed?
 		switch msg.String() {
-
 		// These keys should exit the program.
 		case "ctrl+c", "q":
 			return m, tea.Quit
-			// The "enter" key and the spacebar (a literal space) toggle
-			// the selected state for the item that the cursor is pointing at.
+		// The "enter" key and the spacebar (a literal space) toggle
+		// the selected state for the item that the cursor is pointing at.
 		case "enter", " ":
-			classChoice, ok := m.choiceList.SelectedItem().(item)
+			raceCh, ok := m.choiceList.SelectedItem().(item)
 			if ok {
-				//
-				// SCHEMA
-				// RACE SELECTION -> NAME SELECTION -> CLASS SELECTION (YOU ARE HERE) -> ? (YOU ARE GOING HERE)
-				//
-				m.character.Class = string(classChoice)
-				//
-				// this is where we insert the character into the database
-				// we got:
-				// account owner: from main.go
-				// class: from this file
-				// race: from charselection.go model
-				// ID and CreatedAt is generated in charselection.go when race is picked in charselection.go model
-				// Level is set to 1, alive is set to true when race is picked in charselection.go model
-				//
-				usersDB, err := routes.ConnectUserDB()
-				if err != nil {
-					log.Println(err)
+				delete(m.selected, m.cursor)
+				m.selected[m.cursor] = struct{}{}
+				// Generate a random 5 digit string for ID
+				rand.Seed(time.Now().UnixNano())
+				id := rand.Intn(99999)
+				// Create a new character struct
+				newCharacter := models.Character{
+					Race:           string(raceCh), // current selection
+					ID:             id,             // random number for character identifier.
+					Level:          1,              // Initial character level
+					CreatedAt:      time.Now(),     // This will probably explode, change it to NOW() function while in SQL query
+					Alive:          true,           // Initial character status
+					CharacterOwner: m.accountOwner,
 				}
-				defer func(usersDB *sql.DB) {
-					err := usersDB.Close()
-					if err != nil {
-						log.Println(err)
-					}
-				}(usersDB)
-				mysqlpkg.AddCharacter(*m.character)
+				return nameselect.InitialModel(string(raceCh), &newCharacter), nil
 			}
 		}
 	case tea.WindowSizeMsg:
 		m.choiceList.SetWidth(msg.Width)
 		return m, nil
 	}
+
+	// Return the updated model and a command to run.
 	var cmd tea.Cmd
-	m.choiceList, cmd = m.choiceList.Update(msg)
+	m.choiceList, cmd = m.choiceList.Update(msg) // updates the choice list
 	return m, cmd
 }
 
 func (m model) View() string {
+	// shbow the choice list
 	return m.choiceList.View()
 }

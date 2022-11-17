@@ -1,4 +1,4 @@
-package extra
+package characterselection
 
 import (
 	"fmt"

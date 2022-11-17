@@ -1,10 +1,14 @@
-package charactersroutes
+package nameselect
 
+//
+// CHARACTER SELECTION MODELS
+// RACE SELECTION -> NAME SELECTION (YOU ARE HERE) -> CLASS SELECTION (YOU ARE GOING HERE)
+//
 import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/mikejk8s/gmud/pkg/extra/classelect"
+	"github.com/mikejk8s/gmud/pkg/characterselection/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
 )
 
@@ -46,10 +50,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
-			//
-			// SCHEMA
-			// RACE SELECTION -> NAME SELECTION (YOU ARE HERE) -> CLASS SELECTION (YOU ARE GOING HERE)
-			//
 			return classelect.InitialModel(m.character), nil
 		}
 	case errMsg:

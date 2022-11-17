@@ -10,6 +10,12 @@ import (
 	"log"
 )
 
+//
+// SCHEMA
+// NEW CHARACTER -> RACE SELECTION -> NAME SELECTION -> CLASS SELECTION
+//
+// EXISTING CHARACTER -> SELECT CHARACTER (YOU ARE HERE)
+//
 type model struct {
 	Character *models.Character
 }

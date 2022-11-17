@@ -3,8 +3,8 @@ package menus
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/mikejk8s/gmud/pkg/extra/charselect"
-	"github.com/mikejk8s/gmud/pkg/extra/existingcharselect"
+	"github.com/mikejk8s/gmud/pkg/characterselection/existingcharselect"
+	"github.com/mikejk8s/gmud/pkg/characterselection/raceselect"
 	//"github.com/charmbracelet/wish"
 )
 
@@ -70,7 +70,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				case "Play with Existing Character":
 					return existingcharselect.InitialModel(m.accountOwner), nil
 				case "Create Character":
-					return charselect.InitialModel(m.accountOwner), nil
+					return raceselect.InitialModel(m.accountOwner), nil
 				default:
 					return m, nil
 				}

@@ -82,7 +82,6 @@ func GetCharacters(code string) *m.Character {
 	if results.Next() {
 		err = results.Scan(&char.ID, &char.Name, &char.Class, &char.Race, &char.Level, &char.CreatedAt, &char.Alive, &char.CharacterOwner)
 		char.CharacterOwner = code
-		fmt.Println(char)
 		if err != nil {
 			return nil
 		}
