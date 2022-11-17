@@ -56,9 +56,7 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	choiceList   list.Model       // items on the to-do list
-	cursor       int              // which to-do list item our cursor is pointing at
-	selected     map[int]struct{} // which to-do items are selected
+	choiceList   list.Model // items on the to-do list
 	accountOwner string
 }
 
@@ -78,13 +76,8 @@ func InitialModel(accountOwn string) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
-		// Our shopping list is a grocery list
 		choiceList:   l,
 		accountOwner: accountOwn,
-		// A map which indicates which choices are selected. We're using
-		// the  map like a mathematical set. The keys refer to the indexes
-		// of the `choices` slice, above.
-		selected: make(map[int]struct{}),
 	}
 }
 
@@ -109,8 +102,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter", " ":
 			raceCh, ok := m.choiceList.SelectedItem().(item)
 			if ok {
-				delete(m.selected, m.cursor)
-				m.selected[m.cursor] = struct{}{}
 				// Generate a random 5 digit string for ID
 				rand.Seed(time.Now().UnixNano())
 				id := rand.Intn(99999)

@@ -30,6 +30,8 @@ var (
 )
 
 type item struct {
+	selected         map[int]struct{}
+	cursor           int
 	CharacterName    string
 	CharacterDetails string
 }
@@ -62,9 +64,7 @@ func InitialModel(accOwner string) model {
 	var listHeight = 14
 	d := list.NewDefaultDelegate()
 	backgroundColor := lipgloss.Color("#000000")
-	color := lipgloss.Color("#FF0000")
 	descriptionColor := lipgloss.Color("#FF9900")
-	d.Styles.SelectedTitle = d.Styles.SelectedTitle.Foreground(color).Background(backgroundColor)
 	d.Styles.SelectedDesc = d.Styles.SelectedDesc.Foreground(descriptionColor).Background(backgroundColor)
 	l := list.New(characterList, d, defaultWidth, listHeight)
 	l.Title = "Pick your character."
@@ -94,7 +94,19 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if !ok {
 				return m, nil
 			} else {
-				return zones.InitialModel(m.Character[m.cursor]), nil
+				for i := range m.Character {
+					if m.choiceList.SelectedItem().(item).CharacterName == m.Character[i].Name {
+						return zones.InitialModel(m.Character[i]), nil
+					}
+				}
+			}
+		case "up", "k":
+			if m.cursor > 0 {
+				m.cursor--
+			}
+		case "down", "j":
+			if m.cursor < len(m.choiceList.Items())-1 {
+				m.cursor++
 			}
 		}
 	case tea.WindowSizeMsg:
