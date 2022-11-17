@@ -46,6 +46,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
+			//
+			// SCHEMA
+			// RACE SELECTION -> NAME SELECTION (YOU ARE HERE) -> CLASS SELECTION (YOU ARE GOING HERE)
+			//
 			return classelect.InitialModel(m.character), nil
 		}
 	case errMsg:

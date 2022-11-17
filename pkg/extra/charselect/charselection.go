@@ -119,7 +119,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					Alive:          true,           // Initial character status
 					CharacterOwner: m.accountOwner,
 				}
-				// Pass it to character name selection screen
+				//
+				// SCHEMA
+				// RACE SELECTION (YOU ARE HERE) -> NAME SELECTION (YOU ARE GOING HERE) -> CLASS SELECTION
+				//
 				return charactersroutes.InitialModel(string(raceCh), &newCharacter), nil
 			}
 		}

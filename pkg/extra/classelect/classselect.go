@@ -103,6 +103,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter", " ":
 			classChoice, ok := m.choiceList.SelectedItem().(item)
 			if ok {
+				//
+				// SCHEMA
+				// RACE SELECTION -> NAME SELECTION (YOU ARE HERE) -> CLASS SELECTION (YOU ARE HERE) -> ? (YOU ARE GOING HERE)
+				//
 				m.character.Class = string(classChoice)
 				//
 				// this is where we insert the character into the database
