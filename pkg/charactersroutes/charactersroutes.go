@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/mikejk8s/gmud/pkg/menus"
+	"github.com/mikejk8s/gmud/pkg/extra/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
 )
 
@@ -46,7 +46,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
-			return menus.InitialModel(m.character.CharacterOwner), nil
+			return classelect.InitialModel(m.character), nil
 		}
 	case errMsg:
 		m.err = msg

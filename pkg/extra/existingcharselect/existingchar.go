@@ -38,14 +38,14 @@ func InitialModel(accOwner string) model {
 		CharacterFound: false,
 	}
 }
-func tickCmd() tea.Cmd {
+func TickCmd() tea.Cmd {
 	return tea.Tick(time.Second*1, func(t time.Time) tea.Msg {
 		return tickMsg(t)
 	})
 }
 func (m model) Init() tea.Cmd {
 	// m.GetCharacterDB()
-	return tickCmd()
+	return TickCmd()
 }
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
@@ -67,7 +67,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// Note that you can also use progress.Model.SetPercent to set the
 		// percentage value explicitly, too.
 		cmd := m.progress.IncrPercent(0.25)
-		return m, tea.Batch(tickCmd(), cmd)
+		return m, tea.Batch(TickCmd(), cmd)
 
 	// FrameMsg is sent when the progress bar wants to animate itself
 	case progress.FrameMsg:
