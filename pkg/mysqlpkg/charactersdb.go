@@ -67,9 +67,11 @@ func GetCharacter() []m.Character {
 	return characters
 }
 
-func GetCharacters(code string) *m.Character {
+// GetCharacters returns an array of characters associated with the account accOwner.
+func GetCharacters(code string) []*m.Character {
 	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
-	char := &m.Character{}
+	// Create a temporary storage of characters
+	var charTempStorage []*m.Character
 	if err != nil {
 		log.Println("Error", err.Error())
 	}
@@ -79,16 +81,21 @@ func GetCharacters(code string) *m.Character {
 		fmt.Println("Err", err.Error())
 		return nil
 	}
-	if results.Next() {
-		err = results.Scan(&char.ID, &char.Name, &char.Class, &char.Race, &char.Level, &char.CreatedAt, &char.Alive, &char.CharacterOwner)
-		char.CharacterOwner = code
-		if err != nil {
-			return nil
+	// Append every character to the temporary storage
+	for {
+		char := &m.Character{}
+		if results.Next() {
+			err = results.Scan(&char.ID, &char.Name, &char.Class, &char.Race, &char.Level, &char.CreatedAt, &char.Alive, &char.CharacterOwner)
+			char.CharacterOwner = code
+			charTempStorage = append(charTempStorage, char)
+			if err != nil {
+				return nil
+			}
+		} else {
+			break
 		}
-	} else {
-		return nil
 	}
-	return char
+	return charTempStorage
 }
 
 func AddCharacter(Character m.Character) {

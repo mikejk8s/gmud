@@ -17,15 +17,17 @@ What's broken:
 
 ~~1.5 Assign user to character~~
 
-2. Let user login to an existing character
+~~2. Let user login to an existing character~~
 
-3. Put user into beginner room with a description
+~~3. Put user into beginner room with a description~~
+
+3.5 Put a viewport into the tutorial.go as a beginner room with a description, as every new created or level 1 character will fall into model in tutorial.go
 
 4. ~~DeleteUser currently 404s~~
 
-5. CharacterRoutes GetUser returns the wrong list of characters, doesn't do its query
+~~5. CharacterRoutes GetUser returns the wrong list of characters, doesn't do its query~~ Now returns array of Characters model.
 
-6. Require unique names sql queries Character.Name
+~~6. Require unique names sql queries Character.Name~~ Queries against DB is done with account name.
 
 7. Make a map of public keys
 
@@ -35,7 +37,7 @@ What's broken:
 
 10. Alive reports false need to switch to reverse bool or dead
 
-~~11. Level shouldnt be 0~~
+~~11. Level shouldnt be 0~~ It is level 1 on every new created character.
 
 12.
 

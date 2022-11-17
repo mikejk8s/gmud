@@ -4,6 +4,8 @@ package nameselect
 // CHARACTER SELECTION MODELS
 // RACE SELECTION -> NAME SELECTION (YOU ARE HERE) -> CLASS SELECTION (YOU ARE GOING HERE)
 //
+// EXISTING CHARACTER -> SELECT CHARACTER (YOU ARE HERE) -> GO TO STARTING ZONE
+//
 import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"

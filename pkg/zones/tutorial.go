@@ -3,17 +3,16 @@ package zones
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mikejk8s/gmud/pkg/models"
 )
 
 type model struct {
-	AccountOwner   string
-	CharacterFound bool
+	Character *models.Character
 }
 
-func InitialModel(accOwner string) model {
+func InitialModel(char *models.Character) model {
 	return model{
-		AccountOwner:   accOwner,
-		CharacterFound: false,
+		Character: char,
 	}
 }
 func (m model) Init() tea.Cmd {
@@ -24,5 +23,5 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 func (m model) View() string {
-	return fmt.Sprintf("Welcome brethen!")
+	return fmt.Sprintf("Welcome %s", m.Character.Name)
 }
