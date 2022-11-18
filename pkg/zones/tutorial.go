@@ -115,13 +115,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// This is needed for high-performance rendering only.
 			cmds = append(cmds, viewport.Sync(m.viewport))
 		}
-	// If user didnt resize the window, we render it 80x50 by initial, then user can resize it.
+	// If user didnt resize the window, we render it by whatever the size is right now.
 	default:
 		headerHeight := lipgloss.Height(m.headerView())
 		footerHeight := lipgloss.Height(m.footerView())
 		verticalMarginHeight := headerHeight + footerHeight
 
 		if m.ready == false {
+			// Get terminal size
 			ptySize, _, _ := m.SSHSession.Pty()
 			m.viewport = viewport.New(ptySize.Window.Width, ptySize.Window.Height-verticalMarginHeight)
 			m.viewport.YPosition = headerHeight
