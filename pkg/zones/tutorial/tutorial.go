@@ -1,4 +1,4 @@
-package zones
+package tutorial
 
 import (
 	"fmt"
@@ -59,7 +59,7 @@ func (m model) Init() tea.Cmd {
 	return nil
 }
 func (m model) headerView() string {
-	title := titleStyle.Render("Mr. Pager")
+	title := titleStyle.Render("Tutorial Zone - Center Area")
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(title)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, title, line)
 }
@@ -94,7 +94,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.viewport.YPosition = headerHeight
 			m.viewport.HighPerformanceRendering = useHighPerformanceRenderer
 			width := msg.Width
-			wrapped := lipgloss.NewStyle().Width(width).Render(m.content)
+			wrapped := lipgloss.NewStyle().Width(width).Bold(true).Render(m.content)
 			m.viewport.SetContent(wrapped)
 			m.ready = true
 

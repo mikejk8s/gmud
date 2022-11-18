@@ -9,7 +9,7 @@ import (
 	"github.com/mikejk8s/gmud/logger"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/zones"
+	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
 	"log"
 )
 
@@ -99,7 +99,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				for i := range m.Character {
 					if m.choiceList.SelectedItem().(item).CharacterName == m.Character[i].Name {
-						return zones.InitialModel(m.Character[i], m.SSHSession), nil
+						return tutorial.InitialModel(m.Character[i], m.SSHSession), nil
 					}
 				}
 			}

@@ -16,7 +16,7 @@ import (
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/routes"
-	"github.com/mikejk8s/gmud/pkg/zones"
+	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
 	"io"
 	"log"
 )
@@ -134,7 +134,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					}
 				}(usersDB)
 				mysqlpkg.AddCharacter(*m.character)
-				zones.InitialModel(m.character, m.SSHSession)
+				tutorial.InitialModel(m.character, m.SSHSession)
 			}
 		}
 	case tea.WindowSizeMsg:

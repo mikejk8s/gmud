@@ -58,16 +58,6 @@ func passHandler(ctx ssh.Context, password string) bool {
 func main() {
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
-	/* go func() {
-		defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
-
-		http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
-		err := http.ListenAndServe(":3872", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}() */
-	// Connect to user-db mysql database and create db + tables if they don't exist
 	go func() {
 		_, err := routes.ConnectUserDB()
 		if err != nil {
@@ -77,12 +67,6 @@ func main() {
 
 	// Migrate only once
 	go routes.Migration()
-	/* go func() {
-		_, err := tracing.JaegerTraceProvider()
-		if err != nil {
-			panic(err)
-		}
-	}() */
 
 	// SSH server begin
 	s, err := wish.NewServer(
