@@ -135,9 +135,13 @@ func loginBubbleteaMiddleware() wish.Middleware {
 		return p
 	}
 	teaHandler := func(s ssh.Session) *tea.Program {
+		pty, _, _ := s.Pty()
 		m := model{
-			time:     time.Now(),
-			accOwner: s.User(),
+			SSHSession: s,
+			Width:      pty.Window.Width,
+			Height:     pty.Window.Height,
+			time:       time.Now(),
+			accOwner:   s.User(),
 		}
 		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen(), tea.WithMouseCellMotion())
 	}
@@ -145,8 +149,11 @@ func loginBubbleteaMiddleware() wish.Middleware {
 }
 
 type model struct {
-	time     time.Time
-	accOwner string // Account owner will be used for matching the characters created from this account.
+	SSHSession ssh.Session
+	time       time.Time
+	Height     int
+	Width      int
+	accOwner   string // Account owner will be used for matching the characters created from this account.
 }
 
 type timeMsg time.Time
@@ -165,7 +172,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "l", "ctrl+l":
 			// return login model and make it equal to main model
-			return mn.InitialModel(m.accOwner), nil // Go to the login page with passing account owner
+			return mn.InitialModel(m.accOwner, m.SSHSession), nil // Go to the login page with passing account owner
 		case "n", "ctrl+n":
 			//mn.NewAccount()
 			return m, tea.Quit
@@ -178,5 +185,6 @@ func (m model) View() string {
 	s := "Welcome to gmud!\n\n"
 	s += "Date> " + m.time.Format(time.RFC1123) + "\n\n"
 	s += "Press 'l' to go in.\n"
-	return fmt.Sprintf(s)
+
+	return fmt.Sprintln(s, m.Height, m.Width)
 }

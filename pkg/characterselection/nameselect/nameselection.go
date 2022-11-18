@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
 )
@@ -18,6 +19,7 @@ type (
 	errMsg error
 )
 type model struct {
+	SSHSession     ssh.Session
 	character      *models.Character
 	input          textinput.Model
 	characterClass string
@@ -25,7 +27,7 @@ type model struct {
 	err            error
 }
 
-func InitialModel(choice string, characterTemp *models.Character) model {
+func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Session) model {
 	ti := textinput.New()
 	ti.Placeholder = "Enter here"
 	ti.Focus()
@@ -33,6 +35,7 @@ func InitialModel(choice string, characterTemp *models.Character) model {
 	ti.Width = 20
 
 	return model{
+		SSHSession:     SSHSess,
 		character:      characterTemp,
 		input:          ti,
 		err:            nil,
@@ -52,7 +55,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
-			return classelect.InitialModel(m.character), nil
+			return classelect.InitialModel(m.character, m.SSHSession), nil
 		}
 	case errMsg:
 		m.err = msg

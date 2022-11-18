@@ -5,12 +5,13 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"os"
 	"strings"
 )
 
-const useHighPerformanceRenderer = true
+const useHighPerformanceRenderer = false
 
 var (
 	titleStyle = func() lipgloss.Style {
@@ -27,10 +28,11 @@ var (
 )
 
 type model struct {
-	content   string
-	ready     bool
-	viewport  viewport.Model
-	Character *models.Character
+	SSHSession ssh.Session
+	content    string
+	ready      bool
+	viewport   viewport.Model
+	Character  *models.Character
 }
 
 func max(a, b int) int {
@@ -39,16 +41,17 @@ func max(a, b int) int {
 	}
 	return b
 }
-func InitialModel(char *models.Character) model {
+func InitialModel(char *models.Character, SSHSess ssh.Session) model {
 	// Load some text for our viewport
 	content, err := os.ReadFile("./textfiles/tutorial.md")
 	if err != nil {
 		panic(err)
 	}
 	return model{
-		content:   string(content),
-		ready:     false,
-		Character: char,
+		SSHSession: SSHSess,
+		content:    string(content),
+		ready:      false,
+		Character:  char,
 	}
 }
 func (m model) Init() tea.Cmd {
@@ -103,6 +106,36 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		} else {
 			m.viewport.Width = msg.Width
 			m.viewport.Height = msg.Height - verticalMarginHeight
+		}
+
+		if useHighPerformanceRenderer {
+			// Render (or re-render) the whole viewport. Necessary both to
+			// initialize the viewport and when the window is resized.
+			//
+			// This is needed for high-performance rendering only.
+			cmds = append(cmds, viewport.Sync(m.viewport))
+		}
+	// If user didnt resize the window, we render it 80x50 by initial, then user can resize it.
+	default:
+		headerHeight := lipgloss.Height(m.headerView())
+		footerHeight := lipgloss.Height(m.footerView())
+		verticalMarginHeight := headerHeight + footerHeight
+
+		if m.ready == false {
+			ptySize, _, _ := m.SSHSession.Pty()
+			m.viewport = viewport.New(ptySize.Window.Width, ptySize.Window.Height-verticalMarginHeight)
+			m.viewport.YPosition = headerHeight
+			m.viewport.HighPerformanceRendering = useHighPerformanceRenderer
+			width := ptySize.Window.Width
+			wrapped := lipgloss.NewStyle().Width(width).Render(m.content)
+			m.viewport.SetContent(wrapped)
+			m.ready = true
+
+			// This is only necessary for high performance rendering, which in
+			// most cases you won't need.
+			//
+			// Render the viewport one line below the header.
+			m.viewport.YPosition = headerHeight + 1
 		}
 
 		if useHighPerformanceRenderer {

@@ -5,6 +5,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/nameselect"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"io"
@@ -56,11 +57,12 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
+	SSHSession   ssh.Session
 	choiceList   list.Model // items on the to-do list
 	accountOwner string
 }
 
-func InitialModel(accountOwn string) model {
+func InitialModel(accountOwn string, SSHSess ssh.Session) model {
 	const defaultWidth = 20
 	const listHeight = 14
 	races := []list.Item{
@@ -76,6 +78,7 @@ func InitialModel(accountOwn string) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
+		SSHSession:   SSHSess,
 		choiceList:   l,
 		accountOwner: accountOwn,
 	}
@@ -114,7 +117,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					Alive:          true,           // Initial character status
 					CharacterOwner: m.accountOwner,
 				}
-				return nameselect.InitialModel(string(raceCh), &newCharacter), nil
+				return nameselect.InitialModel(string(raceCh), &newCharacter, m.SSHSession), nil
 			}
 		}
 	case tea.WindowSizeMsg:

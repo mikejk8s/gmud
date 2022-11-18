@@ -12,9 +12,11 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/routes"
+	"github.com/mikejk8s/gmud/pkg/zones"
 	"io"
 	"log"
 )
@@ -59,6 +61,7 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
+	SSHSession ssh.Session
 	character  *models.Character
 	choiceList list.Model
 	choice     string
@@ -66,7 +69,7 @@ type model struct {
 	selected   map[int]struct{}
 }
 
-func InitialModel(characterTemp *models.Character) model {
+func InitialModel(characterTemp *models.Character, SSHSess ssh.Session) model {
 	const defaultWidth = 20
 	const listHeight = 14
 	classes := []list.Item{
@@ -82,6 +85,7 @@ func InitialModel(characterTemp *models.Character) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
+		SSHSession: SSHSess,
 		choiceList: l,
 		selected:   make(map[int]struct{}),
 		character:  characterTemp,
@@ -130,6 +134,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					}
 				}(usersDB)
 				mysqlpkg.AddCharacter(*m.character)
+				zones.InitialModel(m.character, m.SSHSession)
 			}
 		}
 	case tea.WindowSizeMsg:

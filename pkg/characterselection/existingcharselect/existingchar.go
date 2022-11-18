@@ -5,6 +5,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/logger"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
@@ -42,6 +43,7 @@ func (i item) FilterValue() string   { return i.CharacterName }
 func (i item) Style() lipgloss.Style { return itemStyle }
 
 type model struct {
+	SSHSession ssh.Session
 	choiceList list.Model
 	choice     string
 	cursor     int
@@ -49,7 +51,7 @@ type model struct {
 	Character  []*models.Character
 }
 
-func InitialModel(accOwner string) model {
+func InitialModel(accOwner string, SSHSess ssh.Session) model {
 	// Get characters associated with the account
 	tempCharacterData := GetCharacterDB(accOwner)
 	var characterList []list.Item
@@ -74,6 +76,7 @@ func InitialModel(accOwner string) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
+		SSHSession: SSHSess,
 		choiceList: l,
 		selected:   make(map[int]struct{}),
 		Character:  tempCharacterData,
@@ -96,7 +99,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				for i := range m.Character {
 					if m.choiceList.SelectedItem().(item).CharacterName == m.Character[i].Name {
-						return zones.InitialModel(m.Character[i]), nil
+						return zones.InitialModel(m.Character[i], m.SSHSession), nil
 					}
 				}
 			}

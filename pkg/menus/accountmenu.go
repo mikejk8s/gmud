@@ -3,20 +3,23 @@ package menus
 import (
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/existingcharselect"
 	"github.com/mikejk8s/gmud/pkg/characterselection/raceselect"
 	//"github.com/charmbracelet/wish"
 )
 
 type model struct {
+	SSHSession   ssh.Session
 	choices      []string         // items on the list
 	cursor       int              // item our cursor is pointing at
 	selected     map[int]struct{} // whats selected
 	accountOwner string
 }
 
-func InitialModel(accOwner string) model {
+func InitialModel(accOwner string, SSHSess ssh.Session) model {
 	return model{
+		SSHSession:   SSHSess, // Will not be used, just passed to the next screen.
 		choices:      []string{"Play with Existing Character", "Create Character"},
 		accountOwner: accOwner,
 		// A map which indicates which choices are selected. We're using
@@ -68,9 +71,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// for associating the character with the account
 				switch m.choices[m.cursor] {
 				case "Play with Existing Character":
-					return existingcharselect.InitialModel(m.accountOwner), nil
+					return existingcharselect.InitialModel(m.accountOwner, m.SSHSession), nil
 				case "Create Character":
-					return raceselect.InitialModel(m.accountOwner), nil
+					return raceselect.InitialModel(m.accountOwner, m.SSHSession), nil
 				default:
 					return m, nil
 				}
