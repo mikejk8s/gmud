@@ -13,15 +13,13 @@ What's broken:
 
 ~~1. Let user create a new character~~ 
 
-![TODO1](https://media4.giphy.com/media/DtcIXipywWrSlvXPrp/giphy.gif?cid=790b76115f4a0964390d82e9bc76ed9bd151e5d2ee43f9a3&rid=giphy.gif&ct=g)
-
 ~~1.5 Assign user to character~~
 
 ~~2. Let user login to an existing character~~
 
 ~~3. Put user into beginner room with a description~~
 
-3.5 Put a viewport into the tutorial.go as a beginner room with a description, as every new created or level 1 character will fall into model in tutorial.go
+~~3.5 Put a viewport into the tutorial.go as a beginner room with a description, as every new created or level 1 character will fall into model in tutorial.go~~
 
 4. ~~DeleteUser currently 404s~~
 
@@ -29,17 +27,21 @@ What's broken:
 
 ~~6. Require unique names sql queries Character.Name~~ Queries against DB is done with account name.
 
-7. Make a map of public keys
+~~7. Make a map of public keys~~ No more public keys, SSH username and password login.
 
-8. *AccountLogin function runs login page on the server*
+8. ~~AccountLogin function runs login page on the server*~~
+
+8.25 We need a whole ass sign up site that handles the registers. Data needs to be nuked at users table.
 
 9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine
 
-10. Alive reports false need to switch to reverse bool or dead
+~~10. Alive reports false need to switch to reverse bool or dead~~  1 means alive and 0 means dead? Cant change it.
 
 ~~11. Level shouldnt be 0~~ It is level 1 on every new created character.
 
-12.
+12. Create a stats model for character stats.
+
+13. Create a combat tutorial room model.
 
 
 ## Api Paths
