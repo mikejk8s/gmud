@@ -5,7 +5,7 @@ A mud in go
 ## Features
 
 What's broken:
-1. //TODO: SSH only takes one key and right now I'm getting errors accessing it
+r~~1. //TODO: SSH only takes one key and right now I'm getting errors accessing itr~~ SSH username and password type of authentication is in charge.
 2. //TODO: gmud container cant connect to database
    1. This is NOT a problem when running ./app from localhost
 

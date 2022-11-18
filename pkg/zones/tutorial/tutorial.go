@@ -1,5 +1,13 @@
 package tutorial
 
+// TUTORIAL ZONE
+//         COMBAT TUTORIAL (combattutorial.go)
+//					^
+//					|
+// 	???	   <- FIRST ROOM (YOU ARE HERE) -> ?????
+//				    |
+//
+// 	         SECOND ROOM ??????????????
 import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/viewport"

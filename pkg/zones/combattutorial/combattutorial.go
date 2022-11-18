@@ -1,4 +1,4 @@
-package tutorial
+package combattutorial
 
 // TUTORIAL ZONE
 //         COMBAT TUTORIAL (YOU ARE HERE)
