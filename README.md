@@ -7,6 +7,9 @@ A mud in go
 What's broken:
 r~~1. //TODO: SSH only takes one key and right now I'm getting errors accessing itr~~ SSH username and password type of authentication is in charge.
 2. //TODO: gmud container cant connect to database
+
+2.25 this is probably due to mysql image, need to specify it by mysql/mysql-server:latest. I will try it in a couple of days.
+
    1. This is NOT a problem when running ./app from localhost
 
 ## Todo
