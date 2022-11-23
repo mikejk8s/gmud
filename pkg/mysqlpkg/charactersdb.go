@@ -82,6 +82,7 @@ func GetCharacters(code string) []*m.Character {
 		fmt.Println("Err", err.Error())
 		return nil
 	}
+	fmt.Println()
 	// Append every character to the temporary storage
 	for {
 		char := &m.Character{}
