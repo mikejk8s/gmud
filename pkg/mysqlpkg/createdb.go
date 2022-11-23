@@ -4,19 +4,14 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/mikejk8s/gmud/logger"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
-)
+	"github.com/mikejk8s/gmud/logger"
 
-const (
-	username = "root"
-	password = "1234"
-	//hostname = "docker.for.mac.localhost:3306"
-	hostname = "127.0.0.1:3306"
-	dbname   = "characters"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func Dsn(dbName string) string {
@@ -24,7 +19,12 @@ func Dsn(dbName string) string {
 }
 
 func DbConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
+	db, err := gorm.Open(mysql.Open(username+":"+password+"@"+"tcp"+hostname+"/"+dbname), &gorm.Config{})
+	if err != nil {
+		panic(err)
+		return nil, err
+	}
+	dbSql, err := db.DB()
 	if err != nil {
 		panic(err)
 		return nil, err
@@ -38,7 +38,7 @@ func DbConnection() (*sql.DB, error) {
 
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
-	res, err := db.ExecContext(ctx, "CREATE SCHEMA IF NOT EXISTS "+dbname)
+	res, err := dbSql.ExecContext(ctx, "CREATE SCHEMA IF NOT EXISTS "+dbname)
 	if err != nil {
 		log.Printf("Error %s when creating DB\n", err)
 		return nil, err
@@ -49,28 +49,7 @@ func DbConnection() (*sql.DB, error) {
 		return nil, err
 	}
 	log.Printf("rows affected %d\n", no)
-
-	db.Close()
-	db, err = sql.Open("mysql", Dsn(dbname))
-	if err != nil {
-		log.Printf("Error %s when opening DB", err)
-		return nil, err
-	}
-	//defer db.Close()
-
-	db.SetMaxOpenConns(20)
-	db.SetMaxIdleConns(20)
-	db.SetConnMaxLifetime(time.Minute * 5)
-
-	ctx, cancelfunc = context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelfunc()
-	err = db.PingContext(ctx)
-	if err != nil {
-		log.Printf("Errors %s pinging DB", err)
-		return nil, err
-	}
-	log.Printf("Connected to DB %s successfully\n", dbname)
-	return db, nil
+	return dbSql, nil
 }
 
 func createCharacterTable(db *sql.DB) error {

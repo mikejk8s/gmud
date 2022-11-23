@@ -15,7 +15,6 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/routes"
 	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
 	"io"
 	"log"
@@ -123,7 +122,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// ID and CreatedAt is generated in charselection.go when race is picked in charselection.go model
 				// Level is set to 1, alive is set to true when race is picked in charselection.go model
 				//
-				usersDB, err := routes.ConnectUserDB()
+				usersDB, err := mysqlpkg.ConnectUserDB()
 				if err != nil {
 					log.Println(err)
 				}

@@ -9,9 +9,11 @@ import (
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/routes"
+	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/muesli/termenv"
+	"io"
 	"log"
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -23,14 +25,14 @@ import (
 
 const (
 	host = "localhost"
-	port = 3131
+	port = 2222
 )
 
 func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
 }
 func passHandler(ctx ssh.Context, password string) bool {
-	usersDB, err := routes.ConnectUserDB()
+	usersDB, err := sqlpkg.ConnectUserDB()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -55,24 +57,30 @@ func passHandler(ctx ssh.Context, password string) bool {
 		return false
 	}
 }
+func _() {
+	ssh.Handle(func(s ssh.Session) {
+		io.WriteString(s, "Hello world\n")
+	})
+
+	log.Fatal(ssh.ListenAndServe(":2222", nil))
+}
 func main() {
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
 	go func() {
-		_, err := routes.ConnectUserDB()
+		_, err := sqlpkg.ConnectUserDB()
 		if err != nil {
 			log.Fatalln(err)
 		}
 	}()
 
 	// Migrate only once
-	go routes.Migration()
+	go sqlpkg.Migration()
 
 	// SSH server begin
 	s, err := wish.NewServer(
 		ssh.PasswordAuth(passHandler),
 		ssh.PublicKeyAuth(pkHandler),
-		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithHostKeyPath(".ssh/term_info_ed25519"),
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
@@ -84,6 +92,9 @@ func main() {
 	)
 	if err != nil {
 		log.Fatalln(err)
+	}
+	s.ConnectionFailedCallback = func(conn net.Conn, err error) {
+		log.Println("Connection failed:", err)
 	}
 	done := make(chan os.Signal, 0)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)

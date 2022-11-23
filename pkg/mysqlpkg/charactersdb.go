@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"log"
 
-	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	//"github.com/mikejk8s/gmud"
 	"fmt"
 
 	"github.com/felixge/fgtrace"
+
 	//cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	m "github.com/mikejk8s/gmud/pkg/models"
 )
@@ -30,7 +31,7 @@ import (
 // 	for result.Next()
 
 func GetCharacter() []m.Character {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
+	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return nil
@@ -69,7 +70,7 @@ func GetCharacter() []m.Character {
 
 // GetCharacters returns an array of characters associated with the account accOwner.
 func GetCharacters(code string) []*m.Character {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname+"?parseTime=true")
+	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
 	// Create a temporary storage of characters
 	var charTempStorage []*m.Character
 	if err != nil {
@@ -99,7 +100,7 @@ func GetCharacters(code string) []*m.Character {
 }
 
 func AddCharacter(Character m.Character) {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -127,7 +128,7 @@ func AddCharacter(Character m.Character) {
 }
 
 func DeleteCharacter(Character m.Character) {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}

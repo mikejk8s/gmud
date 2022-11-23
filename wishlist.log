@@ -1,4 +1,0 @@
-2022/08/17 18:28:12 setting delegate height: 2
-2022/08/17 18:28:21 offering public key: /Users/mrj/.ssh/zuul ssh-ed25519 SHA256:qlbCLwyXVrPgtcoVlSfSLdPh0NHxDX6/BDJwFzKjBTo
-2022/08/17 18:28:21 offering public key via ssh agent: ssh-ed25519 SHA256:qlbCLwyXVrPgtcoVlSfSLdPh0NHxDX6/BDJwFzKjBTo
-2022/08/17 18:28:21 got an error: failed to create session: connection failed: ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain
