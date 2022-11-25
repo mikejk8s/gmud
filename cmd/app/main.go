@@ -6,16 +6,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
-	"github.com/julienschmidt/httprouter"
 	"github.com/mikejk8s/gmud/pkg/httprequests"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/websockets"
 	"github.com/muesli/termenv"
 	"log"
 	"net"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -89,19 +86,6 @@ func main() {
 	}()
 	// This command will refresh password to websockets in every 5 minutes.
 	go httprequests.RefreshPassword()
-	//
-	// pass this channel storage to all functions, as all messages will be sent to this channel from a websocket.
-	//
-	var channelStorage = websockets.NewChannelStorage()
-	go func() {
-		newRouter := httprouter.New()
-		// Pass this channelS
-		newRouter.GET("/ws", channelStorage.Mount)
-		err := http.ListenAndServe(":8080", newRouter)
-		if err != nil {
-			log.Println(err)
-		}
-	}()
 	// SSH server begin
 	s, err := wish.NewServer(
 		ssh.PasswordAuth(passHandler),
@@ -112,7 +96,7 @@ func main() {
 		}),
 		wish.WithMiddleware(
 			lm.Middleware(),
-			loginBubbleteaMiddleware(*channelStorage),
+			loginBubbleteaMiddleware(),
 		),
 	)
 	if err != nil {
@@ -140,7 +124,7 @@ func main() {
 	}
 }
 
-func loginBubbleteaMiddleware(storage websockets.ChannelStorage) wish.Middleware {
+func loginBubbleteaMiddleware() wish.Middleware {
 	login := func(m tea.Model, opts ...tea.ProgramOption) *tea.Program {
 		p := tea.NewProgram(m, opts...)
 		go func() {
