@@ -6,14 +6,16 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
+	"github.com/julienschmidt/httprouter"
+	"github.com/mikejk8s/gmud/pkg/httprequests"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
-	db "github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/websockets"
 	"github.com/muesli/termenv"
-	"io"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -32,19 +34,21 @@ func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
 }
 func passHandler(ctx ssh.Context, password string) bool {
-	usersDB, err := sqlpkg.ConnectUserDB()
+	usersConn := sqlpkg.SqlConn{}
+	err := usersConn.GetSQLConn("users")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	// data := usersDB.Exec(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User())).First(&p)
 	user := models.User{}
-	rows, _ := usersDB.Query(fmt.Sprintf("SELECT password, email, name, username from users.users where username = '%s'", ctx.User()))
+	rows, _ := usersConn.DB.Query(fmt.Sprintf("SELECT password, email, name, username from users.users where username = '%s'", ctx.User()))
 	for rows.Next() {
 		err := rows.Scan(&user.Password, &user.Email, &user.Name, &user.Username)
 		if err != nil {
 			panic(err)
 		}
 	}
+	usersConn.CloseConn()
 	if user.Password == password {
 		credentialError := user.CheckPassword(password)
 		if credentialError != nil {
@@ -57,37 +61,58 @@ func passHandler(ctx ssh.Context, password string) bool {
 		return false
 	}
 }
-func _() {
-	ssh.Handle(func(s ssh.Session) {
-		io.WriteString(s, "Hello world\n")
-	})
-
-	log.Fatal(ssh.ListenAndServe(":2222", nil))
-}
 func main() {
-	// Connect to char-db mysql database and create db + tables if they don't exist
-	go db.Connect()
+	// Create users schema and users table, migrate if possible.
+	go sqlpkg.Migration()
+	// Connect to mariadb database and create characters schema + character tables if they don't exist
+	initialTableCreation := sqlpkg.SqlConn{}
+	err := initialTableCreation.GetSQLConn("characters")
+	if err != nil {
+		log.Println(err)
+	}
 	go func() {
-		_, err := sqlpkg.ConnectUserDB()
+		err := initialTableCreation.CreateCharacterTable()
+		if err != nil {
+			log.Println(err)
+		} else {
+			initialTableCreation.CloseConn()
+		}
+	}()
+	go func() {
+		initialUsersCreation := sqlpkg.SqlConn{}
+		err := initialUsersCreation.GetSQLConn("")
 		if err != nil {
 			log.Fatalln(err)
 		}
+		initialUsersCreation.CreateUsersTable()
+		initialUsersCreation.CloseConn()
 	}()
-
-	// Migrate only once
-	go sqlpkg.Migration()
-
+	// This command will refresh password to websockets in every 5 minutes.
+	go httprequests.RefreshPassword()
+	//
+	// pass this channel storage to all functions, as all messages will be sent to this channel from a websocket.
+	//
+	var channelStorage = websockets.NewChannelStorage()
+	go func() {
+		newRouter := httprouter.New()
+		// Pass this channelS
+		newRouter.GET("/ws", channelStorage.Mount)
+		err := http.ListenAndServe(":8080", newRouter)
+		if err != nil {
+			log.Println(err)
+		}
+	}()
 	// SSH server begin
 	s, err := wish.NewServer(
 		ssh.PasswordAuth(passHandler),
 		ssh.PublicKeyAuth(pkHandler),
-		wish.WithHostKeyPath(".ssh/term_info_ed25519"),
+		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
 		}),
 		wish.WithMiddleware(
 			lm.Middleware(),
-			loginBubbleteaMiddleware(),
+			loginBubbleteaMiddleware(*channelStorage),
 		),
 	)
 	if err != nil {
@@ -115,7 +140,7 @@ func main() {
 	}
 }
 
-func loginBubbleteaMiddleware() wish.Middleware {
+func loginBubbleteaMiddleware(storage websockets.ChannelStorage) wish.Middleware {
 	login := func(m tea.Model, opts ...tea.ProgramOption) *tea.Program {
 		p := tea.NewProgram(m, opts...)
 		go func() {
@@ -166,7 +191,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "l", "ctrl+l":
-			// return login model and make it equal to main model
 			return mn.InitialModel(m.accOwner, m.SSHSession), nil // Go to the login page with passing account owner
 		case "n", "ctrl+n":
 			//mn.NewAccount()

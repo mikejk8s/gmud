@@ -43,17 +43,18 @@ func (i item) FilterValue() string   { return i.CharacterName }
 func (i item) Style() lipgloss.Style { return itemStyle }
 
 type model struct {
-	SSHSession ssh.Session
-	choiceList list.Model
-	choice     string
-	cursor     int
-	selected   map[int]struct{}
-	Character  []*models.Character
+	SQLConnection *mysqlpkg.SqlConn
+	SSHSession    ssh.Session
+	choiceList    list.Model
+	choice        string
+	cursor        int
+	selected      map[int]struct{}
+	Character     []*models.Character
 }
 
-func InitialModel(accOwner string, SSHSess ssh.Session) model {
+func InitialModel(accOwner string, SSHSess ssh.Session, dbConn *mysqlpkg.SqlConn) model {
 	// Get characters associated with the account
-	tempCharacterData := GetCharacterDB(accOwner)
+	tempCharacterData := GetCharacterDB(dbConn, accOwner)
 	var characterList []list.Item
 	for i := range tempCharacterData {
 		fmt.Println(tempCharacterData[i].Name)
@@ -76,10 +77,11 @@ func InitialModel(accOwner string, SSHSess ssh.Session) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
-		SSHSession: SSHSess,
-		choiceList: l,
-		selected:   make(map[int]struct{}),
-		Character:  tempCharacterData,
+		SQLConnection: dbConn,
+		SSHSession:    SSHSess,
+		choiceList:    l,
+		selected:      make(map[int]struct{}),
+		Character:     tempCharacterData,
 	}
 }
 func (m model) Init() tea.Cmd {
@@ -125,7 +127,7 @@ func (m model) View() string {
 }
 
 // GetCharacterDB returns an array of characters associated with the account accOwner.
-func GetCharacterDB(accOwner string) []*models.Character {
+func GetCharacterDB(dbConn *mysqlpkg.SqlConn, accOwner string) []*models.Character {
 	cDBLogger := logger.GetNewLogger()
 	err := cDBLogger.AssignOutput("characterDB", "./logs/characterDBconn")
 	if err != nil {
@@ -135,5 +137,5 @@ func GetCharacterDB(accOwner string) []*models.Character {
 		cDBLogger.LogUtil.Errorf("Error %s connecting to characterDB during fetching the %s accounts characters: ", err, accOwner)
 		panic(err.Error())
 	}
-	return mysqlpkg.GetCharacters(accOwner)
+	return dbConn.GetCharacters(accOwner)
 }

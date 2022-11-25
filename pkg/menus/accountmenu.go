@@ -6,6 +6,7 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/existingcharselect"
 	"github.com/mikejk8s/gmud/pkg/characterselection/raceselect"
+	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	//"github.com/charmbracelet/wish"
 )
 
@@ -69,11 +70,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.selected[m.cursor] = struct{}{}
 				// Pass the account owner to the character selection screen
 				// for associating the character with the account
+
+				// Dont forget to pass SSHSession and DBConnection, a user should occupy a single session.
+				dbConn := &mysqlpkg.SqlConn{}
+				dbConn.GetSQLConn("")
 				switch m.choices[m.cursor] {
 				case "Play with Existing Character":
-					return existingcharselect.InitialModel(m.accountOwner, m.SSHSession), nil
+					return existingcharselect.InitialModel(m.accountOwner, m.SSHSession, dbConn), nil
 				case "Create Character":
-					return raceselect.InitialModel(m.accountOwner, m.SSHSession), nil
+					return raceselect.InitialModel(m.accountOwner, m.SSHSession, dbConn), nil
 				default:
 					return m, nil
 				}
@@ -89,7 +94,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	// The header
 	s := "Choose your way.\n\n"
-
 	// Iterate over our choices
 	for i, choice := range m.choices {
 
@@ -108,7 +112,6 @@ func (m model) View() string {
 		// Render the row
 		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
 	}
-
 	// The footer
 	s += "\nPress q to quit.\n"
 

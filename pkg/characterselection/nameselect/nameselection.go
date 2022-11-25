@@ -13,12 +13,14 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
+	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 )
 
 type (
 	errMsg error
 )
 type model struct {
+	DBConnection   *mysqlpkg.SqlConn
 	SSHSession     ssh.Session
 	character      *models.Character
 	input          textinput.Model
@@ -27,7 +29,7 @@ type model struct {
 	err            error
 }
 
-func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Session) model {
+func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Session, DBConn *mysqlpkg.SqlConn) model {
 	ti := textinput.New()
 	ti.Placeholder = "Enter here"
 	ti.Focus()
@@ -35,6 +37,7 @@ func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Se
 	ti.Width = 20
 
 	return model{
+		DBConnection:   DBConn,
 		SSHSession:     SSHSess,
 		character:      characterTemp,
 		input:          ti,
@@ -55,7 +58,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case tea.KeyEnter:
 			m.character.Name = m.input.Value()
-			return classelect.InitialModel(m.character, m.SSHSession), nil
+			return classelect.InitialModel(m.character, m.SSHSession, m.DBConnection), nil
 		}
 	case errMsg:
 		m.err = msg

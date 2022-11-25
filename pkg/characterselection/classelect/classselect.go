@@ -7,7 +7,6 @@ package classelect
 // EXISTING CHARACTER -> SELECT CHARACTER (YOU ARE HERE) -> GO TO STARTING ZONE
 //
 import (
-	"database/sql"
 	"fmt"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -60,15 +59,16 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	SSHSession ssh.Session
-	character  *models.Character
-	choiceList list.Model
-	choice     string
-	cursor     int
-	selected   map[int]struct{}
+	DBConnection *mysqlpkg.SqlConn
+	SSHSession   ssh.Session
+	character    *models.Character
+	choiceList   list.Model
+	choice       string
+	cursor       int
+	selected     map[int]struct{}
 }
 
-func InitialModel(characterTemp *models.Character, SSHSess ssh.Session) model {
+func InitialModel(characterTemp *models.Character, SSHSess ssh.Session, DBConn *mysqlpkg.SqlConn) model {
 	const defaultWidth = 20
 	const listHeight = 14
 	classes := []list.Item{
@@ -84,10 +84,11 @@ func InitialModel(characterTemp *models.Character, SSHSess ssh.Session) model {
 	l.Styles.PaginationStyle = paginationStyle
 	l.Styles.HelpStyle = helpStyle
 	return model{
-		SSHSession: SSHSess,
-		choiceList: l,
-		selected:   make(map[int]struct{}),
-		character:  characterTemp,
+		DBConnection: DBConn,
+		SSHSession:   SSHSess,
+		choiceList:   l,
+		selected:     make(map[int]struct{}),
+		character:    characterTemp,
 	}
 }
 
@@ -122,17 +123,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// ID and CreatedAt is generated in charselection.go when race is picked in charselection.go model
 				// Level is set to 1, alive is set to true when race is picked in charselection.go model
 				//
-				usersDB, err := mysqlpkg.ConnectUserDB()
+				err := m.DBConnection.GetSQLConn("characters")
 				if err != nil {
 					log.Println(err)
 				}
-				defer func(usersDB *sql.DB) {
-					err := usersDB.Close()
-					if err != nil {
-						log.Println(err)
-					}
-				}(usersDB)
-				mysqlpkg.AddCharacter(*m.character)
+				m.DBConnection.AddCharacter(*m.character)
+				m.DBConnection.CloseConn()
 				tutorial.InitialModel(m.character, m.SSHSession)
 			}
 		}
