@@ -4,7 +4,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"log"
-	"strings"
 )
 
 type User struct {
@@ -15,19 +14,14 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func (user *User) HashPassword(password string) error {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	if err != nil {
-		return err
-	}
-	user.Password = string(bytes)
-	return nil
-}
-
+// CheckPassword gets plain password as input and checks if it matches the hashed password in the database.
+//
+// user.Password is set during fetching the users database, and retrieved as already hashed.
+//
+// If err is not nil, then the password is not correct and SSH password authentication will fail by returning false.
 func (user *User) CheckPassword(providedPassword string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(providedPassword))
-	// DELETE THESE LINES LATER!!!!!!!!
-	if err != nil && strings.Contains(err.Error(), "hashedSecret too short to be a bcrypted password") == false {
+	if err != nil {
 		log.Println(err)
 		return err
 	}

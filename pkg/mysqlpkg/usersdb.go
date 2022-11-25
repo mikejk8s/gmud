@@ -2,6 +2,7 @@ package mysqlpkg
 
 import (
 	"github.com/mikejk8s/gmud/pkg/userdb"
+	"log"
 )
 
 func (s *SqlConn) CreateUsersTable() {
@@ -16,6 +17,19 @@ func (s *SqlConn) CreateUsersTable() {
 		);`)
 }
 
+// CreateNewUser is self-explanatory by its name.
+//
+// Created_at and updated_at are set to the current time of the database.
+//
+// LoginReq is a struct that contains the user's name, password and email, that is sent from signup server mostly, or you can set one up yourself.
+func (s *SqlConn) CreateNewUser(userInfo LoginReq) error {
+	stmt, err := s.DB.Prepare("INSERT INTO users.users (created_at,updated_at,deleted_at,name, username,email,password) VALUES (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,?,?,?,?)")
+	if err != nil {
+		log.Println("Error", err.Error())
+	}
+	stmt.Query(userInfo.Name, userInfo.Name, userInfo.Email, userInfo.Password)
+	return nil
+}
 func Migration() {
 	userdb.Connect(username, password, hostname, "users")
 	userdb.Migrate()

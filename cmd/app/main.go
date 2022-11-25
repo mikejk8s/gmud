@@ -6,6 +6,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
+	"github.com/mikejk8s/gmud/pkg/backend"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
@@ -31,6 +32,10 @@ func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
 }
 func passHandler(ctx ssh.Context, password string) bool {
+	// This means that the user is not signed up yet
+	if ctx.User() == "" {
+		return false // siktir git kayıt ol gel
+	}
 	usersConn := sqlpkg.SqlConn{}
 	err := usersConn.GetSQLConn("users")
 	if err != nil {
@@ -46,16 +51,11 @@ func passHandler(ctx ssh.Context, password string) bool {
 		}
 	}
 	usersConn.CloseConn()
-	if user.Password == password {
-		credentialError := user.CheckPassword(password)
-		if credentialError != nil {
-			return false
-		} else {
-			return true
-		}
-
-	} else {
+	credentialError := user.CheckPassword(password)
+	if credentialError != nil {
 		return false
+	} else {
+		return true
 	}
 }
 func main() {
@@ -67,6 +67,7 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
+	// Characters table creation.
 	go func() {
 		err := initialTableCreation.CreateCharacterTable()
 		if err != nil {
@@ -75,6 +76,7 @@ func main() {
 			initialTableCreation.CloseConn()
 		}
 	}()
+	// Users table creation.
 	go func() {
 		initialUsersCreation := sqlpkg.SqlConn{}
 		err := initialUsersCreation.GetSQLConn("")
@@ -84,15 +86,20 @@ func main() {
 		initialUsersCreation.CreateUsersTable()
 		initialUsersCreation.CloseConn()
 	}()
+	// Fire the webpage server that will handle the signup page.
+	//
+	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
+	go backend.StartWebPageBackend()
 	// Create a new TCP server
 	newTCP := tcpserver.TCPServer{}
+	// Listen from TCP_HOST and TCP_PORT envs, set these up from Docker-compose.yml.
 	newTCP.Port = os.Getenv("TCP_HOST")
 	newTCP.Host = os.Getenv("TCP_PORT")
 	go newTCP.CreateListener()
-	// SSH server begin
+	// Initialize the SSH server
 	s, err := wish.NewServer(
-		ssh.PasswordAuth(passHandler),
-		ssh.PublicKeyAuth(pkHandler),
+		wish.WithIdleTimeout(30*time.Minute), // 30-minute idle timer, in case if someone forgets to log out.
+		wish.WithPasswordAuth(passHandler),
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
@@ -117,7 +124,6 @@ func main() {
 			log.Fatalln(err)
 		}
 	}()
-	// start web based terminal
 	<-done
 	log.Println("Stopping SSH server")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)

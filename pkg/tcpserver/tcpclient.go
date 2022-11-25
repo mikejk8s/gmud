@@ -9,8 +9,11 @@ import (
 func (s *TCPServer) NewTCPDialer() {
 	s.Dialer, s.Err = net.Dial("tcp", fmt.Sprintf("%s:%s", s.Host, s.Port))
 }
+func (s *TCPServer) CloseTCPDialer() {
+	s.Dialer.Close()
+}
 
-// Dont put \n in the message, it will be added automatically.
+// !!! Dont put \n in the message, it will be added automatically. !!!
 func (s *TCPServer) Writer(connMessage string) {
 	fmt.Fprintf(s.Dialer, fmt.Sprintf("%s\n", connMessage))
 }

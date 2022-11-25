@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Candan A.Ş</title>
+</head>
+<script>
+    function exportToJSON() {
+        const usernameInput = document.getElementById("username").value;
+        const passwordInput = document.getElementById("password").value;
+        const emailInput = document.getElementById("email").value;
+        const postRequestURL = document.getElementById("callback").value;
+        console.log(postRequestURL);
+        fetch(postRequestURL, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            'body': JSON.stringify({"username": usernameInput, "password": passwordInput, "email": emailInput})
+        })
+    }
+</script>
+<body>
+<!-- create a simple form to collect username and password, creates a json and sends it to http://localhost:6969/callback -->
+<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+<form action="" onsubmit="exportToJSON()" target="dummyframe">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
+    {{ $callback := .CallbackURL }}
+    <!-- put the callback url in a hidden input -->
+    <input type="hidden" id="callback" value="{{ $callback }}">
+    <input type="submit" value="Submit">
+
+</form>
+</body>
+</html>
