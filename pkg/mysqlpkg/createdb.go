@@ -2,57 +2,13 @@ package mysqlpkg
 
 import (
 	"context"
-	"database/sql"
-	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"log"
 	"time"
-
-	"github.com/mikejk8s/gmud/logger"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func Dsn(dbName string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
-}
-
-func DbConnection() (*sql.DB, error) {
-	db, err := gorm.Open(mysql.Open(username+":"+password+"@"+"tcp"+hostname+"/"+dbname), &gorm.Config{})
-	if err != nil {
-		panic(err)
-		return nil, err
-	}
-	dbSql, err := db.DB()
-	if err != nil {
-		panic(err)
-		return nil, err
-	}
-
-	if err != nil {
-		log.Printf("Error %s when opening DB\n", err)
-		return nil, err
-	}
-	//defer db.Close()
-
-	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelfunc()
-	res, err := dbSql.ExecContext(ctx, "CREATE SCHEMA IF NOT EXISTS "+dbname)
-	if err != nil {
-		log.Printf("Error %s when creating DB\n", err)
-		return nil, err
-	}
-	no, err := res.RowsAffected()
-	if err != nil {
-		log.Printf("Error %s when fetching rows", err)
-		return nil, err
-	}
-	log.Printf("rows affected %d\n", no)
-	return dbSql, nil
-}
-
-func createCharacterTable(db *sql.DB) error {
+func (s *SqlConn) CreateCharacterTable() error {
 	query := `CREATE TABLE IF NOT EXISTS characters (
 		id BIGINT UNIQUE NOT NULL PRIMARY KEY,
 		name VARCHAR(30) UNIQUE NOT NULL,
@@ -66,7 +22,7 @@ func createCharacterTable(db *sql.DB) error {
 
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
-	res, err := db.ExecContext(ctx, query)
+	res, err := s.DB.ExecContext(ctx, query)
 	if err != nil {
 		log.Printf("Error %s when creating Character table", err)
 		panic(err)
@@ -81,36 +37,3 @@ func createCharacterTable(db *sql.DB) error {
 	log.Printf("Rows affected when creating table: %d", rows)
 	return nil
 }
-
-func Connect() {
-	// Get a new logger instance for database
-	DBConnectionLogger := logger.GetNewLogger()
-	logDirectory := fmt.Sprintf("./logs/dbconn")
-	err := DBConnectionLogger.AssignOutput("dbLog", logDirectory)
-	if err != nil {
-		log.Printf("Error %s when assigning output to logger", err)
-	}
-	db, err := DbConnection()
-	if err != nil {
-		DBConnectionLogger.LogUtil.Errorln("Error connecting to DB: ", err)
-		panic(err)
-		return
-	}
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-			DBConnectionLogger.LogUtil.Errorf("Error %s while connecting to DB: ", err)
-			return
-		}
-	}(db)
-	DBConnectionLogger.LogUtil.Infoln("Connected to DB successfully")
-	err = createCharacterTable(db)
-	if err != nil {
-		DBConnectionLogger.LogUtil.Errorf("Error %s while creating Character table", err)
-		panic(err)
-		return
-	}
-}
-
-// ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
-// defer cancelfunc()

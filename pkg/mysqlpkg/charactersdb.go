@@ -8,21 +8,19 @@ import (
 	//"github.com/mikejk8s/gmud"
 	"fmt"
 
-	"github.com/felixge/fgtrace"
-
 	//cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	m "github.com/mikejk8s/gmud/pkg/models"
 )
 
 // func GetCharacters(code string) []m.Character {
-// 	db, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
+// 	DB, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
 // 	char:= &m.Character{}
 // 	if err != nil {
 // 		fmt.Println("Error", err.Error())
 // 		return nil
 // 		{
-// 	defer db.Close()
-// 	results, err := db.Query("SELECT * FROM characters")
+// 	defer DB.Close()
+// 	results, err := DB.Query("SELECT * FROM characters")
 // 	if err != nil {
 // 		fmt.Println("Err", err.Error())
 // 		return nil
@@ -30,27 +28,15 @@ import (
 // 	defer results.Close()
 // 	for result.Next()
 
-func GetCharacter() []m.Character {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
+func (s *SqlConn) CloseConn() error {
+	err := s.DB.Close()
 	if err != nil {
-		fmt.Println("Error", err.Error())
-		return nil
+		return err
 	}
-
-	defer func(trace *fgtrace.Trace) {
-		err := trace.Stop()
-		if err != nil {
-			log.Println(err)
-		}
-	}(fgtrace.Config{Dst: fgtrace.File("charactersdb-fgtrace.json")}.Trace())
-
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-			log.Println(err)
-		}
-	}(db)
-	results, err := db.Query("SELECT * FROM characters")
+	return nil
+}
+func (s *SqlConn) GetCharacter() []m.Character {
+	results, err := s.DB.Query("SELECT * FROM characters")
 	if err != nil {
 		fmt.Println("Error", err.Error())
 		return nil
@@ -69,21 +55,15 @@ func GetCharacter() []m.Character {
 }
 
 // GetCharacters returns an array of characters associated with the account accOwner.
-func GetCharacters(code string) []*m.Character {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
-	// Create a temporary storage of characters
-	var charTempStorage []*m.Character
-	if err != nil {
-		log.Println("Error", err.Error())
-	}
-	defer db.Close()
-	results, err := db.Query(fmt.Sprintf("SELECT * FROM characters WHERE characterowner = '%s'", code))
+func (s *SqlConn) GetCharacters(code string) []*m.Character {
+	results, err := s.DB.Query(fmt.Sprintf("SELECT * FROM characters WHERE characterowner = '%s'", code))
 	if err != nil {
 		fmt.Println("Err", err.Error())
 		return nil
 	}
 	fmt.Println()
 	// Append every character to the temporary storage
+	var charTempStorage []*m.Character
 	for {
 		char := &m.Character{}
 		if results.Next() {
@@ -100,20 +80,8 @@ func GetCharacters(code string) []*m.Character {
 	return charTempStorage
 }
 
-func AddCharacter(Character m.Character) {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
-	if err != nil {
-		panic(err.Error())
-	}
-	// defer the close till after this function has finished
-	// executing
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-			log.Println(err)
-		}
-	}(db)
-	insert, err := db.Query(
+func (s *SqlConn) AddCharacter(Character m.Character) {
+	insert, err := s.DB.Query(
 		"INSERT INTO characters (name,id,class,level,race,characterowner) VALUES (?,?,?,?,?,?)",
 		Character.Name, Character.ID, Character.Class, Character.Level, Character.Race, Character.CharacterOwner)
 	// if there is an error inserting, handle it
@@ -128,21 +96,19 @@ func AddCharacter(Character m.Character) {
 	}(insert)
 }
 
-func DeleteCharacter(Character m.Character) {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
-	if err != nil {
-		panic(err.Error())
-	}
-	// defer the close till after this function has finished
-	// executing
-	defer db.Close()
-	delete, err := db.Query(
+func (s *SqlConn) DeleteCharacter(Character m.Character) {
+	delete, err := s.DB.Query(
 		"DELETE FROM characters WHERE id = ?", Character.ID)
 	// if there is an error deleting, handle it
 	if err != nil {
 		panic(err.Error())
 	}
-	defer delete.Close()
+	defer func(delete *sql.Rows) {
+		err := delete.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(delete)
 }
 
 //TODO: Convert to postgres
