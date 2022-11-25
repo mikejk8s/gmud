@@ -1,0 +1,49 @@
+version: '3'
+services:
+  db:
+    image: mariadb:latest
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dbinit
+    ports:
+      - '127.0.0.1:3306:3306'
+    volumes:
+      - 'db_data:/var/lib/mysql'
+    restart: on-failure
+    environment:
+      # Change this later.
+      - MARIADB_USER_NAME=cansu
+      - MARIADB_USER_PASSWORD=cansu
+    networks:
+      - dev
+    healthcheck:
+      test: "/usr/bin/mysql --user=$$MARIA_DB_USER_NAME --password=$$MARIADB_USER_PASSWORD --execute \"use users\""
+      timeout: 60s
+      retries: 60
+  mud:
+    container_name: gmud
+    restart: always
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.gmud
+    volumes:
+    - app:/approot
+    environment:
+      - WAIT_HOSTS=maria:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    ports:
+      - "2222:2222"
+      - "8081:8081"
+    depends_on:
+      - db
+    networks:
+      - dev
+volumes:
+  db_data:
+  app:
+networks:
+    dev:
+      driver: bridge
