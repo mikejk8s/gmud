@@ -1,7 +1,12 @@
 # gmud
 
 A mud in go
-
+## How to run?
+````shell
+docker compose up
+````
+And connect to 127.0.0.1:2222 with your favourite Telnet client.
+It doesn't work on my side due to my college network, but it should work on yours.
 ## Features
 
 What's broken:
