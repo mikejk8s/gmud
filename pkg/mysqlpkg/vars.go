@@ -12,7 +12,7 @@ type SqlConn struct {
 
 // GetSQLConn attaches a new sql connection to the SqlConn struct.
 func (conn *SqlConn) GetSQLConn(dbname string) error {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname)
+	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
 	if err != nil {
 		log.Println("Error", err.Error())
 		return err

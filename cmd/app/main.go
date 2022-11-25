@@ -6,10 +6,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
-	"github.com/mikejk8s/gmud/pkg/httprequests"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/tcpserver"
 	"github.com/muesli/termenv"
 	"log"
 	"net"
@@ -84,8 +84,11 @@ func main() {
 		initialUsersCreation.CreateUsersTable()
 		initialUsersCreation.CloseConn()
 	}()
-	// This command will refresh password to websockets in every 5 minutes.
-	go httprequests.RefreshPassword()
+	// Create a new TCP server
+	newTCP := tcpserver.TCPServer{}
+	newTCP.Port = os.Getenv("TCP_HOST")
+	newTCP.Host = os.Getenv("TCP_PORT")
+	go newTCP.CreateListener()
 	// SSH server begin
 	s, err := wish.NewServer(
 		ssh.PasswordAuth(passHandler),

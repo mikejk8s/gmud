@@ -15,6 +15,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
+	"github.com/mikejk8s/gmud/pkg/tcpserver"
+	"log"
 	"os"
 	"strings"
 )
@@ -50,6 +52,16 @@ func max(a, b int) int {
 	return b
 }
 func InitialModel(char *models.Character, SSHSess ssh.Session) model {
+	// Send data to TCP server that a character has entered the tutorial zone.
+	newTCP := tcpserver.TCPServer{}
+	newTCP.Port = os.Getenv("TCP_HOST")
+	newTCP.Host = os.Getenv("TCP_PORT")
+	newTCP.NewTCPDialer()
+	if newTCP.Err != nil {
+		log.Println(newTCP.Err)
+	}
+	newTCP.Writer(fmt.Sprintf("TUTORIAL_ZONE: %s", char.Name))
+	// it is succesful, but I still dont know how the fuck I can implement whois function.
 	// Load some text for our viewport
 	content, err := os.ReadFile("./textfiles/tutorial.md")
 	if err != nil {

@@ -34,6 +34,8 @@ services:
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
+      - TCP_HOST=127.0.0.1
+      - TCP_PORT=3131
     ports:
       - "2222:2222"
       - "8081:8081"

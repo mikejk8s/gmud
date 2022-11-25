@@ -73,7 +73,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 				// Dont forget to pass SSHSession and DBConnection, a user should occupy a single session.
 				dbConn := &mysqlpkg.SqlConn{}
-				dbConn.GetSQLConn("")
+				dbConn.GetSQLConn("characters")
 				switch m.choices[m.cursor] {
 				case "Play with Existing Character":
 					return existingcharselect.InitialModel(m.accountOwner, m.SSHSession, dbConn), nil
