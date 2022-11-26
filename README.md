@@ -7,16 +7,6 @@ docker compose up
 ````
 And connect to 127.0.0.1:2222 with your favourite Telnet client.
 It doesn't work on my side due to my college network, but it should work on yours.
-## Features
-
-What's broken:
-r~~1. //TODO: SSH only takes one key and right now I'm getting errors accessing itr~~ SSH username and password type of authentication is in charge.
-2. //TODO: gmud container cant connect to database
-
-2.25 this is probably due to mysql image, need to specify it by mysql/mysql-server:latest. I will try it in a couple of days.
-
-   1. This is NOT a problem when running ./app from localhost
-
 ## Todo
 
 ~~1. Let user create a new character~~ 
@@ -49,7 +39,13 @@ r~~1. //TODO: SSH only takes one key and right now I'm getting errors accessing 
 
 12. Create a stats model for character stats.
 
-13. Create a combat tutorial room model.
+Currently after class selection, character is saved in database. Create a new stat selection model, expand characters table (or however you want) and send character to database after stat selection.
+
+![image](https://user-images.githubusercontent.com/92731060/204088110-59cc9580-e76b-4a89-8fa1-2a949ccbcbbe.png)
+
+
+14. Take barebones signup server (html templates in cmd/app/templates, create static files at wherever you want I didnt code it. backend code itself is in pkg/backend) and make it actually a real server. mike probably had a site for that.
+
 
 
 ## Api Paths
