@@ -5,6 +5,8 @@ A mud in go
 ````shell
 docker compose up
 ````
+Change initdecoy.sql to init.sql and replace username and passwords in line 23-30.
+
 And connect to 127.0.0.1:2222 with your favourite Telnet client.
 It doesn't work on my side due to my college network, but it should work on yours.
 ## Todo
