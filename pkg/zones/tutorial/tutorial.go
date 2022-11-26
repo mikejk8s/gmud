@@ -60,6 +60,7 @@ func InitialModel(char *models.Character, SSHSess ssh.Session) model {
 	if newTCP.Err != nil {
 		log.Println(newTCP.Err)
 	}
+	newTCP.NewTCPDialer()
 	newTCP.Writer(fmt.Sprintf("TUTORIAL_ZONE: %s", char.Name))
 	// it is succesful, but I still dont know how the fuck I can implement whois function.
 	// Load some text for our viewport
