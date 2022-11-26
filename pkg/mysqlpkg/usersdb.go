@@ -31,6 +31,6 @@ func (s *SqlConn) CreateNewUser(userInfo LoginReq) error {
 	return nil
 }
 func Migration() {
-	userdb.Connect(username, password, hostname, "users")
+	userdb.Connect(Username, Password, Hostname, "users")
 	userdb.Migrate()
 }

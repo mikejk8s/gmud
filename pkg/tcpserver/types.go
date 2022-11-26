@@ -16,3 +16,9 @@ type TCPServer struct {
 	Dialer net.Conn
 	Err    error
 }
+
+// This variables are initialized when first TCP server is created and you can use them to dial to the TCP server.
+var (
+	TCPHost string
+	TCPPort string
+)

@@ -54,9 +54,9 @@ func max(a, b int) int {
 func InitialModel(char *models.Character, SSHSess ssh.Session) model {
 	// Send data to TCP server that a character has entered the tutorial zone.
 	newTCP := tcpserver.TCPServer{}
-	newTCP.Port = os.Getenv("TCP_HOST")
-	newTCP.Host = os.Getenv("TCP_PORT")
-	newTCP.NewTCPDialer()
+	// Server that is running on background atm.
+	newTCP.Port = tcpserver.TCPPort
+	newTCP.Host = tcpserver.TCPHost
 	if newTCP.Err != nil {
 		log.Println(newTCP.Err)
 	}

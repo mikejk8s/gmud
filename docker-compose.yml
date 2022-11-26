@@ -34,6 +34,12 @@ services:
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
+      # These envs are used for connection to the database.
+      - MYSQL_USER=cansu
+      - MYSQL_PASSWORD=cansu
+      - MYSQL_HOST=(127.0.0.1:3306)
+      # This is used for switching between localhost:port to TCP_HOST:TCP_PORT etc.
+      - RUNNING_ON_DOCKER=true
       # WEBPAGE environment variables are used for Gin web server.
       - WEBPAGE_HOST=127.0.0.1
       - WEBPAGE_PORT=6969

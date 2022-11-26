@@ -6,7 +6,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
-	"github.com/mikejk8s/gmud/pkg/backend"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
@@ -27,6 +26,8 @@ const (
 	host = "localhost"
 	port = 2222
 )
+
+var RunningOnDocker = false
 
 func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
 	return true
@@ -59,6 +60,57 @@ func passHandler(ctx ssh.Context, password string) bool {
 	}
 }
 func main() {
+	// This is used for switching between localhost:port to TCP_HOST:TCP_PORT etc.
+	// Lookup for a running on docker environment variable, if exists
+	tempEnvVar, ok := os.LookupEnv("RUNNING_ON_DOCKER")
+	if ok {
+		// set running on docker to true
+		RunningOnDocker = tempEnvVar == "true"
+		// Use mysqlpkg's RunningOnDocker variable that is set on vars.go if you want to use this bool in other code.
+		sqlpkg.RunningOnDocker = RunningOnDocker
+		log.Println("Running on docker is set to", sqlpkg.RunningOnDocker)
+	} else {
+		sqlpkg.RunningOnDocker = false
+	}
+	// I will try to set everything from one function so future contributors can change variables
+	// from one place as they run the app on their own.
+	//
+	// Change the mysqlpkg variables if we are running on docker
+	if RunningOnDocker {
+		sqlpkg.Username = os.Getenv("MYSQL_USER")
+		sqlpkg.Password = os.Getenv("MYSQL_PASSWORD")
+		sqlpkg.Hostname = os.Getenv("MYSQL_HOST")
+	} else {
+		// If we are not running on docker, please change these variables as you desire.
+		sqlpkg.Username = "cansu"
+		sqlpkg.Password = "1234"
+		sqlpkg.Hostname = "(127.0.0.1:3306)"
+	}
+	// Create a new TCP server
+	newTCP := tcpserver.TCPServer{}
+	// Listen from TCP_HOST and TCP_PORT envs, set these up from Docker-compose.yml.
+	// or if not running on docker, change host and port on else statement.
+	if RunningOnDocker {
+		newTCP.Host = os.Getenv("TCP_HOST")
+		newTCP.Port = os.Getenv("TCP_PORT")
+		// This values will be used in the future for dialing to the server that is running in background.
+		tcpserver.TCPPort = os.Getenv("TCP_PORT")
+		tcpserver.TCPHost = os.Getenv("TCP_HOST")
+	} else {
+		newTCP.Host = "127.0.0.1"
+		newTCP.Port = "4545"
+		// This values will be used in the future for dialing to the server that is running in background.
+		tcpserver.TCPHost = "127.0.0.1"
+		tcpserver.TCPPort = "4545"
+	}
+	// Fire the webpage server that will handle the signup page.
+	//
+	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
+	//
+	// Or localhost:6969 if it's not running on docker. You can change it by changing 6969 below simply.
+	// go backend.StartWebPageBackend(RunningOnDocker, 6969)
+	// Start listening the TCP server
+	go newTCP.CreateListener()
 	// Create users schema and users table, migrate if possible.
 	go sqlpkg.Migration()
 	// Connect to mariadb database and create characters schema + character tables if they don't exist
@@ -86,16 +138,6 @@ func main() {
 		initialUsersCreation.CreateUsersTable()
 		initialUsersCreation.CloseConn()
 	}()
-	// Fire the webpage server that will handle the signup page.
-	//
-	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
-	go backend.StartWebPageBackend()
-	// Create a new TCP server
-	newTCP := tcpserver.TCPServer{}
-	// Listen from TCP_HOST and TCP_PORT envs, set these up from Docker-compose.yml.
-	newTCP.Port = os.Getenv("TCP_HOST")
-	newTCP.Host = os.Getenv("TCP_PORT")
-	go newTCP.CreateListener()
 	// Initialize the SSH server
 	s, err := wish.NewServer(
 		wish.WithIdleTimeout(30*time.Minute), // 30-minute idle timer, in case if someone forgets to log out.

@@ -21,7 +21,7 @@ type SqlConn struct {
 
 // GetSQLConn attaches a new sql connection to the SqlConn struct.
 func (conn *SqlConn) GetSQLConn(dbname string) error {
-	db, err := sql.Open("mysql", username+":"+password+"@tcp"+hostname+"/"+dbname+"?parseTime=true")
+	db, err := sql.Open("mysql", Username+":"+Password+"@tcp"+Hostname+"/"+dbname+"?parseTime=true")
 	if err != nil {
 		log.Println("Error", err.Error())
 		return err
@@ -30,12 +30,14 @@ func (conn *SqlConn) GetSQLConn(dbname string) error {
 	return nil
 }
 
+var RunningOnDocker = false
+
 // these are self-explanatory, change them to your own database credentials when you are running them locally.
 //
 // will change it to work with docker-composer environment variables later.
-const (
-	username = "cansu"
-	password = "1234"
+var (
+	Username = "cansu"
+	Password = "1234"
 	//hostname = "docker.for.mac.localhost:3306"
-	hostname = "(127.0.0.1:3306)"
+	Hostname = "(127.0.0.1:3306)"
 )

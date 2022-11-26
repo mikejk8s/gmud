@@ -73,13 +73,20 @@ func SignupPage(c *gin.Context) {
 //
 // You can set these values in the docker-compose.yml file.
 //
-// Or just comment it out and use r.Run(":desiredport") to run the server on a desired port.
-func StartWebPageBackend() {
+// If app is not ran on Docker (envExists=false), it will use the localPort variable that is passed to the function.
+func StartWebPageBackend(envExists bool, localPort int) {
 	r := gin.Default()
 	r.GET("/signup", SignupPage)
 	r.POST("/callback", SignupFormJSONBinding)
 	r.HTMLRender = ginview.Default()
-	r.LoadHTMLGlob("templates/*.html")
-	r.Run(fmt.Sprintf("%s:%s", os.Getenv("WEBPAGE_HOST"), os.Getenv("WEBPAGE_PORT")))
+	if envExists {
+		// If we are running from Docker, then working directory consists all folders.
+		// Means, cmd/app/templates is the correct path.
+		r.LoadHTMLGlob("cmd/app/templates/*.html")
+		r.Run(fmt.Sprintf("%s:%s", os.Getenv("WEBPAGE_HOST"), os.Getenv("WEBPAGE_PORT")))
+	} else {
+		r.LoadHTMLGlob("templates/*.html")
+		r.Run(fmt.Sprintf(":%d", localPort))
+	}
 	// r.Run(":6969")
 }
