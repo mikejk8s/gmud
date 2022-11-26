@@ -31,7 +31,8 @@ It doesn't work on my side due to my college network, but it should work on your
 
 8.25 We need a whole ass sign up site that handles the registers. Data needs to be nuked at users table.
 
-9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine
+~~9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine~~ Rename initdecoy.sql to init.sql and replace XXXXX values on line 25-30. Then write username, password, host (in (127.0.0.1:3306) form) and password in docker.composer.yml
+
 
 ~~10. Alive reports false need to switch to reverse bool or dead~~  1 means alive and 0 means dead? Cant change it.
 
