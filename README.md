@@ -9,6 +9,19 @@ Change initdecoy.sql to init.sql and replace username and passwords in line 23-3
 
 And connect to 127.0.0.1:2222 with your favourite Telnet client.
 It doesn't work on my side due to my college network, but it should work on yours.
+
+## Ideas
+
+- For multiplayer, make a lobby system. For every connected player, the clientside port is different. 
+ For example local address is always same but clientside port is 59080 etc. Save that SSH session's clientside address, 
+split it into port,make a new tcp server with that port.
+Upload port to database under the name of the user. After that, other people can join that user by typing his name, by listening to TCP port that is assigned under that account.
+- Above seems like overengineering it best.
+- If we can handle the multiplayer, then return to implementing the game again. Such as statistics.
+- D&D 5e ruleset can be used for characters, and one-page adventures can be used for quests. Lobby system will be used for multiplayer.
+- We may say just screw it, and let the people create their own adventures. But that will be a lot of work. And Path of Exile's new league is near. We can just roll with 3-5 quests and keep it as proof of concept not a game engine.
+
+
 ## Todo
 
 ~~1. Let user create a new character~~ 
