@@ -27,9 +27,19 @@ func SignupFormJSONBinding(c *gin.Context) {
 		fmt.Println(err)
 	}
 	// Hash the password and salt it with 16 min cost, this can change. Then create a new user with the LoginJSON struct.
-	hashAndSalt([]byte(LoginJSON.Password), 16, LoginJSON)
+	err = hashAndSalt([]byte(LoginJSON.Password), 16, LoginJSON)
+	if err != nil {
+		// Send a response to the client that the user already exists.
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "failed",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "success",
+		})
+	}
 }
-func hashAndSalt(pwd []byte, minCost int, userInfo mysqlpkg.LoginReq) {
+func hashAndSalt(pwd []byte, minCost int, userInfo mysqlpkg.LoginReq) error {
 
 	// Use GenerateFromPassword to hash & salt pwd.
 	// MinCost is just an integer constant provided by the bcrypt
@@ -54,8 +64,9 @@ func hashAndSalt(pwd []byte, minCost int, userInfo mysqlpkg.LoginReq) {
 	// Create a new user from all these information.
 	err = dbUsers.CreateNewUser(userInfo)
 	if err != nil {
-		log.Println(err)
+		return err
 	}
+	return nil
 }
 
 // SignupPage is a literally fleshed out signup page just consisting three input fields with a submit button.
@@ -76,8 +87,18 @@ func SignupPage(c *gin.Context) {
 // If app is not ran on Docker (envExists=false), it will use the localPort variable that is passed to the function.
 func StartWebPageBackend(envExists bool, localPort int) {
 	r := gin.Default()
+	// This is used for hiding printing one hundred of lines of loading static files.
+	// If you want to see which files are loaded you can remove this line.
+	gin.SetMode(gin.ReleaseMode)
 	r.GET("/signup", SignupPage)
 	r.POST("/callback", SignupFormJSONBinding)
+	r.GET("/exists", func(c *gin.Context) {
+		c.HTML(
+			http.StatusOK,
+			"exists.html",
+			gin.H{},
+		)
+	})
 	r.HTMLRender = ginview.Default()
 	if envExists {
 		// If we are running from Docker, then working directory consists all folders.

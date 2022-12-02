@@ -6,6 +6,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
+	"github.com/mikejk8s/gmud/pkg/backend"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
@@ -23,15 +24,12 @@ import (
 )
 
 const (
-	host = "localhost"
+	host = "127.0.0.1"
 	port = 2222
 )
 
 var RunningOnDocker = false
 
-func pkHandler(ctx ssh.Context, key ssh.PublicKey) bool {
-	return true
-}
 func passHandler(ctx ssh.Context, password string) bool {
 	// This means that the user is not signed up yet
 	if ctx.User() == "" {
@@ -108,7 +106,7 @@ func main() {
 	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
 	//
 	// Or localhost:6969 if it's not running on docker. You can change it by changing 6969 below simply.
-	// go backend.StartWebPageBackend(RunningOnDocker, 6969)
+	go backend.StartWebPageBackend(RunningOnDocker, 6969)
 	// Start listening the TCP server
 	go newTCP.CreateListener()
 	// Create users schema and users table, migrate if possible.
@@ -239,6 +237,7 @@ func (m model) View() string {
 	s := "Welcome to gmud!\n\n"
 	s += "Date> " + m.time.Format(time.RFC1123) + "\n\n"
 	s += "Press 'l' to go in.\n"
-
+	s += m.SSHSession.LocalAddr().String() + "\n"
+	s += m.SSHSession.RemoteAddr().String() + "\n"
 	return fmt.Sprintln(s, m.Height, m.Width)
 }

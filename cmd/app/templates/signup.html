@@ -17,7 +17,15 @@
                 'content-type': 'application/json'
             },
             'body': JSON.stringify({"username": usernameInput, "password": passwordInput, "email": emailInput})
-        })
+        }).then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data["status"] === "success") {
+                    window.location.href = "http://localhost:6969/terminal";
+                } else {
+                    window.location.href = "http://localhost:6969/exists";
+                }
+            });
     }
 </script>
 <body>
