@@ -12,16 +12,13 @@ It doesn't work on my side due to my college network, but it should work on your
 
 ## Ideas
 
-- For multiplayer, make a lobby system. For every connected player, the clientside port is different. 
- For example local address is always same but clientside port is 59080 etc. Save that SSH session's clientside address, 
-split it into port,make a new tcp server with that port.
-Upload port to database under the name of the user. After that, other people can join that user by typing his name, by listening to TCP port that is assigned under that account.
+- I am thinking something else for MP.
 - Above seems like overengineering it best.
 - If we can handle the multiplayer, then return to implementing the game again. Such as statistics.
 - D&D 5e ruleset can be used for characters, and one-page adventures can be used for quests. Lobby system will be used for multiplayer.
 - We may say just screw it, and let the people create their own adventures. But that will be a lot of work. And Path of Exile's new league is near. We can just roll with 3-5 quests and keep it as proof of concept not a game engine.
 
-
+ 
 ## Todo
 
 ~~1. Let user create a new character~~ 
@@ -46,7 +43,7 @@ Upload port to database under the name of the user. After that, other people can
 
 8.25 We need a whole ass sign up site that handles the registers. Data needs to be nuked at users table.
 
-~~9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine~~ Rename initdecoy.sql to init.sql and replace XXXXX values on line 25-30. Then write username, password, host (in (127.0.0.1:3306) form) and password in docker.composer.yml
+~~9. Docker-compose broken, gmud connection refused to mysql/localhost:3306 - can access w/ sqlstudio fine~~ Rename initdecoy.sql to init.sql and replace XXXXX values on line 25-30. Then write username, password, Host (in (127.0.0.1:3306) form) and password in docker.composer.yml
 
 
 ~~10. Alive reports false need to switch to reverse bool or dead~~  1 means alive and 0 means dead? Cant change it.
@@ -76,7 +73,7 @@ This part is completely yeeted off. We still need a create account endpoint on a
 # To fix go mod  paths
 
 ```go
-➜  charactersDb git:(main) ✗ go env -w GOPRIVATE=github.com/mikejk8s
+➜ charactersDb git:(main) ✗ go env -w GOPRIVATE=github.com/mikejk8s
 ➜  charactersDb git:(main) ✗ go mod tidy
 Found existing alias for "go mod". You should use: "gom"
 go: finding module for package github.com/mikejk8s/gmud
