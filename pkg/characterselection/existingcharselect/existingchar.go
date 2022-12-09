@@ -57,7 +57,6 @@ func InitialModel(accOwner string, SSHSess ssh.Session, dbConn *mysqlpkg.SqlConn
 	tempCharacterData := GetCharacterDB(dbConn, accOwner)
 	var characterList []list.Item
 	for i := range tempCharacterData {
-		fmt.Println(tempCharacterData[i].Name)
 		characterList = append(characterList, item{
 			CharacterName:    tempCharacterData[i].Name,
 			CharacterDetails: fmt.Sprintf("Level> %d \t Class> %s", tempCharacterData[i].Level, tempCharacterData[i].Class),

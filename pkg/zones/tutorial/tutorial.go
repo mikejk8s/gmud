@@ -15,8 +15,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/tcpserver"
-	"log"
+	"github.com/mikejk8s/gmud/pkg/zones/combattutorial"
 	"os"
 	"strings"
 )
@@ -52,16 +51,6 @@ func max(a, b int) int {
 	return b
 }
 func InitialModel(char *models.Character, SSHSess ssh.Session) model {
-	// Send data to TCP server that a character has entered the tutorial zone.
-	newTCP := tcpserver.TCPServer{}
-	// Server that is running on background atm.
-	newTCP.Port = tcpserver.TCPPort
-	newTCP.Host = tcpserver.TCPHost
-	if newTCP.Err != nil {
-		log.Println(newTCP.Err)
-	}
-	newTCP.NewTCPDialer()
-	newTCP.Writer(fmt.Sprintf("TUTORIAL_ZONE: %s", char.Name))
 	// it is succesful, but I still dont know how the fuck I can implement whois function.
 	// Load some text for our viewport
 	content, err := os.ReadFile("./textfiles/tutorial.md")
@@ -96,7 +85,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	)
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		if k := msg.String(); k == "ctrl+c" || k == "q" || k == "esc" {
+		switch msg.String() {
+		case "up", "k":
+			return combattutorial.InitialModel(m.Character, m.SSHSession), nil
+		case "down", "j":
+			return combattutorial.InitialModel(m.Character, m.SSHSession), nil
+		}
+		switch msg.Type {
+		case tea.KeyCtrlC:
 			return m, tea.Quit
 		}
 

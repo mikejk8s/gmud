@@ -129,7 +129,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 				m.DBConnection.AddCharacter(*m.character)
 				m.DBConnection.CloseConn()
-				tutorial.InitialModel(m.character, m.SSHSession)
+				return tutorial.InitialModel(m.character, m.SSHSession), nil
 			}
 		}
 	case tea.WindowSizeMsg:

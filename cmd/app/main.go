@@ -10,7 +10,7 @@ import (
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/tcpserver"
+	"github.com/mikejk8s/gmud/pkg/sshcommands"
 	"github.com/muesli/termenv"
 	"log"
 	"net"
@@ -24,8 +24,8 @@ import (
 )
 
 const (
-	host = "127.0.0.1"
-	port = 2222
+	Host = "127.0.0.1"
+	Port = 2222
 )
 
 var RunningOnDocker = false
@@ -84,31 +84,13 @@ func main() {
 		sqlpkg.Password = "1234"
 		sqlpkg.Hostname = "(127.0.0.1:3306)"
 	}
-	// Create a new TCP server
-	newTCP := tcpserver.TCPServer{}
-	// Listen from TCP_HOST and TCP_PORT envs, set these up from Docker-compose.yml.
-	// or if not running on docker, change host and port on else statement.
-	if RunningOnDocker {
-		newTCP.Host = os.Getenv("TCP_HOST")
-		newTCP.Port = os.Getenv("TCP_PORT")
-		// This values will be used in the future for dialing to the server that is running in background.
-		tcpserver.TCPPort = os.Getenv("TCP_PORT")
-		tcpserver.TCPHost = os.Getenv("TCP_HOST")
-	} else {
-		newTCP.Host = "127.0.0.1"
-		newTCP.Port = "4545"
-		// This values will be used in the future for dialing to the server that is running in background.
-		tcpserver.TCPHost = "127.0.0.1"
-		tcpserver.TCPPort = "4545"
-	}
+	// Run a websocket server to communicate between players.
 	// Fire the webpage server that will handle the signup page.
 	//
 	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
 	//
 	// Or localhost:6969 if it's not running on docker. You can change it by changing 6969 below simply.
 	go backend.StartWebPageBackend(RunningOnDocker, 6969)
-	// Start listening the TCP server
-	go newTCP.CreateListener()
 	// Create users schema and users table, migrate if possible.
 	go sqlpkg.Migration()
 	// Connect to mariadb database and create characters schema + character tables if they don't exist
@@ -140,7 +122,7 @@ func main() {
 	s, err := wish.NewServer(
 		wish.WithIdleTimeout(30*time.Minute), // 30-minute idle timer, in case if someone forgets to log out.
 		wish.WithPasswordAuth(passHandler),
-		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
+		wish.WithAddress(fmt.Sprintf("%s:%d", Host, Port)),
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
 		}),
@@ -157,7 +139,7 @@ func main() {
 	}
 	done := make(chan os.Signal, 0)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	log.Printf("Starting SSH server on %s:%d", host, port)
+	log.Printf("Starting SSH server on %s:%d", Host, Port)
 	go func() {
 		err = s.ListenAndServe()
 		if err != nil {
@@ -221,6 +203,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.time = time.Time(msg)
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "k":
+			sshcommands.Test(m.SSHSession, "whois")
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "l", "ctrl+l":

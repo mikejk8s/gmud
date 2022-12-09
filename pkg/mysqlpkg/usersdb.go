@@ -27,7 +27,10 @@ func (s *SqlConn) CreateNewUser(userInfo LoginReq) error {
 	if err != nil {
 		log.Println("Error", err.Error())
 	}
-	stmt.Query(userInfo.Name, userInfo.Name, userInfo.Email, userInfo.Password)
+	_, err = stmt.Query(userInfo.Name, userInfo.Name, userInfo.Email, userInfo.Password)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 func Migration() {
