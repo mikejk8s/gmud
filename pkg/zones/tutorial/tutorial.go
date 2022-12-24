@@ -9,15 +9,21 @@ package tutorial
 //
 // 	         SECOND ROOM ??????????????
 import (
+	"context"
 	"fmt"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
+	"github.com/mikejk8s/gmud/pkg/wserver"
 	"github.com/mikejk8s/gmud/pkg/zones/combattutorial"
+	"log"
+	"nhooyr.io/websocket"
+	"nhooyr.io/websocket/wsjson"
 	"os"
 	"strings"
+	"time"
 )
 
 const useHighPerformanceRenderer = false
@@ -57,6 +63,27 @@ func InitialModel(char *models.Character, SSHSess ssh.Session) model {
 	if err != nil {
 		panic(err)
 	}
+	// dial to websocket server that is running on 127.0.0.1:5000
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	c, _, err := websocket.Dial(ctx, fmt.Sprintf("ws://%s", wserver.GetWSPort()), nil)
+	if err != nil {
+		log.Println(err)
+		cancel()
+		return model{}
+	}
+	defer cancel()
+	// then send a message to the websocket server
+	err = wsjson.Write(ctx, c, "Welcome, time has no meaning here!")
+	// read the response from the websocket server
+	_, msg, err := c.Read(ctx)
+	if err != nil {
+		log.Println(err)
+		cancel()
+		return model{}
+	}
+	// print the response
+	content = append(content, msg...)
+	// TODO: do this for whois, let the users know who is in the room
 	return model{
 		SSHSession: SSHSess,
 		content:    string(content),

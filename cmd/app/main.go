@@ -11,6 +11,7 @@ import (
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/sshcommands"
+	"github.com/mikejk8s/gmud/pkg/wserver"
 	"github.com/muesli/termenv"
 	"log"
 	"net"
@@ -84,7 +85,9 @@ func main() {
 		sqlpkg.Password = "1234"
 		sqlpkg.Hostname = "(127.0.0.1:3306)"
 	}
-	// Run a websocket server to communicate between players.
+	// Run a websocket server to communicate between players, fiddle with change websocket port if you want.
+	wserver.ChangeWSPort(5000)
+	go wserver.LaunchWS()
 	// Fire the webpage server that will handle the signup page.
 	//
 	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml

@@ -99,6 +99,9 @@ func StartWebPageBackend(envExists bool, localPort int) {
 			gin.H{},
 		)
 	})
+	r.GET("/success", func(c *gin.Context) {
+		c.Writer.Write([]byte("Success!"))
+	})
 	r.HTMLRender = ginview.Default()
 	if envExists {
 		// If we are running from Docker, then working directory consists all folders.

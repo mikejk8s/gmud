@@ -13,6 +13,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/muesli/termenv v0.13.0
+	github.com/olahol/melody v1.1.1
 	github.com/sirupsen/logrus v1.9.0
 	go.opentelemetry.io/otel v1.10.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.10.0
@@ -20,6 +21,7 @@ require (
 	golang.org/x/crypto v0.3.0
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.10
+	nhooyr.io/websocket v1.8.7
 )
 
 require (
@@ -36,9 +38,11 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/compress v1.10.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
