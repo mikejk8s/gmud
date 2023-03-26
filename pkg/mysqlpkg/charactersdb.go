@@ -12,72 +12,33 @@ import (
 	m "github.com/mikejk8s/gmud/pkg/models"
 )
 
-// func GetCharacters(code string) []m.Character {
-// 	DB, err := sql.Open("mysql", username+":"+password+"@tcp(127.0.0.1:3306)/"+dbname)
-// 	char:= &m.Character{}
-// 	if err != nil {
-// 		fmt.Println("Error", err.Error())
-// 		return nil
-// 		{
-// 	defer DB.Close()
-// 	results, err := DB.Query("SELECT * FROM characters")
-// 	if err != nil {
-// 		fmt.Println("Err", err.Error())
-// 		return nil
-// 	}
-// 	defer results.Close()
-// 	for result.Next()
-
-func (s *SqlConn) CloseConn() error {
-	err := s.DB.Close()
-	if err != nil {
-		return err
+func (s *SqlConn) Close() error {
+	if err := s.DB.Close(); err != nil {
+		return fmt.Errorf("error closing SQL connection: %w", err)
 	}
 	return nil
 }
-func (s *SqlConn) GetCharacter() []m.Character {
-	results, err := s.DB.Query("SELECT * FROM characters")
-	if err != nil {
-		fmt.Println("Error", err.Error())
-		return nil
-	}
 
-	characters := []m.Character{}
-	for results.Next() {
+func (s *SqlConn) GetCharactersByOwner(owner string) ([]*m.Character, error) {
+	rows, err := s.DB.Query("SELECT * FROM characters WHERE characterowner = ?", owner)
+	if err != nil {
+		return nil, fmt.Errorf("error querying characters: %w", err)
+	}
+	defer rows.Close()
+
+	var characters []*m.Character
+	for rows.Next() {
 		var character m.Character
-		err = results.Scan(&character.Name, &character.ID, &character.Class, &character.Race, &character.Level, &character.CreatedAt, &character.Alive)
-		if err != nil {
-			panic(err.Error())
+		if err := rows.Scan(&character.ID, &character.Name, &character.Class, &character.Race, &character.Level, &character.CreatedAt, &character.Alive, &character.CharacterOwner); err != nil {
+			return nil, fmt.Errorf("error scanning row: %w", err)
 		}
-		characters = append(characters, character)
+		character.CharacterOwner = owner
+		characters = append(characters, &character)
 	}
-	return characters
-}
-
-// GetCharacters returns an array of characters associated with the account accOwner.
-func (s *SqlConn) GetCharacters(code string) []*m.Character {
-	results, err := s.DB.Query(fmt.Sprintf("SELECT * FROM characters WHERE characterowner = '%s'", code))
-	if err != nil {
-		fmt.Println("Err", err.Error())
-		return nil
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("error getting row errors: %w", err)
 	}
-	fmt.Println()
-	// Append every character to the temporary storage
-	var charTempStorage []*m.Character
-	for {
-		char := &m.Character{}
-		if results.Next() {
-			err = results.Scan(&char.ID, &char.Name, &char.Class, &char.Race, &char.Level, &char.CreatedAt, &char.Alive, &char.CharacterOwner)
-			char.CharacterOwner = code
-			charTempStorage = append(charTempStorage, char)
-			if err != nil {
-				return nil
-			}
-		} else {
-			break
-		}
-	}
-	return charTempStorage
+	return characters, nil
 }
 
 func (s *SqlConn) AddCharacter(Character m.Character) {

@@ -9,21 +9,18 @@ package tutorial
 //
 // 	         SECOND ROOM ??????????????
 import (
-	"context"
 	"fmt"
+	"log"
+	"os"
+	"strings"
+
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/gliderlabs/ssh"
+	"github.com/mikejk8s/gmud/pkg/backend"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/wserver"
 	"github.com/mikejk8s/gmud/pkg/zones/combattutorial"
-	"log"
-	"nhooyr.io/websocket"
-	"nhooyr.io/websocket/wsjson"
-	"os"
-	"strings"
-	"time"
 )
 
 const useHighPerformanceRenderer = false
@@ -63,26 +60,26 @@ func InitialModel(char *models.Character, SSHSess ssh.Session) model {
 	if err != nil {
 		panic(err)
 	}
-	// dial to websocket server that is running on 127.0.0.1:5000
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	c, _, err := websocket.Dial(ctx, fmt.Sprintf("ws://%s", wserver.GetWSPort()), nil)
+	// dial to websocket server
+	wsUtil, err := backend.NewWebsocketUtil()
 	if err != nil {
 		log.Println(err)
-		cancel()
 		return model{}
 	}
-	defer cancel()
 	// then send a message to the websocket server
-	err = wsjson.Write(ctx, c, "Welcome, time has no meaning here!")
+	if _, err = wsUtil.Conn.Write([]byte("Welcome, time has no meaning here!")); err != nil {
+		log.Fatal(err)
+		return model{}
+	}
 	// read the response from the websocket server
-	_, msg, err := c.Read(ctx)
-	if err != nil {
-		log.Println(err)
-		cancel()
+	var msg = make([]byte, 512)
+	var n int
+	if n, err = wsUtil.Conn.Read(msg); err != nil {
+		log.Fatal(err)
 		return model{}
 	}
 	// print the response
-	content = append(content, msg...)
+	content = append(content, msg[:n]...)
 	// TODO: do this for whois, let the users know who is in the room
 	return model{
 		SSHSession: SSHSess,
@@ -100,6 +97,7 @@ func (m model) headerView() string {
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(title)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, title, line)
 }
+
 func (m model) footerView() string {
 	info := infoStyle.Render(fmt.Sprintf("%3.f%%", m.viewport.ScrollPercent()*100))
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(info)))

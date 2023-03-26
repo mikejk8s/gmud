@@ -2,6 +2,7 @@ package mysqlpkg
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -17,23 +18,14 @@ func (s *SqlConn) CreateCharacterTable() error {
 		level INT(3) NOT NULL DEFAULT '1',
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		alive BOOLEAN NOT NULL DEFAULT '1',
-        characterowner VARCHAR(20) NOT NULL DEFAULT 'player'
-	) ENGINE=INNODB;`
+		characterowner VARCHAR(20) NOT NULL DEFAULT 'player'
+	)`
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if _, err := s.DB.ExecContext(ctx, query); err != nil {
+		return fmt.Errorf("error creating Character table: %w", err)
+	}
 
-	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelfunc()
-	res, err := s.DB.ExecContext(ctx, query)
-	if err != nil {
-		log.Printf("Error %s when creating Character table", err)
-		panic(err)
-		return err
-	}
-	rows, err := res.RowsAffected()
-	if err != nil {
-		log.Printf("Error %s when getting rows affected", err)
-		panic(err)
-		return err
-	}
-	log.Printf("Rows affected when creating table: %d", rows)
+	log.Printf("Character table created successfully.")
 	return nil
 }

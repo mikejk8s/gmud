@@ -8,6 +8,9 @@ package classelect
 //
 import (
 	"fmt"
+	"io"
+	"log"
+
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -15,8 +18,6 @@ import (
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
-	"io"
-	"log"
 )
 
 var (
@@ -128,7 +129,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					log.Println(err)
 				}
 				m.DBConnection.AddCharacter(*m.character)
-				m.DBConnection.CloseConn()
+				m.DBConnection.Close()
 				return tutorial.InitialModel(m.character, m.SSHSession), nil
 			}
 		}

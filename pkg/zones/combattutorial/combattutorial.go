@@ -2,6 +2,7 @@ package combattutorial
 
 import (
 	"fmt"
+
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/gliderlabs/ssh"
@@ -61,30 +62,22 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	var cmd tea.Cmd
-
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch msg.Type {
-		case tea.KeyCtrlC, tea.KeyEsc:
+		if msg.Type == tea.KeyCtrlC || msg.Type == tea.KeyEsc {
 			return m, tea.Quit
-		case tea.KeyEnter:
 		}
-
-	// We handle errors just like any other message
 	case errMsg:
 		m.err = msg
-		return m, nil
+	default:
+		m.textInput, _ = m.textInput.Update(msg)
 	}
 
-	m.textInput, cmd = m.textInput.Update(msg)
-	return m, cmd
+	return m, nil
 }
-
 func (m model) View() string {
 	return fmt.Sprintf(
-		"Send a message to your homies\n\n%s\n\n%s",
+		"Send a message to your homies\n\n%s\n\n(esc to quit)\n",
 		m.textInput.View(),
-		"(esc to quit)",
-	) + "\n"
+	)
 }

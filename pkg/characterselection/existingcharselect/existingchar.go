@@ -2,6 +2,8 @@ package existingcharselect
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -10,7 +12,6 @@ import (
 	"github.com/mikejk8s/gmud/pkg/models"
 	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
 	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
-	"log"
 )
 
 //
@@ -21,13 +22,12 @@ import (
 //
 
 var (
-	appStyle          = lipgloss.NewStyle().Padding(1, 2)
-	titleStyle        = lipgloss.NewStyle().MarginLeft(2)
-	itemStyle         = lipgloss.NewStyle().PaddingLeft(4)
-	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(2).Foreground(lipgloss.Color("#006FFF"))
-	paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
-	helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
-	quitTextStyle     = lipgloss.NewStyle().Margin(1, 0, 2, 4)
+	appStyle        = lipgloss.NewStyle().Padding(1, 2)
+	titleStyle      = lipgloss.NewStyle().MarginLeft(2)
+	itemStyle       = lipgloss.NewStyle().PaddingLeft(4)
+	paginationStyle = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
+	helpStyle       = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
+	quitTextStyle   = lipgloss.NewStyle().Margin(1, 0, 2, 4)
 )
 
 type item struct {
@@ -54,7 +54,10 @@ type model struct {
 
 func InitialModel(accOwner string, SSHSess ssh.Session, dbConn *mysqlpkg.SqlConn) model {
 	// Get characters associated with the account
-	tempCharacterData := GetCharacterDB(dbConn, accOwner)
+	tempCharacterData, err := GetCharacterDB(dbConn, accOwner)
+	if err != nil {
+		log.Panic(err)
+	}
 	var characterList []list.Item
 	for i := range tempCharacterData {
 		characterList = append(characterList, item{
@@ -126,7 +129,7 @@ func (m model) View() string {
 }
 
 // GetCharacterDB returns an array of characters associated with the account accOwner.
-func GetCharacterDB(dbConn *mysqlpkg.SqlConn, accOwner string) []*models.Character {
+func GetCharacterDB(dbConn *mysqlpkg.SqlConn, accOwner string) ([]*models.Character, error) {
 	cDBLogger := logger.GetNewLogger()
 	err := cDBLogger.AssignOutput("characterDB", "./logs/characterDBconn")
 	if err != nil {
@@ -136,5 +139,5 @@ func GetCharacterDB(dbConn *mysqlpkg.SqlConn, accOwner string) []*models.Charact
 		cDBLogger.LogUtil.Errorf("Error %s connecting to characterDB during fetching the %s accounts characters: ", err, accOwner)
 		panic(err.Error())
 	}
-	return dbConn.GetCharacters(accOwner)
+	return dbConn.GetCharactersByOwner(accOwner)
 }

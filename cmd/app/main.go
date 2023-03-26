@@ -3,6 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"net"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
@@ -10,15 +17,7 @@ import (
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
 	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/mikejk8s/gmud/pkg/sshcommands"
-	"github.com/mikejk8s/gmud/pkg/wserver"
 	"github.com/muesli/termenv"
-	"log"
-	"net"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
@@ -32,31 +31,37 @@ const (
 var RunningOnDocker = false
 
 func passHandler(ctx ssh.Context, password string) bool {
-	// This means that the user is not signed up yet
 	if ctx.User() == "" {
-		return false // siktir git kayıt ol gel
+		return false
 	}
+
 	usersConn := sqlpkg.SqlConn{}
 	err := usersConn.GetSQLConn("users")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	// data := usersDB.Exec(fmt.Sprintf("SELECT password from users.users where username = '%s'", ctx.User())).First(&p)
+	defer usersConn.Close()
+
 	user := models.User{}
-	rows, _ := usersConn.DB.Query(fmt.Sprintf("SELECT password, email, name, username from users.users where username = '%s'", ctx.User()))
+	query := fmt.Sprintf("SELECT password, email, name, username from users.users where username = '%s'", ctx.User())
+	rows, err := usersConn.DB.Query(query)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer rows.Close()
+
 	for rows.Next() {
-		err := rows.Scan(&user.Password, &user.Email, &user.Name, &user.Username)
+		err = rows.Scan(&user.Password, &user.Email, &user.Name, &user.Username)
 		if err != nil {
-			panic(err)
+			log.Fatalln(err)
 		}
 	}
-	usersConn.CloseConn()
-	credentialError := user.CheckPassword(password)
-	if credentialError != nil {
-		return false
-	} else {
-		return true
+
+	if err = rows.Err(); err != nil {
+		log.Fatalln(err)
 	}
+
+	return user.CheckPassword(password) == nil
 }
 func main() {
 	// This is used for switching between localhost:port to TCP_HOST:TCP_PORT etc.
@@ -83,11 +88,10 @@ func main() {
 		// If we are not running on docker, please change these variables as you desire.
 		sqlpkg.Username = "cansu"
 		sqlpkg.Password = "1234"
-		sqlpkg.Hostname = "(127.0.0.1:3306)"
+		sqlpkg.Hostname = "(127.0.0.1:5432)"
 	}
 	// Run a websocket server to communicate between players, fiddle with change websocket port if you want.
-	wserver.ChangeWSPort(5000)
-	go wserver.LaunchWS()
+	go backend.StartWSServer()
 	// Fire the webpage server that will handle the signup page.
 	//
 	// This function will use WEBPAGE_HOST and WEBPAGE_ENV variables that is submitted on docker-compose.yml
@@ -97,7 +101,7 @@ func main() {
 	// Create users schema and users table, migrate if possible.
 	go sqlpkg.Migration()
 	// Connect to mariadb database and create characters schema + character tables if they don't exist
-	initialTableCreation := sqlpkg.SqlConn{}
+	initialTableCreation := new(sqlpkg.SqlConn)
 	err := initialTableCreation.GetSQLConn("characters")
 	if err != nil {
 		log.Println(err)
@@ -106,9 +110,9 @@ func main() {
 	go func() {
 		err := initialTableCreation.CreateCharacterTable()
 		if err != nil {
-			log.Println(err)
+			panic(err)
 		} else {
-			initialTableCreation.CloseConn()
+			initialTableCreation.Close()
 		}
 	}()
 	// Users table creation.
@@ -119,7 +123,7 @@ func main() {
 			log.Fatalln(err)
 		}
 		initialUsersCreation.CreateUsersTable()
-		initialUsersCreation.CloseConn()
+		initialUsersCreation.Close()
 	}()
 	// Initialize the SSH server
 	s, err := wish.NewServer(
@@ -162,9 +166,6 @@ func loginBubbleteaMiddleware() wish.Middleware {
 	login := func(m tea.Model, opts ...tea.ProgramOption) *tea.Program {
 		p := tea.NewProgram(m, opts...)
 		go func() {
-			// if err := p.Start(); err != nil {
-			// 	log.Fatalln(err)
-			// }
 			for {
 				<-time.After(1 * time.Second)
 				p.Send(timeMsg(time.Now()))
@@ -172,7 +173,8 @@ func loginBubbleteaMiddleware() wish.Middleware {
 		}()
 		return p
 	}
-	teaHandler := func(s ssh.Session) *tea.Program {
+
+	sshHandler := func(s ssh.Session) *tea.Program {
 		pty, _, _ := s.Pty()
 		m := model{
 			SSHSession: s,
@@ -183,7 +185,9 @@ func loginBubbleteaMiddleware() wish.Middleware {
 		}
 		return login(m, tea.WithInput(s), tea.WithOutput(s), tea.WithAltScreen(), tea.WithMouseCellMotion())
 	}
-	return bm.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
+
+	bmHandler := bm.MiddlewareWithProgramHandler(sshHandler, termenv.ANSI256)
+	return bmHandler
 }
 
 type model struct {
@@ -206,8 +210,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.time = time.Time(msg)
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "k":
-			sshcommands.Test(m.SSHSession, "whois")
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "l", "ctrl+l":

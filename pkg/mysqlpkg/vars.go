@@ -1,9 +1,13 @@
 package mysqlpkg
 
 import (
+	"context"
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"fmt"
 	"log"
+	"time"
+
+	_ "github.com/lib/pq"
 )
 
 // LoginReq is used for handling sign-up requests from the webpage server.
@@ -22,12 +26,22 @@ type SqlConn struct {
 
 // GetSQLConn attaches a new sql connection to the SqlConn struct.
 func (conn *SqlConn) GetSQLConn(dbname string) error {
-	db, err := sql.Open("mysql", Username+":"+Password+"@tcp"+Hostname+"/"+dbname+"?parseTime=true")
+	dsn := fmt.Sprintf("%s:%s@%s/postgres?parseTime=true&sslmode=%s", Username, Password, Hostname, SSLMode)
+	println(dsn)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
-		log.Println("Error", err.Error())
+		log.Println("Error:", err.Error())
 		return err
 	}
 	conn.DB = db
+
+	query := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s;", dbname)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if _, err := conn.DB.ExecContext(ctx, query); err != nil {
+		return fmt.Errorf("error creating Character database: %w", err)
+	}
+
 	return nil
 }
 
@@ -40,5 +54,6 @@ var (
 	Username = "cansu"
 	Password = "1234"
 	//hostname = "docker.for.mac.localhost:3306"
-	Hostname = "(127.0.0.1:3306)"
+	Hostname = "127.0.0.1:5432"
+	SSLMode  = "disable"
 )
