@@ -13,14 +13,14 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/classelect"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/postgrespkg"
 )
 
 type (
 	errMsg error
 )
 type model struct {
-	DBConnection   *mysqlpkg.SqlConn
+	DBConnection   *postgrespkg.SqlConn
 	SSHSession     ssh.Session
 	character      *models.Character
 	input          textinput.Model
@@ -29,7 +29,7 @@ type model struct {
 	err            error
 }
 
-func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Session, DBConn *mysqlpkg.SqlConn) model {
+func InitialModel(choice string, characterTemp *models.Character, SSHSess ssh.Session, DBConn *postgrespkg.SqlConn) model {
 	ti := textinput.New()
 	ti.Placeholder = "Enter here"
 	ti.Focus()

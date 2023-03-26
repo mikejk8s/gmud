@@ -6,7 +6,7 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/existingcharselect"
 	"github.com/mikejk8s/gmud/pkg/characterselection/raceselect"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/postgrespkg"
 	//"github.com/charmbracelet/wish"
 )
 
@@ -72,7 +72,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// for associating the character with the account
 
 				// Dont forget to pass SSHSession and DBConnection, a user should occupy a single session.
-				dbConn := &mysqlpkg.SqlConn{}
+				dbConn := &postgrespkg.SqlConn{}
 				dbConn.GetSQLConn("characters")
 				switch m.choices[m.cursor] {
 				case "Play with Existing Character":

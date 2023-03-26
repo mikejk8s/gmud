@@ -10,7 +10,7 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/logger"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/postgrespkg"
 	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
 )
 
@@ -43,7 +43,7 @@ func (i item) FilterValue() string   { return i.CharacterName }
 func (i item) Style() lipgloss.Style { return itemStyle }
 
 type model struct {
-	SQLConnection *mysqlpkg.SqlConn
+	SQLConnection *postgrespkg.SqlConn
 	SSHSession    ssh.Session
 	choiceList    list.Model
 	choice        string
@@ -52,7 +52,7 @@ type model struct {
 	Character     []*models.Character
 }
 
-func InitialModel(accOwner string, SSHSess ssh.Session, dbConn *mysqlpkg.SqlConn) model {
+func InitialModel(accOwner string, SSHSess ssh.Session, dbConn *postgrespkg.SqlConn) model {
 	// Get characters associated with the account
 	tempCharacterData, err := GetCharacterDB(dbConn, accOwner)
 	if err != nil {
@@ -129,7 +129,7 @@ func (m model) View() string {
 }
 
 // GetCharacterDB returns an array of characters associated with the account accOwner.
-func GetCharacterDB(dbConn *mysqlpkg.SqlConn, accOwner string) ([]*models.Character, error) {
+func GetCharacterDB(dbConn *postgrespkg.SqlConn, accOwner string) ([]*models.Character, error) {
 	cDBLogger := logger.GetNewLogger()
 	err := cDBLogger.AssignOutput("characterDB", "./logs/characterDBconn")
 	if err != nil {

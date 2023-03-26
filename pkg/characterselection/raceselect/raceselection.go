@@ -8,7 +8,7 @@ import (
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/characterselection/nameselect"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/postgrespkg"
 	"io"
 	"math/rand"
 	"time"
@@ -56,13 +56,13 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	DBConnection *mysqlpkg.SqlConn // even if this
-	SSHSession   ssh.Session       // and this is not used, continue on carrying them.
-	choiceList   list.Model        // items on the to-do list
+	DBConnection *postgrespkg.SqlConn // even if this
+	SSHSession   ssh.Session          // and this is not used, continue on carrying them.
+	choiceList   list.Model           // items on the to-do list
 	accountOwner string
 }
 
-func InitialModel(accountOwn string, SSHSess ssh.Session, dbConn *mysqlpkg.SqlConn) model {
+func InitialModel(accountOwn string, SSHSess ssh.Session, dbConn *postgrespkg.SqlConn) model {
 	const defaultWidth = 20
 	const listHeight = 14
 	races := []list.Item{

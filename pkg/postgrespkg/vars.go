@@ -1,4 +1,4 @@
-package mysqlpkg
+package postgrespkg
 
 import (
 	"context"
@@ -51,8 +51,8 @@ var RunningOnDocker = false
 //
 // will change it to work with docker-composer environment variables later.
 var (
-	Username = "cansu"
-	Password = "1234"
+	Username = "gmud"
+	Password = "gmud"
 	//hostname = "docker.for.mac.localhost:3306"
 	Hostname = "127.0.0.1:5432"
 	SSLMode  = "disable"

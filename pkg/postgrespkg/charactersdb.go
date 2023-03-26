@@ -1,14 +1,12 @@
-package mysqlpkg
+package postgrespkg
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
-	//"github.com/mikejk8s/gmud"
-	"fmt"
+	_ "github.com/lib/pq"
 
-	//cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	m "github.com/mikejk8s/gmud/pkg/models"
 )
 
@@ -20,7 +18,7 @@ func (s *SqlConn) Close() error {
 }
 
 func (s *SqlConn) GetCharactersByOwner(owner string) ([]*m.Character, error) {
-	rows, err := s.DB.Query("SELECT * FROM characters WHERE characterowner = ?", owner)
+	rows, err := s.DB.Query("SELECT * FROM characters WHERE characterowner = $1", owner)
 	if err != nil {
 		return nil, fmt.Errorf("error querying characters: %w", err)
 	}
@@ -43,7 +41,7 @@ func (s *SqlConn) GetCharactersByOwner(owner string) ([]*m.Character, error) {
 
 func (s *SqlConn) AddCharacter(Character m.Character) {
 	insert, err := s.DB.Query(
-		"INSERT INTO characters (name,id,class,level,race,characterowner) VALUES (?,?,?,?,?,?)",
+		"INSERT INTO characters (name,id,class,level,race,characterowner) VALUES ($1,$2,$3,$4,$5,$6)",
 		Character.Name, Character.ID, Character.Class, Character.Level, Character.Race, Character.CharacterOwner)
 	// if there is an error inserting, handle it
 	if err != nil {
@@ -59,7 +57,7 @@ func (s *SqlConn) AddCharacter(Character m.Character) {
 
 func (s *SqlConn) DeleteCharacter(Character m.Character) {
 	delete, err := s.DB.Query(
-		"DELETE FROM characters WHERE id = ?", Character.ID)
+		"DELETE FROM characters WHERE id = $1", Character.ID)
 	// if there is an error deleting, handle it
 	if err != nil {
 		panic(err.Error())
@@ -72,4 +70,21 @@ func (s *SqlConn) DeleteCharacter(Character m.Character) {
 	}(delete)
 }
 
-//TODO: Convert to postgres
+func (s *SqlConn) CreateCharacterTable() error {
+	query := `CREATE TABLE IF NOT EXISTS characters (
+		id BIGINT UNIQUE NOT NULL PRIMARY KEY,
+		name VARCHAR(30) UNIQUE NOT NULL,
+		class VARCHAR(15) NOT NULL,
+		race VARCHAR(15) NOT NULL DEFAULT 'HUMAN',
+		level INT NOT NULL DEFAULT '1',
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		alive BOOLEAN NOT NULL DEFAULT '1',
+		characterowner VARCHAR(20) NOT NULL DEFAULT 'player'
+	)`
+	if _, err := s.DB.Exec(query); err != nil {
+		return fmt.Errorf("error creating Character table: %w", err)
+	}
+
+	log.Printf("Character table created successfully.")
+	return nil
+}

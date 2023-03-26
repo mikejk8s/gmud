@@ -1,51 +1,54 @@
 version: '3'
 services:
   db:
-    image: mariadb:latest
-    container_name: mysql
-    build:
-      context: .
-      dockerfile: ./Dockerfile.dbinit
-    ports:
-      - '127.0.0.1:3306:3306'
+    image: bitnami/postgresql:latest
+    container_name: postgres
     volumes:
-      - 'db_data:/var/lib/mysql'
+      - 'db_data:/bitnami/postgresql'
+      - './sql/initdecoy.sql:/initdb/init.sql'
     restart: on-failure
+    env_file:
+      - prod.env
     environment:
-      # Change this later.
-      - MARIADB_USER_NAME=cansu
-      - MARIADB_USER_PASSWORD=cansu
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_INITDB_ARGS=--username=postgres --pwfile=<(echo "$$POSTGRES_PASSWORD") -E UTF8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8
+      - POSTGRES_INITDB_WALDIR=/bitnami/postgresql/wal
+      - POSTGRES_INITDB_XLOGDIR=/bitnami/postgresql/xlog
+      - POSTGRES_INITDB_EXTRA_FLAGS=-U postgres --pwfile=<(echo "$$POSTGRES_PASSWORD") --auth=trust
+      - POSTGRES_INITDB_SETROLE=gmud
     networks:
       - dev
     healthcheck:
-      test: "/usr/bin/mysql --user=$$MARIA_DB_USER_NAME --password=$$MARIADB_USER_PASSWORD --execute \"use users\""
+      test: "/opt/bitnami/postgresql/bin/pg_isready -U $$POSTGRES_USER -d users"
       timeout: 60s
       retries: 60
+
   mud:
     container_name: gmud
     restart: always
-    build: 
+    build:
       context: .
       dockerfile: ./Dockerfile.gmud
     volumes:
     - app:/approot
     environment:
-      - WAIT_HOSTS=maria:3306
+      - WAIT_HOSTS=postgres:5432
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
-      # These envs are used for connection to the database.
-      - MYSQL_USER=cansu
-      - MYSQL_PASSWORD=cansu
-      - MYSQL_HOST=(127.0.0.1:3306)
-      # This is used for switching between localhost:port to TCP_HOST:TCP_PORT etc.
+      - PGUSER=gmud
+      - PGPASSWORD=gmud
+      - PGHOST=postgres
+      - PGPORT=5432
       - RUNNING_ON_DOCKER=true
-      # WEBPAGE environment variables are used for Gin web server.
       - WEBPAGE_HOST=127.0.0.1
       - WEBPAGE_PORT=6969
-      # TCP environment variables are used for TCP server.
       - TCP_HOST=127.0.0.1
       - TCP_PORT=3131
+      - PGSSLMODE=disable
+
     ports:
       - "2222:2222"
       - "8081:8081"
@@ -53,9 +56,11 @@ services:
       - db
     networks:
       - dev
+
 volumes:
   db_data:
   app:
+
 networks:
-    dev:
-      driver: bridge
+  dev:
+    driver: bridge

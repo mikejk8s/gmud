@@ -1,4 +1,4 @@
-package mysqlpkg
+package postgrespkg
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/lib/pq"
 )
 
 func (s *SqlConn) CreateCharacterTable() error {
@@ -22,7 +22,12 @@ func (s *SqlConn) CreateCharacterTable() error {
 	)`
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	if _, err := s.DB.ExecContext(ctx, query); err != nil {
+
+	_, err := s.DB.ExecContext(ctx, query)
+	if err != nil {
+		if e, ok := err.(*pq.Error); ok {
+			return fmt.Errorf("error creating Character table. Error code: %s. Error: %w", e.Code.Name(), err)
+		}
 		return fmt.Errorf("error creating Character table: %w", err)
 	}
 

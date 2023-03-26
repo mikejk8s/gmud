@@ -13,14 +13,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/wish"
 	bm "github.com/charmbracelet/wish/bubbletea"
+	lm "github.com/charmbracelet/wish/logging"
+	"github.com/gliderlabs/ssh"
+	"github.com/muesli/termenv"
+
 	"github.com/mikejk8s/gmud/pkg/backend"
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	"github.com/mikejk8s/gmud/pkg/models"
-	sqlpkg "github.com/mikejk8s/gmud/pkg/mysqlpkg"
-	"github.com/muesli/termenv"
-
-	lm "github.com/charmbracelet/wish/logging"
-	"github.com/gliderlabs/ssh"
+	sqlpkg "github.com/mikejk8s/gmud/pkg/postgrespkg"
 )
 
 const (
@@ -81,9 +81,9 @@ func main() {
 	//
 	// Change the mysqlpkg variables if we are running on docker
 	if RunningOnDocker {
-		sqlpkg.Username = os.Getenv("MYSQL_USER")
-		sqlpkg.Password = os.Getenv("MYSQL_PASSWORD")
-		sqlpkg.Hostname = os.Getenv("MYSQL_HOST")
+		sqlpkg.Username = os.Getenv("POSTGRES_USER")
+		sqlpkg.Password = os.Getenv("POSTGRESQL_PASSWORD")
+		sqlpkg.Hostname = os.Getenv("POSTGRES_HOST")
 	} else {
 		// If we are not running on docker, please change these variables as you desire.
 		sqlpkg.Username = "cansu"

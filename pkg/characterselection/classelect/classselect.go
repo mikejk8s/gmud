@@ -16,7 +16,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/gliderlabs/ssh"
 	"github.com/mikejk8s/gmud/pkg/models"
-	"github.com/mikejk8s/gmud/pkg/mysqlpkg"
+	"github.com/mikejk8s/gmud/pkg/postgrespkg"
 	"github.com/mikejk8s/gmud/pkg/zones/tutorial"
 )
 
@@ -60,7 +60,7 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	DBConnection *mysqlpkg.SqlConn
+	DBConnection *postgrespkg.SqlConn
 	SSHSession   ssh.Session
 	character    *models.Character
 	choiceList   list.Model
@@ -69,7 +69,7 @@ type model struct {
 	selected     map[int]struct{}
 }
 
-func InitialModel(characterTemp *models.Character, SSHSess ssh.Session, DBConn *mysqlpkg.SqlConn) model {
+func InitialModel(characterTemp *models.Character, SSHSess ssh.Session, DBConn *postgrespkg.SqlConn) model {
 	const defaultWidth = 20
 	const listHeight = 14
 	classes := []list.Item{

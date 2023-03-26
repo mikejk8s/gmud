@@ -1,20 +1,21 @@
-package mysqlpkg
+package postgrespkg
 
 import (
-	"github.com/mikejk8s/gmud/pkg/userdb"
 	"log"
+
+	"github.com/mikejk8s/gmud/pkg/userdb"
 )
 
 func (s *SqlConn) CreateUsersTable() {
-	s.DB.Exec(`CREATE TABLE IF NOT EXISTS userstable(
-    	id            integer unsigned null,
-    	created_at    datetime         null,
-   	 	updated_at    datetime         null,
-    	deleted_at    datetime         null,
-    	name          varchar(255)     null,
-    	password_hash varchar(255)     null,
-    	remember_hash varchar(255)     null
-		);`)
+	s.DB.Exec(`CREATE TABLE IF NOT EXISTS users (
+		id              SERIAL PRIMARY KEY,
+		created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		updated_at      TIMESTAMP,
+		deleted_at      TIMESTAMP,
+		name            VARCHAR(255),
+		password_hash   VARCHAR(255),
+		remember_hash   VARCHAR(255)
+	);`)
 }
 
 // CreateNewUser is self-explanatory by its name.
@@ -23,7 +24,7 @@ func (s *SqlConn) CreateUsersTable() {
 //
 // LoginReq is a struct that contains the user's name, password and email, that is sent from signup server mostly, or you can set one up yourself.
 func (s *SqlConn) CreateNewUser(userInfo LoginReq) error {
-	stmt, err := s.DB.Prepare("INSERT INTO users.users (created_at,updated_at,deleted_at,name, username,email,password) VALUES (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,?,?,?,?)")
+	stmt, err := s.DB.Prepare("INSERT INTO users (created_at, updated_at, deleted_at, name, username, email, password) VALUES (CURRENT_TIMESTAMP, NULL, NULL, ?, ?, ?, ?)")
 	if err != nil {
 		log.Println("Error", err.Error())
 	}
@@ -33,6 +34,7 @@ func (s *SqlConn) CreateNewUser(userInfo LoginReq) error {
 	}
 	return nil
 }
+
 func Migration() {
 	userdb.Connect(Username, Password, Hostname, "users")
 	userdb.Migrate()
