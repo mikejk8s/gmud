@@ -6,10 +6,12 @@ import (
 	"log"
 	"time"
 
-	"github.com/lib/pq"
+"github.com/lib/pq"
 )
 
-func (s *SqlConn) CreateCharacterTable() error {
+# TODO: Why is this doubled in charactersdb.go? Which one?
+
+func (s *SqlConn) CreateCharacterTable2() error {
 	query := `CREATE TABLE IF NOT EXISTS characters (
 		id BIGINT UNIQUE NOT NULL PRIMARY KEY,
 		name VARCHAR(30) UNIQUE NOT NULL,

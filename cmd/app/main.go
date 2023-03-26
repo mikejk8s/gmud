@@ -86,8 +86,8 @@ func main() {
 		sqlpkg.Hostname = os.Getenv("POSTGRES_HOST")
 	} else {
 		// If we are not running on docker, please change these variables as you desire.
-		sqlpkg.Username = "cansu"
-		sqlpkg.Password = "1234"
+		sqlpkg.Username = "gmud"
+		sqlpkg.Password = "gmud"
 		sqlpkg.Hostname = "(127.0.0.1:5432)"
 	}
 	// Run a websocket server to communicate between players, fiddle with change websocket port if you want.
