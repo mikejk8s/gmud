@@ -305,9 +305,9 @@ This code defines a command line interface in Go using the Bubble Tea library. I
 ### 📄 pkg/charactersroutes/charactersroutes.go
 ```go
 55     			//return
-62     	var Character m.Character
-68     			//return
-69     			db.DeleteCharacter(Character)
+56     		}
+57     	}
+58     	c.JSON(http.StatusNotFound, errors.New("Character not found"))
 ```
 
 <br/>
@@ -448,6 +448,12 @@ This code defines a command line interface in Go using the Bubble Tea library. I
 4      	"time"
 5      )
 6      
+7      type Character struct {
+8      	Name string	`json:"name"`
+9      	ID string	`json:"id"`
+10     	Class string	`json:"class"`
+11     	Race string	`json:"race"`
+12     	Level int	`json:"level"`
 13     	CreatedAt time.Time	`json:"created_at"`
 14     	Alive bool	`json:"alive"`
 ```
