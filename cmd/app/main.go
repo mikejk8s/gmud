@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -16,15 +17,13 @@ import (
 	lm "github.com/charmbracelet/wish/logging"
 	"github.com/gliderlabs/ssh"
 	"github.com/muesli/termenv"
+	// "github.com/newrelic/go-agent/v3/newrelic"
+	"github.com/felixge/fgtrace"
 
 	mn "github.com/mikejk8s/gmud/pkg/menus"
 	db "github.com/mikejk8s/gmud/pkg/mysql"
 	r "github.com/mikejk8s/gmud/pkg/routes"
 	"github.com/mikejk8s/gmud/pkg/tracing"
-
-	// "github.com/newrelic/go-agent/v3/newrelic"
-	"github.com/felixge/fgtrace"
-	"net/http"
 )
 
 const (
@@ -37,20 +36,20 @@ func main() {
 	defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
 
 	http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
-	http.ListenAndServe(":1234", nil)
+	http.ListenAndServe(":1234", nil) // TODO: Fix hardcoded port
 
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
 
 	// Connect to user-db mysql database and create db + tables if they don't exist
-	go	r.ConnectUserDB()
+	go r.ConnectUserDB()
 
 	go tracing.JaegerTraceProvider()
 
 	// SSH server begin
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
-		wish.WithHostKeyPath(".ssh/term_info_ed25519"),
+		wish.WithHostKeyPath(".ssh/term_info_ed25519"), 
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
 		}),
@@ -170,6 +169,3 @@ func (m model) View() string {
 	s += "Press 'q' to quit\n"
 	return fmt.Sprintf(s, m.term, m.width, m.height)
 }
-
-
-
