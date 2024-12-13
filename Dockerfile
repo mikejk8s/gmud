@@ -1,21 +1,27 @@
-# Step 1: Modules caching
-FROM golang:1.19-alpine3.16 as modules
-COPY go.mod go.sum /modules/
-WORKDIR /modules
+# Stage 1: Builder
+FROM golang:1.23.4-alpine AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Step 2: Builder
-FROM golang:1.19-alpine3.16 as builder
-COPY --from=modules /go/pkg /go/pkg
-COPY . /app
-WORKDIR /app
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -tags migrate -o /bin/app ./cmd/app
+COPY . .
 
-# Step 3: Final
-FROM scratch
-#COPY --from=builder /app/config /config
-#COPY --from=builder /app/migrations /migrations
-COPY --from=builder /bin/app /app
-#COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-CMD ["/app"]
+# Build the application as a statically linked binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app ./cmd/app/main.go
+
+# Stage 2: Final runtime image
+FROM alpine:latest
+
+WORKDIR /app
+
+# Copy only the built binary from the builder stage
+COPY --from=builder /app/app .
+
+RUN chmod +x /app/app
+
+EXPOSE 1234 2222
+
+# Command to run your application
+CMD ["./app"]
