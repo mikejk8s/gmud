@@ -16,12 +16,9 @@ FROM alpine:latest
 
 WORKDIR /app
 
-# Copy only the built binary from the builder stage
 COPY --from=builder /app/app .
-
 RUN chmod +x /app/app
 
 EXPOSE 1234 2222
 
-# Command to run your application
 CMD ["./app"]

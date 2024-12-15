@@ -10,6 +10,7 @@ import (
     _ "github.com/go-sql-driver/mysql"
 )
 
+// TODO: More db endpoints to centralize
 const (
     username = "user"
     password = "password"

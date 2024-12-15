@@ -2,24 +2,21 @@ package routes
 
 import (
 	"net/http"
+	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/semihalev/gin-stats"
+	nrgin "github.com/newrelic/go-agent/v3/integrations/nrgin"
+	"github.com/newrelic/go-agent/v3/newrelic"
 
 	"github.com/mikejk8s/gmud/controllers"
 	"github.com/mikejk8s/gmud/middlewares"
 	cr "github.com/mikejk8s/gmud/pkg/charactersroutes"
 	"github.com/mikejk8s/gmud/pkg/userdb"
-
-	nrgin "github.com/newrelic/go-agent/v3/integrations/nrgin"
-	"github.com/newrelic/go-agent/v3/newrelic"
-
-	"fmt"
-	"os"
-
 )
 
-
+// TODO: Hardcoded db endpoints
 func ConnectUserDB() {
 	// Initialize Database
 	userdb.Connect("user:password@tcp(localhost:3307)/users?parseTime=true")

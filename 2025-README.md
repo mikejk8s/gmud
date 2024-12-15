@@ -10,6 +10,7 @@ Prior to bailing for 2 years I was converting the ORM to point to postgres inste
 ### WSL2 Specifics
 
 * Use docker-compose.exe up to start to use Windows GUI desktop
+* ssh -i .ssh/term_info_ed25519.pub localhost -p 2222  
 
 # TODO: 
 
@@ -22,6 +23,8 @@ In no particular order here
     * reconnect swimm docs
 * Security
     * Clean up image, /code etc are passing through
+* fgtrace
+    * This seems to be generating metrics in the container /app/fgtrace.json - it's created after container startup. Look into why I have broken fgtrace comments everywhere. 
 
 
 ## To get the engine cranking again

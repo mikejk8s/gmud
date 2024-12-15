@@ -36,7 +36,12 @@ func main() {
 	defer fgtrace.Config{Dst: fgtrace.File("fgtrace.json")}.Trace().Stop()
 
 	http.DefaultServeMux.Handle("/debug/fgtrace", fgtrace.Config{})
-	http.ListenAndServe(":1234", nil) // TODO: Fix hardcoded port
+
+	go func () {
+	if err := http.ListenAndServe(":1234", nil); err !=nil {
+	log.Fatalf("Http server error: %v", err)
+	}
+}()
 
 	// Connect to char-db mysql database and create db + tables if they don't exist
 	go db.Connect()
@@ -49,7 +54,7 @@ func main() {
 	// SSH server begin
 	s, err := wish.NewServer(
 		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
-		wish.WithHostKeyPath(".ssh/term_info_ed25519"), 
+		wish.WithHostKeyPath(".ssh/term_info_ed25519"),
 		wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 			return true
 		}),

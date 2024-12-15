@@ -7,7 +7,7 @@ import (
 )
 
 func JaegerTraceProvider()(*sdktrace.TracerProvider, error) {
-    exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://localhost:14268/api/traces")))
+    exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://localhost:14268/api/traces"))) // TODO: I probably need to expose this 
     if err != nil {
         return nil, err
     }
